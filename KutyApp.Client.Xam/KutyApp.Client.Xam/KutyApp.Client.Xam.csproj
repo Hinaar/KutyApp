@@ -4,9 +4,21 @@
     <TargetFramework>netstandard2.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
+    <PackageReference Include="Refit" Version="4.6.48" />
+    <PackageReference Include="Xamarin.Forms" Version="3.3.0.967583" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.1.0.431" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\KutyApp.Client.Services.LocalRepository\KutyApp.Client.Services.LocalRepository.csproj" />
+    <ProjectReference Include="..\..\KutyApp.Services.ClientConsumer.Api\KutyApp.Client.Services.ClientConsumer.csproj" />
   </ItemGroup>
 
 </Project>

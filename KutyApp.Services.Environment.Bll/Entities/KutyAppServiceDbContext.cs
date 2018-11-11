@@ -13,5 +13,12 @@ namespace KutyApp.Services.Environment.Bll.Entities
 
             base.OnModelCreating(modelBuilder);
         }
+
+        public KutyAppServiceDbContext(DbContextOptions options) : base(options) { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+        }
     }
 }

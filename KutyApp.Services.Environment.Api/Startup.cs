@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using KutyApp.Services.Environment.Bll.DI;
 using KutyApp.Services.Environment.Bll.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,7 +35,9 @@ namespace KutyApp.Services.Environment.Api
             {
                 options.UseSqlServer(
                     connectionString,
-                    b => b.MigrationsAssembly($"{nameof(KutyApp)}.{nameof(Services)}.{nameof(Environment)}.{nameof(Api)}")
+                    b => {
+                        b.UseNetTopologySuite();
+                        b.MigrationsAssembly($"{nameof(KutyApp)}.{nameof(Services)}.{nameof(Environment)}.{nameof(Api)}"); }
                     );
             });
 
@@ -45,9 +48,11 @@ namespace KutyApp.Services.Environment.Api
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddBllManagers();
+
             //Filtereket majd ide
             //---
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAutoMapper();
 
@@ -75,9 +80,15 @@ namespace KutyApp.Services.Environment.Api
             //---
 
             app.UseSwagger();
-            app.UseCors();
 
-            app.UseHttpsRedirection();
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.), 
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
 

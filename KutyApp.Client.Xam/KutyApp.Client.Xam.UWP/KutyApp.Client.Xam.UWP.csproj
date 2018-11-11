@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{8B42C784-2DC0-4420-A7A3-6D398A13E10C}</ProjectGuid>
+    <ProjectGuid>{5A353DC6-A734-4DBD-94B2-068E33BFDEA2}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KutyApp.Client.Xam.UWP</RootNamespace>
@@ -20,7 +20,7 @@
     <EnableDotNetNativeCompatibleProfile>true</EnableDotNetNativeCompatibleProfile>
     <PackageCertificateKeyFile>KutyApp.Client.Xam.UWP_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
-<PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
@@ -123,12 +123,19 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
-  <ItemGroup> 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite">
+      <Version>2.1.4</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.6" />
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
+    <PackageReference Include="Xamarin.Forms" Version="3.3.0.967583" />
     <PackageReference Include="Prism.DryIoc.Forms" Version="7.1.0.431" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\KutyApp.Client.Services.LocalRepository\KutyApp.Client.Services.LocalRepository.csproj">
+      <Project>{48fb5c4b-d430-49fc-b758-bfda1f78fc58}</Project>
+      <Name>KutyApp.Client.Services.LocalRepository</Name>
+    </ProjectReference>
     <ProjectReference Include="..\KutyApp.Client.Xam\KutyApp.Client.Xam.csproj">
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>
       <Name>KutyApp.Client.Xam</Name>

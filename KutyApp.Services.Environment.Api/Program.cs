@@ -14,6 +14,13 @@ namespace KutyApp.Services.Environment.Api
     {
         public static void Main(string[] args)
         {
+            //IConfigurationRoot config = new ConfigurationBuilder()
+            //        .SetBasePath(Directory.GetCurrentDirectory())
+            //        .AddJsonFile("hosting.json")
+            //        .AddCommandLine(args)
+            //        .Build();
+            //CreateWebHostBuilder(args).UseConfiguration(config).Build().Run();
+
             CreateWebHostBuilder(args).Build().Run();
         }
 

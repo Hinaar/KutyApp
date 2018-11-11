@@ -1,4 +1,6 @@
-﻿using Prism;
+﻿using KutyApp.Client.Services.LocalRepository.Interfaces;
+using KutyApp.Client.Services.LocalRepository.Managers;
+using Prism;
 using Prism.Ioc;
 using System;
 using System.Collections.Generic;
@@ -7,6 +9,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -23,15 +26,23 @@ namespace KutyApp.Client.Xam.UWP
         {
             this.InitializeComponent();
 
-            LoadApplication(new KutyApp.Client.Xam.App(new UwpInitializer()));
+            var dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "KutyAppDb.db");
+
+            LoadApplication(new KutyApp.Client.Xam.App(new UwpInitializer(dbPath)));
         }
     }
 
     public class UwpInitializer : IPlatformInitializer
     {
+        private string path;
+        public UwpInitializer(string dbPath)
+        {
+            path = dbPath;
+        }
         public void RegisterTypes(IContainerRegistry containerRegistry)
         {
             // Register any platform specific implementations
+            containerRegistry.RegisterInstance<IPetRepository>(new PetRepositoryManager(path));
         }
     }
 }

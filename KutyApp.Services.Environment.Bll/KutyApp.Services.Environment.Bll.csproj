@@ -11,10 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dtos\" />
-    <Folder Include="Mapping\" />
-    <Folder Include="Interfaces\" />
-    <Folder Include="Managers\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
 
 </Project>
