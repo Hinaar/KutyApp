@@ -8,6 +8,7 @@ using System.Net.Http;
 using System.Text;
 using KutyApp.Client.Services.ClientConsumer.Interfaces;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
+using Plugin.Connectivity;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -25,9 +26,11 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            var tmp = await PetRepository.GetDogsAsync();
+            //if (CrossConnectivity.IsSupported)
+            //    CrossConnectivity.Current.IsConnected;
+            //var tmp = await PetRepository.GetDogsAsync();
             //var tmp = await EnvironmentApi.GetPoisAsync();
-            Title = tmp.FirstOrDefault()?.Name ?? "ures";
+            //Title = tmp.FirstOrDefault()?.Name ?? "ures";
             base.OnNavigatedTo(parameters);
         }
     }
