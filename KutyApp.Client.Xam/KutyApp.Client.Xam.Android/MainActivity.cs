@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Runtime;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using KutyApp.Client.Services.LocalRepository.Managers;
+using Plugin.Permissions;
 using Prism;
 using Prism.Ioc;
 using System.Diagnostics;
@@ -22,9 +23,16 @@ namespace KutyApp.Client.Xam.Droid
             base.OnCreate(bundle);
 
             var dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "KutyAppDb.db");
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App(new AndroidInitializer(dbPath)));
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
+        {
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
     }
 

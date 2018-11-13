@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KutyApp.Client.Xam.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,11 @@ namespace KutyApp.Client.Xam.Views
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            ((MainPageViewModel)this.BindingContext).GombNyomos();
         }
     }
 }
