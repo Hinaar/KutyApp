@@ -1,12 +1,76 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:KutyApp.Client.Xam"
              x:Class="KutyApp.Client.Xam.Views.MainPage"
+             NavigationPage.HasNavigationBar="False"
              Title="{Binding Title, Mode=TwoWay}">
+    <ScrollView>
+        <Grid Margin="10, 30">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
 
-    <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
-        <Label Text="Welcome to Xamarin Forms and Prism! cust" />
-        <Button Text="ACtiooon" Clicked="Button_Clicked"/>
-    </StackLayout>
+            <Grid Margin="10" Grid.Row="0" Grid.Column="0">
+                <Grid  Padding="10" BackgroundColor="Beige">
+                    <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />
+                </Grid>
+                <Button Clicked="Button_Clicked" Opacity="1" BackgroundColor="Transparent"/>
+                <Grid VerticalOptions="End" Padding="2, 0">
+                    <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                    <StackLayout>
+                        <Label Text="Pets" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+
+            <Grid Margin="10" Grid.Row="0" Grid.Column="1">
+                <Grid  Padding="10" BackgroundColor="Beige">
+                    <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.maps.png}"/>
+                </Grid>
+                <Button Clicked="Button_Clicked" Opacity="1" BackgroundColor="Transparent"/>
+                <Grid VerticalOptions="End" Padding="2, 0">
+                    <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                    <StackLayout>
+                        <Label Text="Pois" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+
+            <Grid Margin="10" Grid.Row="1" Grid.Column="0">
+                <Grid  Padding="10" BackgroundColor="Beige">
+                    <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.user.png}"/>
+                </Grid>
+                <Button Clicked="Button_Clicked" Opacity="1" BackgroundColor="Transparent"/>
+                <Grid VerticalOptions="End" Padding="2, 0">
+                    <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                    <StackLayout>
+                        <Label Text="Profile" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+
+            <Grid Margin="10" Grid.Row="1" Grid.Column="1">
+                <Grid  Padding="10" BackgroundColor="Beige" >
+                    <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.clipboard.png}"/>
+                </Grid>
+                <Button  Clicked="Button_Clicked" Opacity="1" BackgroundColor="Transparent" />
+                <Grid VerticalOptions="End" Padding="2, 0">
+                    <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                    <StackLayout>
+                        <Label Text="Adverts" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                    </StackLayout>
+                </Grid>
+            </Grid>
+
+
+        </Grid>
+    </ScrollView>
+
 
 </ContentPage>

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Prism.Services;
+using Plugin.LocalNotifications;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -83,7 +84,8 @@ namespace KutyApp.Client.Xam.ViewModels
                         //UWP: only this works on desktop and only after allowing location service in location privacy settings
                         var res2 = await locator.GetPositionAsync();
                         string s = string.Empty;
-                        await PageDialogService.DisplayAlertAsync("Ittvagy", $"{res2.Latitude}   -    {res2.Longitude}", "OK");
+                        //await PageDialogService.DisplayAlertAsync("Ittvagy", $"{res2.Latitude}   -    {res2.Longitude}", "OK");
+                        CrossLocalNotifications.Current.Show("cim", "ertesitoo", 101 /*DateTime.Now.AddSeconds(10)*/);
                     }
 
                     var results = await CrossGeolocator.Current.GetPositionAsync();
