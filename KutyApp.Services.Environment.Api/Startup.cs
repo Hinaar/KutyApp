@@ -52,7 +52,7 @@ namespace KutyApp.Services.Environment.Api
 
             //Filtereket majd ide
             //---
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_0);
 
             services.AddAutoMapper();
 

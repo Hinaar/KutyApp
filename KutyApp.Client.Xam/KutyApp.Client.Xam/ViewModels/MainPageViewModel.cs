@@ -16,6 +16,8 @@ using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
 using Prism.Services;
 using Plugin.LocalNotifications;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -34,6 +36,12 @@ namespace KutyApp.Client.Xam.ViewModels
             Title = "Main a Page";
         }
 
+        private ICommand navigateToPetsPage;
+
+        public ICommand NavigateToPetsPage {  get { return navigateToPetsPage ?? new Command(async () => await NavigationService.NavigateAsync("PetsPage")); } }
+        
+
+
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             //TODO: xamarin essentials
@@ -41,7 +49,7 @@ namespace KutyApp.Client.Xam.ViewModels
             //yield ensures correct working through init methods
             await Task.Yield();
 
-            await GeolocatorMoka();
+            //await GeolocatorMoka();
             base.OnNavigatedTo(parameters);
         }
 
@@ -50,8 +58,7 @@ namespace KutyApp.Client.Xam.ViewModels
             await GeolocatorMoka();
         }
 
-
-        private async Task GeolocatorMoka()
+        public async Task GeolocatorMoka()
         {
             try
             {
