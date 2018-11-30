@@ -24,11 +24,20 @@ namespace KutyApp.Client.Xam.ViewModels
         }
 
         private ICommand navigateToPetsDetailPage;
+        private ICommand newPetCommand;
+
         public ICommand NavigateToPetsDetailPage { get {
                 return navigateToPetsDetailPage ?? (navigateToPetsDetailPage = new Command(
                     async param =>
                         //Debug.WriteLine(((Dog)param).Id));
                         await NavigationService.NavigateAsync(nameof(Views.PetDetailPage), new NavigationParameters { { ParameterKeys.PetId, (int)(param as Dog).Id } })));
+            }
+        }
+        public ICommand NewPetCommand { get {
+                return newPetCommand ?? (newPetCommand = new Command(
+                    async () =>
+                        //Debug.WriteLine(((Dog)param).Id));
+                        await NavigationService.NavigateAsync(nameof(Views.PetDetailPage))));
             }
         }
 

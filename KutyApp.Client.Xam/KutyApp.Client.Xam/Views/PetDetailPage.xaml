@@ -9,6 +9,8 @@
             <Entry Text="{Binding ChipNumber, Mode=TwoWay}" />
             <Picker ItemsSource="{Binding GenderValues}" SelectedItem="{Binding Gender, Mode=TwoWay}" />
             <DatePicker Date="{Binding BirthDate, Mode=TwoWay}" />
+            <Button Text="UPDATE PET" Command="{Binding AddOrEditPetCommand}" />
+            <Button Text="DELETE PET" Command="{Binding DeletePetCommand}" VerticalOptions="End"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

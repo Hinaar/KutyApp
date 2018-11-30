@@ -1,5 +1,6 @@
 ﻿using KutyApp.Client.Common.Constants;
 using KutyApp.Client.Services.LocalRepository.Entities.Enums;
+using KutyApp.Client.Services.LocalRepository.Entities.Models;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using Prism.Navigation;
 using System;
@@ -7,6 +8,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -25,6 +28,10 @@ namespace KutyApp.Client.Xam.ViewModels
         public IEnumerable<Gender> GenderValues => Enum.GetValues(typeof(Gender)).Cast<Gender>();
         private DateTime birthDate;
         private int? age;
+        private int id;
+
+        private ICommand addOrEditPetCommand;
+        private ICommand deletePetCommand;
 
         #region Public Properties
         public string Name
@@ -56,12 +63,17 @@ namespace KutyApp.Client.Xam.ViewModels
             get { return age; }
             set { SetProperty(ref age, value); }
         }
+
+        public int Id
+        {
+            get { return id; }
+            set { SetProperty(ref id, value); }
+        }
         #endregion
 
         public async override void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            await Task.Yield();
             if (parameters.ContainsKey(ParameterKeys.PetId))
                 await LoadPet((int)parameters[ParameterKeys.PetId]);
         }
@@ -74,6 +86,30 @@ namespace KutyApp.Client.Xam.ViewModels
             Gender = pet.Gender;
             BirthDate = pet.BirthDate ?? DateTime.MinValue;
             Age = pet.Age;
+            Id = pet.Id;
         }
+
+        public ICommand AddOrEditPetCommand { get {
+                return addOrEditPetCommand ?? (addOrEditPetCommand = new Command(
+                    async () =>
+                    {
+                        var dog = await PetRepository.AddOrEditDogAsync(new Dog { Id = this.Id, Name = this.Name, ChipNumber = this.chipNumber, BirthDate = BirthDate ==  DateTime.MinValue ? (DateTime?)null : BirthDate, Gender = this.Gender });
+                        if (dog.Id != 0)
+                            await NavigationService.NavigateAsync(nameof(Views.PetsPage));
+                    }));
+            }
+        }
+
+        public ICommand DeletePetCommand { get {
+                return deletePetCommand ?? (deletePetCommand = new Command(
+                    async () =>
+                    {
+                        await PetRepository.DeleteDogAsync(id);
+                        await NavigationService.NavigateAsync(nameof(Views.PetsPage));
+                    }));
+            }
+        }
+
+
     }
 }

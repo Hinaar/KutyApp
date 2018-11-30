@@ -11,17 +11,18 @@
              x:Class="KutyApp.Client.Xam.Views.PetsPage">
     <ContentPage.Content>
             <ListView ItemsSource="{Binding Dogs, Mode=TwoWay}" IsPullToRefreshEnabled="True" SeparatorVisibility="Default"
-                      HasUnevenRows="True" SelectionMode="None">
+                      HasUnevenRows="True" SelectionMode="None" x:Name="List">
                 <ListView.Behaviors>
-                    <!--TODO converterrel adni a parmetert (selected item nmjo)-->
                     <b:EventToCommandBehavior EventName="ItemTapped" 
                                               Command="{Binding NavigateToPetsDetailPage}" 
                                               EventArgsParameterPath="Item" />
                 </ListView.Behaviors>
+                <!--TODO: Dog helyett dogviewmodel-eket tartalmazzon -> hosszan nyomott commandok egybol tudnak hivatkozni a benne levo dolgokra pl. delete-->
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Dog">
                         <ViewCell>
                         <ViewCell.ContextActions>
+                            <MenuItem Text="New" Command="{Binding Path=BindingContext.NewPetCommand, Source={x:Reference Name=List}}" />
                             <MenuItem Text="Delete" IsDestructive="True" />
                         </ViewCell.ContextActions>
                         <StackLayout>

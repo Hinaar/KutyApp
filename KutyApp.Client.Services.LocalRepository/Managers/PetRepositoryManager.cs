@@ -29,7 +29,15 @@ namespace KutyApp.Client.Services.LocalRepository.Managers
             else
             {
                 var tracking = dbContext.Update(dog);
-                await dbContext.SaveChangesAsync();
+                try
+                {
+                    await dbContext.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+
+                    throw;
+                }
                 return dog;
             }
         }
@@ -46,13 +54,13 @@ namespace KutyApp.Client.Services.LocalRepository.Managers
 
         public async Task<Dog> GetDogByIdAsync(int id)
         {
-            var dog = await dbContext.Dogs.FindAsync(id);
+            var dog = await dbContext.Dogs.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id);
             return dog;
         }
 
         public async Task<List<Dog>> GetDogsAsync()
         {
-            var dogs = await dbContext.Dogs.ToListAsync();
+            var dogs = await dbContext.Dogs.AsNoTracking().ToListAsync();
             return dogs;
         }
     }
