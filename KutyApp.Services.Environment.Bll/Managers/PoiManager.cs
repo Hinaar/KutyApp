@@ -111,7 +111,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
             //order by distance 
             if (search.Longitude.HasValue && search.Latitude.HasValue)
             {
-                IPoint location = LocationManager.GeometryFactory.CreatePoint(new Coordinate(search.Latitude.Value, search.Longitude.Value));
+                IPoint location = LocationManager.GeometryFactory.CreatePoint(new Coordinate(search.Longitude.Value, search.Latitude.Value));
                 //TODO: valszeg ez nem marad szimplan query
                 query = query.OrderBy(p => p.Location.Distance(location));
             }

@@ -27,8 +27,8 @@ namespace KutyApp.Client.Xam
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
-            //await NavigationService.NavigateAsync("MainPage");
+            //await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync(nameof(Views.MainPage));
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -37,6 +37,8 @@ namespace KutyApp.Client.Xam
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<PetsPage, PetsPageViewModel>();
+            containerRegistry.RegisterForNavigation<PetDetailPage, PetDetailPageViewModel>();
+            containerRegistry.RegisterForNavigation<PoisPage, PoisPageViewModel>();
             //containerRegistry.RegisterInstance<IPetRepository>(new PetRepositoryManager(localDbPath));
         }
     }

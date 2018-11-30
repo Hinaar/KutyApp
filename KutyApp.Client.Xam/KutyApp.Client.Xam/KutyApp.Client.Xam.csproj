@@ -24,6 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Behaviors.Forms" Version="1.4.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.1.4" />
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
     <PackageReference Include="Refit" Version="4.6.48" />
@@ -36,11 +37,18 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\KutyApp.Client.Services.LocalRepository\KutyApp.Client.Services.LocalRepository.csproj" />
+    <ProjectReference Include="..\..\KutyApp.Common\KutyApp.Client.Common.csproj" />
     <ProjectReference Include="..\..\KutyApp.Services.ClientConsumer.Api\KutyApp.Client.Services.ClientConsumer.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="Views\PetDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\PetsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\PoisPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             IsBusy="{Binding IsBusy, Mode=TwoWay}"
+             x:Class="KutyApp.Client.Xam.Views.PetDetailPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry Text="{Binding Name, Mode=TwoWay}" />
+            <Entry Text="{Binding ChipNumber, Mode=TwoWay}" />
+            <Picker ItemsSource="{Binding GenderValues}" SelectedItem="{Binding Gender, Mode=TwoWay}" />
+            <DatePicker Date="{Binding BirthDate, Mode=TwoWay}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

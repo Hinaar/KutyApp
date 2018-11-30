@@ -1,10 +1,14 @@
-﻿using KutyApp.Client.Services.LocalRepository.Entities.Models;
+﻿using KutyApp.Client.Common.Constants;
+using KutyApp.Client.Services.LocalRepository.Entities.Models;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using Prism.Navigation;
 using Prism.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -16,8 +20,16 @@ namespace KutyApp.Client.Xam.ViewModels
         {
             this.PetRepository = petRepository;
             this.PageDialogService = pageDialogService;
-            Dogs = new ObservableCollection<Dog>(new List<Dog> { new Dog { Name = "nevem he"} });
-            string s = string.Empty;
+            Dogs = new ObservableCollection<Dog>();
+        }
+
+        private ICommand navigateToPetsDetailPage;
+        public ICommand NavigateToPetsDetailPage { get {
+                return navigateToPetsDetailPage ?? (navigateToPetsDetailPage = new Command(
+                    async param =>
+                        //Debug.WriteLine(((Dog)param).Id));
+                        await NavigationService.NavigateAsync(nameof(Views.PetDetailPage), new NavigationParameters { { ParameterKeys.PetId, (int)(param as Dog).Id } })));
+            }
         }
 
         private ObservableCollection<Dog> dogs;
@@ -31,15 +43,17 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
+            base.OnNavigatedTo(parameters);
             await Task.Yield();
             await LoadMyPetsAsync();
-            base.OnNavigatedTo(parameters);
         }
 
         private async Task LoadMyPetsAsync()
         {
+            IsBusy = true;
             var pets = await PetRepository.GetDogsAsync();
             Dogs = new ObservableCollection<Dog>(pets);
+            IsBusy = false;
         }
     }
 }

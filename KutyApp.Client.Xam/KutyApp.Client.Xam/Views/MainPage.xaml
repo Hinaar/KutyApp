@@ -4,7 +4,9 @@
              xmlns:local="clr-namespace:KutyApp.Client.Xam"
              x:Class="KutyApp.Client.Xam.Views.MainPage"
              NavigationPage.HasNavigationBar="True"
-             Title="{Binding Title, Mode=TwoWay}">
+             Title="{Binding Title, Mode=TwoWay}"
+             IsBusy="{Binding IsBusy, Mode=TwoWay}"
+             >
     <ScrollView>
         <Grid Margin="10, 30">
             <Grid.ColumnDefinitions>
@@ -20,7 +22,7 @@
                 <Grid  Padding="10" BackgroundColor="Beige">
                     <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />
                 </Grid>
-                <Button Clicked="Button_Clicked" Opacity="1" BackgroundColor="Transparent" Command="{Binding NavigateToPetsPage}"/>
+                <Button Opacity="1" BackgroundColor="Transparent" Command="{Binding NavigateToPetsPage}"/>
                 <Grid VerticalOptions="End" Padding="2, 0">
                     <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
                     <StackLayout>
@@ -33,7 +35,7 @@
                 <Grid  Padding="10" BackgroundColor="Beige">
                     <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.maps.png}"/>
                 </Grid>
-                <Button Clicked="Button_Clicked" Opacity="1" BackgroundColor="Transparent"/>
+                <Button Opacity="1" BackgroundColor="Transparent" Command="{Binding NavigateToPoisPage}"/>
                 <Grid VerticalOptions="End" Padding="2, 0">
                     <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
                     <StackLayout>
@@ -46,7 +48,7 @@
                 <Grid  Padding="10" BackgroundColor="Beige">
                     <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.user.png}"/>
                 </Grid>
-                <Button Clicked="Button_Clicked" Opacity="1" BackgroundColor="Transparent"/>
+                <Button Opacity="1" BackgroundColor="Transparent"/>
                 <Grid VerticalOptions="End" Padding="2, 0">
                     <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
                     <StackLayout>
@@ -59,7 +61,7 @@
                 <Grid  Padding="10" BackgroundColor="Beige" >
                     <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.clipboard.png}"/>
                 </Grid>
-                <Button  Clicked="Button_Clicked" Opacity="1" BackgroundColor="Transparent" />
+                <Button Opacity="1" BackgroundColor="Transparent" />
                 <Grid VerticalOptions="End" Padding="2, 0">
                     <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
                     <StackLayout>

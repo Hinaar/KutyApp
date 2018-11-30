@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:serverModels="clr-namespace:KutyApp.Client.Services.ClientConsumer.Dtos;assembly=KutyApp.Client.Services.ClientConsumer"
+             x:Class="KutyApp.Client.Xam.Views.PoisPage">
+    <ContentPage.Content>
+        <Grid>
+            <ListView ItemsSource="{Binding Pois, Mode=TwoWay}" IsPullToRefreshEnabled="True" SeparatorVisibility="Default"
+                  HasUnevenRows="True" SelectionMode="Single">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="serverModels:PoiDto">
+                        <ViewCell>
+                            <StackLayout Margin="0,5">
+                                <Label Text="{Binding Name}"/>
+                                <Label Text="{Binding EnvironmentTypes}" />
+                                <Label Text="{Binding Latitude, StringFormat='Lat.: {0:N}'}" />
+                                <Label Text="{Binding Longitude, StringFormat='Long.: {0:N}'}" />
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ActivityIndicator IsEnabled="True" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

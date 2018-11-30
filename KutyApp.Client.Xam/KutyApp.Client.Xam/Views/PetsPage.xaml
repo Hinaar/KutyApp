@@ -5,10 +5,19 @@
              Title="PetPage"
              xmlns:models="clr-namespace:KutyApp.Client.Services.LocalRepository.Entities.Models;assembly=KutyApp.Client.Services.LocalRepository"
              xmlns:local="clr-namespace:KutyApp.Client.Xam"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             IsBusy="{Binding IsBusy, Mode=TwoWay}"
              x:Class="KutyApp.Client.Xam.Views.PetsPage">
     <ContentPage.Content>
             <ListView ItemsSource="{Binding Dogs, Mode=TwoWay}" IsPullToRefreshEnabled="True" SeparatorVisibility="Default"
-                      HasUnevenRows="True">
+                      HasUnevenRows="True" SelectionMode="None">
+                <ListView.Behaviors>
+                    <!--TODO converterrel adni a parmetert (selected item nmjo)-->
+                    <b:EventToCommandBehavior EventName="ItemTapped" 
+                                              Command="{Binding NavigateToPetsDetailPage}" 
+                                              EventArgsParameterPath="Item" />
+                </ListView.Behaviors>
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Dog">
                         <ViewCell>
