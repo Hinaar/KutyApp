@@ -2,6 +2,7 @@
 using KutyApp.Client.Services.LocalRepository.Entities.Enums;
 using KutyApp.Client.Services.LocalRepository.Entities.Models;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
+using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
@@ -16,10 +17,12 @@ namespace KutyApp.Client.Xam.ViewModels
     public class PetDetailPageViewModel : ViewModelBase
     {
         private IPetRepository PetRepository { get; }
+        private IMediaManager MediaManager { get; }
 
-        public PetDetailPageViewModel(INavigationService navigationService, IPetRepository petRepository) : base(navigationService)
+        public PetDetailPageViewModel(INavigationService navigationService, IPetRepository petRepository, IMediaManager mediaManager) : base(navigationService)
         {
             this.PetRepository = petRepository;
+            this.MediaManager = mediaManager;
         }
 
         private string name;
@@ -76,6 +79,9 @@ namespace KutyApp.Client.Xam.ViewModels
             base.OnNavigatedTo(parameters);
             if (parameters.ContainsKey(ParameterKeys.PetId))
                 await LoadPet((int)parameters[ParameterKeys.PetId]);
+
+            var tmp2 = await MediaManager.TakePhotoAsync();
+            string s = string.Empty;
         }
 
         private async Task LoadPet(int id)

@@ -14,7 +14,6 @@
     <None Remove="Resources\Images\dog.png" />
     <None Remove="Resources\Images\maps.png" />
     <None Remove="Resources\Images\user.png" />
-    <None Remove="Resources\xml\file_paths.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -22,7 +21,6 @@
     <EmbeddedResource Include="Resources\Images\dog.png" />
     <EmbeddedResource Include="Resources\Images\maps.png" />
     <EmbeddedResource Include="Resources\Images\user.png" />
-    <EmbeddedResource Include="Resources\xml\file_paths.xml" />
   </ItemGroup>
 
   <ItemGroup>

@@ -21,12 +21,12 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
         {
             if (await PermissionManager.CheckAndGrantPermissionsAsyc(new List<Permission> { Permission.Camera, Permission.Storage }))
             {
-                var file = await CrossMedia.Current.PickPhotoAsync(options ?? new PickMediaOptions
-                {
-                    PhotoSize = PhotoSize.Medium
-                });
-                if (file != null)
-                    return file;
+                    var file = await CrossMedia.Current.PickPhotoAsync(options ?? new PickMediaOptions
+                    {
+                        PhotoSize = PhotoSize.Medium
+                    });
+                    if (file != null)
+                        return file;
             }
 
             throw new System.Exception("perm");
@@ -34,17 +34,30 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
 
         public async Task<MediaFile> TakePhotoAsync(StoreCameraMediaOptions options = null)
         {
-            if (!CrossMedia.Current.IsCameraAvailable || CrossMedia.Current.IsTakePhotoSupported)
+            throw new NotImplementedException();
+            if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 throw new System.Exception("support");
 
-            var file = await CrossMedia.Current.TakePhotoAsync(options ?? new StoreCameraMediaOptions
+            try
             {
-                SaveToAlbum = true,
-                Name = $"{DateTime.Now}Tmp.jpg"
-            });
+                var file = await CrossMedia.Current.TakePhotoAsync(options ?? new StoreCameraMediaOptions
+                {
+                    SaveToAlbum = true,
+                    //Name = $"{DateTime.Now}Tmp.jpg",
+                    CompressionQuality = 75,
+                    //CustomPhotoSize = 50,
+                    //PhotoSize = PhotoSize.MaxWidthHeight,
+                    //MaxWidthHeight = 2000,
+                });
 
-            if (file != null)
-                return file;
+                if (file != null)
+                    return file;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
 
             throw new Exception("nul");
         }

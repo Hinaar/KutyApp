@@ -20,9 +20,9 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
                 statusDictionary = await RequestPermissionsAsync(permissions);
 
             foreach (var permission in permissions)
-                if (statusDictionary[permission] != PermissionStatus.Granted)
-                    //throw new Exception("Permission can not be granted");
-                    return false;
+                if (statusDictionary[permission] != PermissionStatus.Granted && permission != Permission.Camera)
+                    throw new Exception("Permission can not be granted");
+
 
             return true;
         }
