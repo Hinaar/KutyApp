@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace KutyApp.Client.Xam.Interfaces
+namespace KutyApp.Client.Services.ServiceCollector.Interfaces
 {
     public interface IPermissionManager
     {

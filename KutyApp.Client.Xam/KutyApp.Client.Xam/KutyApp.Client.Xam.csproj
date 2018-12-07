@@ -40,6 +40,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\KutyApp.Client.Services.LocalRepository\KutyApp.Client.Services.LocalRepository.csproj" />
+    <ProjectReference Include="..\..\KutyApp.Client.Services.MediaService\KutyApp.Client.Services.ServiceCollector.csproj" />
     <ProjectReference Include="..\..\KutyApp.Common\KutyApp.Client.Common.csproj" />
     <ProjectReference Include="..\..\KutyApp.Services.ClientConsumer.Api\KutyApp.Client.Services.ClientConsumer.csproj" />
   </ItemGroup>
@@ -54,6 +55,10 @@
     <EmbeddedResource Update="Views\PoisPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Implementations\" />
   </ItemGroup>
 
 </Project>

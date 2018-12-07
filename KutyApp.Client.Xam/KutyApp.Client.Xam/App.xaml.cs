@@ -1,4 +1,6 @@
 ﻿using KutyApp.Client.Services.ClientConsumer.Interfaces;
+using KutyApp.Client.Services.ServiceCollector.Implementations;
+using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using KutyApp.Client.Xam.Config;
 using KutyApp.Client.Xam.ViewModels;
 using KutyApp.Client.Xam.Views;
@@ -39,6 +41,8 @@ namespace KutyApp.Client.Xam
             containerRegistry.RegisterForNavigation<PetsPage, PetsPageViewModel>();
             containerRegistry.RegisterForNavigation<PetDetailPage, PetDetailPageViewModel>();
             containerRegistry.RegisterForNavigation<PoisPage, PoisPageViewModel>();
+            containerRegistry.Register<IPermissionManager, PermissionManager>();
+            containerRegistry.Register<IMediaManager, MediaManager>();
             //containerRegistry.RegisterInstance<IPetRepository>(new PetRepositoryManager(localDbPath));
         }
     }

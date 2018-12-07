@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KutyApp.Client.Services", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KutyApp.Client.Services.LocalRepository", "KutyApp.Client.Services.LocalRepository\KutyApp.Client.Services.LocalRepository.csproj", "{48FB5C4B-D430-49FC-B758-BFDA1F78FC58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KutyApp.Client.Services.MediaService", "KutyApp.Client.Services.MediaService\KutyApp.Client.Services.MediaService.csproj", "{CB1C22D3-3AEC-42FD-A0DF-A4B84D20EBFF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KutyApp.Client.Services.ServiceCollector", "KutyApp.Client.Services.MediaService\KutyApp.Client.Services.ServiceCollector.csproj", "{CB1C22D3-3AEC-42FD-A0DF-A4B84D20EBFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
