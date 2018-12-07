@@ -91,7 +91,9 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
-    <None Include="Info.plist" />
+    <None Include="Info.plist">
+      <SubType>Designer</SubType>
+    </None>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <ITunesArtwork Include="iTunesArtwork@1x.png" />
     <ITunesArtwork Include="iTunesArtwork@2x.png" />
@@ -204,6 +206,9 @@
     <PackageReference Include="Xam.Plugin.Geolocator">
       <Version>4.5.0.6</Version>
     </PackageReference>
+    <PackageReference Include="Xam.Plugin.Media">
+      <Version>4.0.1.5</Version>
+    </PackageReference>
     <PackageReference Include="Xam.Plugins.Notifier">
       <Version>3.0.1</Version>
     </PackageReference>
@@ -214,6 +219,10 @@
     <ProjectReference Include="..\..\KutyApp.Client.Services.LocalRepository\KutyApp.Client.Services.LocalRepository.csproj">
       <Project>{48fb5c4b-d430-49fc-b758-bfda1f78fc58}</Project>
       <Name>KutyApp.Client.Services.LocalRepository</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\KutyApp.Common\KutyApp.Client.Common.csproj">
+      <Project>{D88472DB-F368-430D-B37C-C5A911A7AB30}</Project>
+      <Name>KutyApp.Client.Common</Name>
     </ProjectReference>
     <ProjectReference Include="..\KutyApp.Client.Xam\KutyApp.Client.Xam.csproj">
       <Project>{A682884C-CB44-4A89-B752-27BB634E0ABE}</Project>

@@ -22,7 +22,7 @@ namespace KutyApp.Client.Xam.Droid
 
             base.OnCreate(bundle);
 
-            var dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), "KutyAppDb.db");
+            var dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), Common.Constants.Paths.DbName);
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);

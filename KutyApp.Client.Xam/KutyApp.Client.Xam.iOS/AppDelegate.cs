@@ -29,7 +29,7 @@ namespace KutyApp.Client.Xam.iOS
             if (!Directory.Exists(libPath))
                 Directory.CreateDirectory(libPath);
 
-            var dbPath = Path.Combine(libPath, "KutyAppDb.db");
+            var dbPath = Path.Combine(libPath, Common.Constants.Paths.DbName);
 
             if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
             {

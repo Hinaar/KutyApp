@@ -26,5 +26,6 @@
     <Capability Name="internetClient" />
     <uap4:Capability Name="offlineMapsManagement" />
     <DeviceCapability Name="location" />
+    <DeviceCapability Name="webcam" />
   </Capabilities>
 </Package>

@@ -26,7 +26,7 @@ namespace KutyApp.Client.Xam.UWP
         {
             this.InitializeComponent();
 
-            var dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "KutyAppDb.db");
+            var dbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, Common.Constants.Paths.DbName);
 
             LoadApplication(new KutyApp.Client.Xam.App(new UwpInitializer(dbPath)));
         }
