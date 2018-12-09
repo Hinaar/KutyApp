@@ -21,12 +21,12 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
         {
             if (await PermissionManager.CheckAndGrantPermissionsAsyc(new List<Permission> { Permission.Camera, Permission.Storage }))
             {
-                    var file = await CrossMedia.Current.PickPhotoAsync(options ?? new PickMediaOptions
-                    {
-                        PhotoSize = PhotoSize.Medium
-                    });
-                    if (file != null)
-                        return file;
+                var file = await CrossMedia.Current.PickPhotoAsync(options ?? new PickMediaOptions
+                {
+                    PhotoSize = PhotoSize.Medium
+                });
+                if (file != null)
+                    return file;
             }
 
             throw new System.Exception("perm");
@@ -34,30 +34,22 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
 
         public async Task<MediaFile> TakePhotoAsync(StoreCameraMediaOptions options = null)
         {
-            throw new NotImplementedException();
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 throw new System.Exception("support");
 
-            try
+            var file = await CrossMedia.Current.TakePhotoAsync(options ?? new StoreCameraMediaOptions
             {
-                var file = await CrossMedia.Current.TakePhotoAsync(options ?? new StoreCameraMediaOptions
-                {
-                    SaveToAlbum = true,
-                    //Name = $"{DateTime.Now}Tmp.jpg",
-                    CompressionQuality = 75,
-                    //CustomPhotoSize = 50,
-                    //PhotoSize = PhotoSize.MaxWidthHeight,
-                    //MaxWidthHeight = 2000,
-                });
+                Directory = "Test",
+                SaveToAlbum = true,
+                CompressionQuality = 75,
+                CustomPhotoSize = 50,
+                PhotoSize = PhotoSize.MaxWidthHeight,
+                MaxWidthHeight = 2000,
+                DefaultCamera = CameraDevice.Rear
+            });
 
-                if (file != null)
-                    return file;
-            }
-            catch (Exception e)
-            {
-
-                throw;
-            }
+            if (file != null)
+                return file;
 
             throw new Exception("nul");
         }

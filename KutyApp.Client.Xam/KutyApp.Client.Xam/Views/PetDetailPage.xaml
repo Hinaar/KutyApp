@@ -4,13 +4,18 @@
              IsBusy="{Binding IsBusy, Mode=TwoWay}"
              x:Class="KutyApp.Client.Xam.Views.PetDetailPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Entry Text="{Binding Name, Mode=TwoWay}" />
-            <Entry Text="{Binding ChipNumber, Mode=TwoWay}" />
-            <Picker ItemsSource="{Binding GenderValues}" SelectedItem="{Binding Gender, Mode=TwoWay}" />
-            <DatePicker Date="{Binding BirthDate, Mode=TwoWay}" />
-            <Button Text="UPDATE PET" Command="{Binding AddOrEditPetCommand}" />
-            <Button Text="DELETE PET" Command="{Binding DeletePetCommand}" VerticalOptions="End"/>
-        </StackLayout>
+        <ScrollView>
+            <StackLayout>
+                <Image Source="{Binding ImagePath}" />
+                <Entry Text="{Binding Name, Mode=TwoWay}" />
+                <Entry Text="{Binding ChipNumber, Mode=TwoWay}" />
+                <Picker ItemsSource="{Binding GenderValues}" SelectedItem="{Binding Gender, Mode=TwoWay}" />
+                <DatePicker Date="{Binding BirthDate, Mode=TwoWay}" />
+                <Button Text="UPDATE PET" Command="{Binding AddOrEditPetCommand}" />
+                <Button Text="DELETE PET" Command="{Binding DeletePetCommand}" VerticalOptions="End"/>
+                <Button Text="Take Photo" Command="{Binding TakePhotoCommand}" />
+                <Button Text="Pick Photo" Command="{Binding PickPhotoCommand}" />
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>
