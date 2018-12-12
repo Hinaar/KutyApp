@@ -3,7 +3,9 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
+using Xamarin.Forms;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -12,13 +14,14 @@ namespace KutyApp.Client.Xam.ViewModels
         protected INavigationService NavigationService { get; private set; }
 
         private string _title;
+        private bool isBusy;
+        private CultureInfo currentLanguage = Localization.Current.CurrentCultureInfo;
+
         public string Title
         {
             get { return _title; }
             set { SetProperty(ref _title, value); }
         }
-
-        private bool isBusy;
 
         public bool IsBusy
         {
@@ -26,6 +29,7 @@ namespace KutyApp.Client.Xam.ViewModels
             set { SetProperty(ref isBusy, value); }
         }
 
+        public CultureInfo CurrentLanguage { get { return currentLanguage; } set { Localization.Current.CurrentCultureInfo = value; SetProperty(ref currentLanguage, value); } }
 
         public ViewModelBase(INavigationService navigationService)
         {

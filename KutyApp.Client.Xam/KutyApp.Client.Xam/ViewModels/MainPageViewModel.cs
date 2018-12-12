@@ -18,6 +18,9 @@ using Prism.Services;
 using Plugin.LocalNotifications;
 using System.Windows.Input;
 using Xamarin.Forms;
+using KutyApp.Client.Common.Constants;
+using System.Diagnostics;
+using KutyApp.Client.Xam.Views;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -34,25 +37,36 @@ namespace KutyApp.Client.Xam.ViewModels
             this.PetRepository = petRepository;
             this.PageDialogService = dialogService;
             Title = "Main a Page";
+            IsEnglish = CurrentLanguage == Languages.En || CurrentLanguage == Languages.Default;
         }
+
+        private bool isEnglish;
+
+        public bool IsEnglish { get => isEnglish; set => SetProperty(ref isEnglish, value); }
 
         private ICommand navigateToPetsPage;
         private ICommand navigateToPoisPage;
+        private ICommand changeLanguage;
 
-        public ICommand NavigateToPetsPage { get {
-                return navigateToPetsPage ?? (navigateToPetsPage = new Command(
+        public ICommand NavigateToPetsPage =>
+                navigateToPetsPage ?? (navigateToPetsPage = new Command(
                     async () =>
                         await NavigationService.NavigateAsync(nameof(Views.PetsPage))));
-            }
-        }
 
-        public ICommand NavigateToPoisPage { get {
-                return navigateToPoisPage ?? (navigateToPoisPage = new Command(
+        public ICommand NavigateToPoisPage =>
+                navigateToPoisPage ?? (navigateToPoisPage = new Command(
                     async () => 
-                        await NavigationService.NavigateAsync(nameof(Views.PoisPage)))); 
-                }
-        }
-        
+                        await NavigationService.NavigateAsync(nameof(Views.PoisPage))));
+
+        public ICommand ChangeLanguage =>
+            changeLanguage ?? (changeLanguage = new Command(
+                async () =>
+                    {
+                        //already shows the required language
+                        CurrentLanguage = IsEnglish ? Languages.En : Languages.Hu;
+                        await NavigationService.NavigateAsync("app:///MainPage", animated: false);
+                    }));
+
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
             //TODO: xamarin essentials

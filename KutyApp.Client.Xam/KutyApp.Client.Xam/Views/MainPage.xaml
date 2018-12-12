@@ -2,77 +2,96 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:KutyApp.Client.Xam"
+             xmlns:locals="clr-namespace:KutyApp.Client"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              x:Class="KutyApp.Client.Xam.Views.MainPage"
              NavigationPage.HasNavigationBar="True"
              Title="{Binding Title, Mode=TwoWay}"
              IsBusy="{Binding IsBusy, Mode=TwoWay}"
              >
-    <ScrollView>
-        <Grid Margin="10, 30">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InvertBooleanConverter x:Key="InvertBooleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <ScrollView Margin="10">
+            <Grid Margin="10, 20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-            <Grid Margin="10" Grid.Row="0" Grid.Column="0">
-                <Grid  Padding="10" BackgroundColor="Beige">
-                    <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />
+                <Grid Margin="10" Grid.Row="0" Grid.Column="0">
+                    <Grid  Padding="10" BackgroundColor="Beige">
+                        <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />
+                    </Grid>
+                    <Button Opacity="1" BackgroundColor="Transparent" Command="{Binding NavigateToPetsPage}"/>
+                    <Grid VerticalOptions="End" Padding="2, 0">
+                        <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                        <StackLayout>
+                            <Label Text="{x:Static local:Resources.Localization.Texts.Pets}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                        </StackLayout>
+                    </Grid>
                 </Grid>
-                <Button Opacity="1" BackgroundColor="Transparent" Command="{Binding NavigateToPetsPage}"/>
-                <Grid VerticalOptions="End" Padding="2, 0">
-                    <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
-                    <StackLayout>
-                        <Label Text="Pets" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
-                    </StackLayout>
+
+                <Grid Margin="10" Grid.Row="0" Grid.Column="1">
+                    <Grid  Padding="10" BackgroundColor="Beige">
+                        <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.maps.png}"/>
+                    </Grid>
+                    <Button Opacity="1" BackgroundColor="Transparent" Command="{Binding NavigateToPoisPage}"/>
+                    <Grid VerticalOptions="End" Padding="2, 0">
+                        <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                        <StackLayout>
+                            <Label Text="Pois" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                        </StackLayout>
+                    </Grid>
                 </Grid>
+
+                <Grid Margin="10" Grid.Row="1" Grid.Column="0">
+                    <Grid  Padding="10" BackgroundColor="Beige">
+                        <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.user.png}"/>
+                    </Grid>
+                    <Button Opacity="1" BackgroundColor="Transparent"/>
+                    <Grid VerticalOptions="End" Padding="2, 0">
+                        <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                        <StackLayout>
+                            <Label Text="Profile" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                        </StackLayout>
+                    </Grid>
+                </Grid>
+
+                <Grid Margin="10" Grid.Row="1" Grid.Column="1">
+                    <Grid  Padding="10" BackgroundColor="Beige" >
+                        <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.clipboard.png}"/>
+                    </Grid>
+                    <Button Opacity="1" BackgroundColor="Transparent" />
+                    <Grid VerticalOptions="End" Padding="2, 0">
+                        <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                        <StackLayout>
+                            <Label Text="Adverts" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                        </StackLayout>
+                    </Grid>
+                </Grid>
+
+
             </Grid>
-
-            <Grid Margin="10" Grid.Row="0" Grid.Column="1">
-                <Grid  Padding="10" BackgroundColor="Beige">
-                    <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.maps.png}"/>
-                </Grid>
-                <Button Opacity="1" BackgroundColor="Transparent" Command="{Binding NavigateToPoisPage}"/>
-                <Grid VerticalOptions="End" Padding="2, 0">
-                    <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
-                    <StackLayout>
-                        <Label Text="Pois" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
-                    </StackLayout>
-                </Grid>
-            </Grid>
-
-            <Grid Margin="10" Grid.Row="1" Grid.Column="0">
-                <Grid  Padding="10" BackgroundColor="Beige">
-                    <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.user.png}"/>
-                </Grid>
-                <Button Opacity="1" BackgroundColor="Transparent"/>
-                <Grid VerticalOptions="End" Padding="2, 0">
-                    <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
-                    <StackLayout>
-                        <Label Text="Profile" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
-                    </StackLayout>
-                </Grid>
-            </Grid>
-
-            <Grid Margin="10" Grid.Row="1" Grid.Column="1">
-                <Grid  Padding="10" BackgroundColor="Beige" >
-                    <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.clipboard.png}"/>
-                </Grid>
-                <Button Opacity="1" BackgroundColor="Transparent" />
-                <Grid VerticalOptions="End" Padding="2, 0">
-                    <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
-                    <StackLayout>
-                        <Label Text="Adverts" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
-                    </StackLayout>
-                </Grid>
-            </Grid>
-
-
-        </Grid>
-    </ScrollView>
-
-
+        </ScrollView>
+        <StackLayout Orientation="Horizontal" VerticalOptions="End">
+            <Label Text="Hungarian" HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="Large" 
+                   Margin="10, 0, 0, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish, Converter={StaticResource InvertBooleanConverter}}"/>
+            <Switch HorizontalOptions="Center" IsToggled="{Binding IsEnglish}">
+                <Switch.Behaviors>
+                    <b:EventToCommandBehavior EventName="Toggled" 
+                                              Command="{Binding ChangeLanguage}"/>
+                </Switch.Behaviors>
+            </Switch>
+            <Label Text="English" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="Large"
+                   Margin="0, 0, 10, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish}"/>
+        </StackLayout>
+    </Grid>
 </ContentPage>

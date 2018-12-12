@@ -19,25 +19,26 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
 
         public async Task<MediaFile> PickPhotoAsync(PickMediaOptions options = null)
         {
+            MediaFile file = null;
             if (await PermissionManager.CheckAndGrantPermissionsAsyc(new List<Permission> { Permission.Camera, Permission.Storage }))
             {
-                var file = await CrossMedia.Current.PickPhotoAsync(options ?? new PickMediaOptions
+                file = await CrossMedia.Current.PickPhotoAsync(options ?? new PickMediaOptions
                 {
                     PhotoSize = PhotoSize.Medium
                 });
-                if (file != null)
-                    return file;
             }
 
-            throw new System.Exception("perm");
+            return file;
         }
 
         public async Task<MediaFile> TakePhotoAsync(StoreCameraMediaOptions options = null)
         {
+            MediaFile file = null;
+
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
                 throw new System.Exception("support");
 
-            var file = await CrossMedia.Current.TakePhotoAsync(options ?? new StoreCameraMediaOptions
+            file = await CrossMedia.Current.TakePhotoAsync(options ?? new StoreCameraMediaOptions
             {
                 Directory = "Test",
                 SaveToAlbum = true,
@@ -48,10 +49,7 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
                 DefaultCamera = CameraDevice.Rear
             });
 
-            if (file != null)
-                return file;
-
-            throw new Exception("nul");
+            return file;
         }
     }
 }

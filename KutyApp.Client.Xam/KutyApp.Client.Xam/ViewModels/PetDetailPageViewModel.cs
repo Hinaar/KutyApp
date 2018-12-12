@@ -6,7 +6,6 @@ using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -22,8 +21,8 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public PetDetailPageViewModel(INavigationService navigationService, IPetRepository petRepository, IMediaManager mediaManager) : base(navigationService)
         {
-            this.PetRepository = petRepository;
-            this.MediaManager = mediaManager;
+            PetRepository = petRepository;
+            MediaManager = mediaManager;
         }
 
         private string name;
@@ -132,20 +131,26 @@ namespace KutyApp.Client.Xam.ViewModels
         private async Task PickPhotoAsync()
         {
             var file = await MediaManager.PickPhotoAsync();
+            if(file != null)
+            {
+                //TODO: save picked image into private library
 
-            //TODO: save picked image into private library
-
-            Pet.ImagePath = file.Path;
-            ImagePath = file.Path;
-            file.Dispose();
+                Pet.ImagePath = file.Path;
+                ImagePath = file.Path;
+                file.Dispose();
+            }
         }
 
         private async Task TakePhotoAsync()
         {
             var file = await MediaManager.TakePhotoAsync();
-            Pet.ImagePath = file.Path;
-            ImagePath = file.Path;
-            file.Dispose();
+
+            if (file != null)
+            {
+                Pet.ImagePath = file.Path;
+                ImagePath = file.Path;
+                file.Dispose();
+            }
         }
     }
 }

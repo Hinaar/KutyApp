@@ -55,9 +55,9 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            base.OnNavigatedTo(parameters);
             await Task.Yield();
             await LoadPois();
+            base.OnNavigatedTo(parameters);
         }
 
         private async Task LoadPois()

@@ -2,6 +2,7 @@
 using KutyApp.Client.Services.ServiceCollector.Implementations;
 using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using KutyApp.Client.Xam.Config;
+using KutyApp.Client.Xam.Resources.Localization;
 using KutyApp.Client.Xam.ViewModels;
 using KutyApp.Client.Xam.Views;
 using Prism;
@@ -27,6 +28,12 @@ namespace KutyApp.Client.Xam
 
         protected override async void OnInitialized()
         {
+            //TODO:
+            Localization.Current.OnCultureChanged += (culture) => Texts.Culture = culture;
+
+            Localization.Current.EnsureDeviceOrDefaultCulture(defaultCultureName: "en",
+                                    availableCultures: new[] { "en", "hu" });
+
             InitializeComponent();
 
             //await NavigationService.NavigateAsync("NavigationPage/MainPage");
