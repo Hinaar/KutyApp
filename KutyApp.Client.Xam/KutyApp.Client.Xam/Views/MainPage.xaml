@@ -2,8 +2,9 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:KutyApp.Client.Xam"
-             xmlns:locals="clr-namespace:KutyApp.Client"
              xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:xamanimation="clr-namespace:Xamanimation;assembly=Xamanimation"
              x:Class="KutyApp.Client.Xam.Views.MainPage"
              NavigationPage.HasNavigationBar="True"
              Title="{Binding Title, Mode=TwoWay}"
@@ -26,11 +27,29 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <Grid Margin="10" Grid.Row="0" Grid.Column="0">
+                <Grid Margin="10" Grid.Row="0" Grid.Column="0" x:Name="PetsButtonWrapper">
                     <Grid  Padding="10" BackgroundColor="Beige">
                         <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />
                     </Grid>
-                    <Button Opacity="1" BackgroundColor="Transparent" Command="{Binding NavigateToPetsPage}"/>
+                    <Button Opacity="1" BackgroundColor="Transparent">
+                        <Button.Behaviors>
+                            <behaviors:EventHandlerBehavior EventName="Clicked">
+                                <behaviors:ScaleAction TargetObject="{x:Reference PetsButtonWrapper}" 
+                                   FinalScale="0.95" 
+                                   Duration="200" 
+                                   EasingFunction="Linear"
+                                   Await="true"/>
+                                <behaviors:ScaleAction TargetObject="{x:Reference PetsButtonWrapper}" 
+                                   FinalScale="1.0" 
+                                   Duration="200" 
+                                   EasingFunction="Linear" 
+                                   Await="true"/>
+                                <behaviors:InvokeCommandAction Command="{Binding NavigateToPetsPage}" />
+                                <!--Converter="{StaticResource SelectedItemConverter}" 
+                                           ConverterParameter="35" />-->
+                            </behaviors:EventHandlerBehavior>
+                        </Button.Behaviors>
+                    </Button>
                     <Grid VerticalOptions="End" Padding="2, 0">
                         <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
                         <StackLayout>
@@ -39,41 +58,87 @@
                     </Grid>
                 </Grid>
 
-                <Grid Margin="10" Grid.Row="0" Grid.Column="1">
+                <Grid Margin="10" Grid.Row="0" Grid.Column="1" x:Name="PoisButtonWrapper">
                     <Grid  Padding="10" BackgroundColor="Beige">
                         <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.maps.png}"/>
                     </Grid>
-                    <Button Opacity="1" BackgroundColor="Transparent" Command="{Binding NavigateToPoisPage}"/>
+                    <Button Opacity="1" BackgroundColor="Transparent">
+                        <Button.Behaviors>
+                            <behaviors:EventHandlerBehavior EventName="Clicked">
+                                <behaviors:ScaleAction TargetObject="{x:Reference PoisButtonWrapper}" 
+                                   FinalScale="0.95" 
+                                   Duration="200" 
+                                   EasingFunction="Linear"
+                                   Await="true"/>
+                                <behaviors:ScaleAction TargetObject="{x:Reference PoisButtonWrapper}" 
+                                   FinalScale="1.0" 
+                                   Duration="200" 
+                                   EasingFunction="Linear" 
+                                   Await="true"/>
+                                <behaviors:InvokeCommandAction Command="{Binding NavigateToPoisPage}" />
+                            </behaviors:EventHandlerBehavior>
+                        </Button.Behaviors>
+                    </Button>
                     <Grid VerticalOptions="End" Padding="2, 0">
                         <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
                         <StackLayout>
-                            <Label Text="Pois" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                            <Label Text="{x:Static local:Resources.Localization.Texts.Pois}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
                         </StackLayout>
                     </Grid>
                 </Grid>
 
-                <Grid Margin="10" Grid.Row="1" Grid.Column="0">
+                <Grid Margin="10" Grid.Row="1" Grid.Column="0" x:Name="ProfileButtonWrapper">
                     <Grid  Padding="10" BackgroundColor="Beige">
                         <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.user.png}"/>
                     </Grid>
-                    <Button Opacity="1" BackgroundColor="Transparent"/>
+                    <Button Opacity="1" BackgroundColor="Transparent">
+                        <Button.Behaviors>
+                            <behaviors:EventHandlerBehavior EventName="Clicked">
+                                <behaviors:ScaleAction TargetObject="{x:Reference ProfileButtonWrapper}" 
+                                   FinalScale="0.95" 
+                                   Duration="200" 
+                                   EasingFunction="Linear"
+                                   Await="true"/>
+                                <behaviors:ScaleAction TargetObject="{x:Reference ProfileButtonWrapper}" 
+                                   FinalScale="1.0" 
+                                   Duration="200" 
+                                   EasingFunction="Linear" 
+                                   Await="true"/>
+                            </behaviors:EventHandlerBehavior>
+                        </Button.Behaviors>
+                    </Button>
                     <Grid VerticalOptions="End" Padding="2, 0">
                         <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
                         <StackLayout>
-                            <Label Text="Profile" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                            <Label Text="{x:Static local:Resources.Localization.Texts.Profile}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
                         </StackLayout>
                     </Grid>
                 </Grid>
 
-                <Grid Margin="10" Grid.Row="1" Grid.Column="1">
+                <Grid Margin="10" Grid.Row="1" Grid.Column="1" x:Name="AdvertsButtonWrapper">
                     <Grid  Padding="10" BackgroundColor="Beige" >
                         <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.clipboard.png}"/>
                     </Grid>
-                    <Button Opacity="1" BackgroundColor="Transparent" />
+                    <Button Opacity="1" BackgroundColor="Transparent">
+                        <Button.Behaviors>
+                            <behaviors:EventHandlerBehavior EventName="Clicked">
+                                <behaviors:ScaleAction TargetObject="{x:Reference AdvertsButtonWrapper}" 
+                                   FinalScale="0.95" 
+                                   Duration="200" 
+                                   EasingFunction="Linear"
+                                   Await="true"/>
+                                <behaviors:ScaleAction TargetObject="{x:Reference AdvertsButtonWrapper}" 
+                                   FinalScale="1.0" 
+                                   Duration="200" 
+                                   EasingFunction="Linear" 
+                                   Await="true"/>
+                            </behaviors:EventHandlerBehavior>
+                        </Button.Behaviors>
+                    </Button>
                     <Grid VerticalOptions="End" Padding="2, 0">
                         <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
                         <StackLayout>
-                            <Label Text="Adverts" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                            <Label Text="{x:Static local:Resources.Localization.Texts.Adverts}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
                         </StackLayout>
                     </Grid>
                 </Grid>
@@ -87,7 +152,8 @@
             <Switch HorizontalOptions="Center" IsToggled="{Binding IsEnglish}">
                 <Switch.Behaviors>
                     <b:EventToCommandBehavior EventName="Toggled" 
-                                              Command="{Binding ChangeLanguage}"/>
+                                              Command="{Binding ChangeLanguage}">
+                    </b:EventToCommandBehavior>
                 </Switch.Behaviors>
             </Switch>
             <Label Text="English" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="Large"

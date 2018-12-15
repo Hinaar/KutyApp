@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Adverts" xml:space="preserve">
+    <value>Hírdetések</value>
+  </data>
   <data name="Pets" xml:space="preserve">
     <value>Állatok</value>
+  </data>
+  <data name="Pois" xml:space="preserve">
+    <value>Poik</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Profil</value>
   </data>
 </root>

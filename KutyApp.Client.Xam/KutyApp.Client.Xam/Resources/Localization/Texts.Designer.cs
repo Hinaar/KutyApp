@@ -61,11 +61,38 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Adverts.
+        /// </summary>
+        public static string Adverts {
+            get {
+                return ResourceManager.GetString("Adverts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pets.
         /// </summary>
         public static string Pets {
             get {
                 return ResourceManager.GetString("Pets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pois.
+        /// </summary>
+        public static string Pois {
+            get {
+                return ResourceManager.GetString("Pois", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Profile.
+        /// </summary>
+        public static string Profile {
+            get {
+                return ResourceManager.GetString("Profile", resourceCulture);
             }
         }
     }

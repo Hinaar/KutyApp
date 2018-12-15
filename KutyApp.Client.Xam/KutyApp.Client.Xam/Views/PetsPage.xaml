@@ -13,7 +13,7 @@
             <ListView ItemsSource="{Binding Dogs, Mode=TwoWay}" IsPullToRefreshEnabled="True" SeparatorVisibility="Default"
                       HasUnevenRows="True" SelectionMode="None" x:Name="List">
                 <ListView.Behaviors>
-                    <b:EventToCommandBehavior EventName="ItemTapped" 
+                  <b:EventToCommandBehavior EventName="ItemTapped" 
                                               Command="{Binding NavigateToPetsDetailPage}" 
                                               EventArgsParameterPath="Item" />
                 </ListView.Behaviors>
