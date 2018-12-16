@@ -21,6 +21,7 @@ using Xamarin.Forms;
 using KutyApp.Client.Services.LocalRepository.Entities.Models;
 using System.Collections.ObjectModel;
 using KutyApp.Client.Services.ClientConsumer.Dtos;
+using Plugin.ExternalMaps;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -38,6 +39,9 @@ namespace KutyApp.Client.Xam.ViewModels
         }
 
         private ObservableCollection<PoiDto> pois;
+        private ObservableCollection<Dog> dogs;
+
+        private ICommand openExternalMapCommand;
 
         public ObservableCollection<PoiDto> Pois
         {
@@ -45,12 +49,21 @@ namespace KutyApp.Client.Xam.ViewModels
             set { SetProperty(ref pois, value); }
         }
 
-        private ObservableCollection<Dog> dogs;
-
         public ObservableCollection<Dog> Dogs
         {
             get { return dogs; }
             set { SetProperty(ref dogs, value); }
+        }
+
+        public ICommand OpenExternalMapCommand =>
+            openExternalMapCommand ?? (openExternalMapCommand = new Command(
+                async poi =>
+                   await OpenExternalMapAsync(poi)));
+
+        private async Task OpenExternalMapAsync(object poi)
+        {
+           var location = poi as PoiDto;
+           await CrossExternalMaps.Current.NavigateTo(null, location.Latitude, location.Longitude);
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -112,6 +125,11 @@ namespace KutyApp.Client.Xam.ViewModels
             }
             catch (Exception ex)
             {
+                IsBusy = false;
+            }
+            finally
+            {
+                IsBusy = false;
             }
         }
     }

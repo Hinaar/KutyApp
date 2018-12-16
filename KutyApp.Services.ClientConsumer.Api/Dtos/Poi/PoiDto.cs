@@ -15,5 +15,6 @@ namespace KutyApp.Client.Services.ClientConsumer.Dtos
         public string Url { get; set; }
         public string ImageUrl { get; set; }
         public string PhoneNumber { get; set; }
+        public double Distance { get; set; }
     }
 }

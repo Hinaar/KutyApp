@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using GeoAPI.Geometries;
+using Geolocation;
 using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Entities;
 using KutyApp.Services.Environment.Bll.Entities.Model;
@@ -108,17 +109,23 @@ namespace KutyApp.Services.Environment.Bll.Managers
 
             IQueryable<Poi> query = DbContext.Pois;
 
+            //TODO: null-t nem engedni
+            IPoint location = null;
+
             //order by distance 
             if (search.Longitude.HasValue && search.Latitude.HasValue)
             {
-                IPoint location = LocationManager.GeometryFactory.CreatePoint(new Coordinate(search.Longitude.Value, search.Latitude.Value));
+                location = LocationManager.GeometryFactory.CreatePoint(new GeoAPI.Geometries.Coordinate(search.Longitude.Value, search.Latitude.Value));
                 //TODO: valszeg ez nem marad szimplan query
                 query = query.OrderBy(p => p.Location.Distance(location));
             }
 
-            List<Poi> pois = await query.ToListAsync();
-            var tmp = Mapper.Map<List<PoiDto>>(pois);
-            return Mapper.Map<List<PoiDto>>(pois);
+            var result = await query.Select(x => new { Poi = x, Distance = location != null ? x.Location.Distance(location) : 0 }).ToListAsync();
+
+            var pois = Mapper.Map<List<PoiDto>>(result.Select(r => r.Poi).ToList());
+            pois.ForEach(t => t.Distance = GeoCalculator.GetDistance(location.Y, location.X, t.Latitude, t.Longitude, 1, DistanceUnit.Kilometers));
+
+            return pois;
         }
     }
 }

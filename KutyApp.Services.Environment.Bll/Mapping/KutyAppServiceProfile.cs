@@ -15,10 +15,10 @@ namespace KutyApp.Services.Environment.Bll.Mapping
         {
             //Poi
             CreateMap<AddOrEditPoiDto, Poi>().ForMember(p => p.Location, m => m.ResolveUsing<LocationResolver>());
-            CreateMap<Poi, AddOrEditPoiDto>().ForMember(d => d.Latitude, m => m.MapFrom(p => p.Location.Coordinate.X))
-                                             .ForMember(d => d.Longitude, m => m.MapFrom(p => p.Location.Coordinate.Y));
-            CreateMap<Poi, PoiDto>().ForMember(d => d.Latitude, m => m.MapFrom(p => p.Location.Coordinate.X))
-                                    .ForMember(d => d.Longitude, m => m.MapFrom(p => p.Location.Coordinate.Y));
+            CreateMap<Poi, AddOrEditPoiDto>().ForMember(d => d.Latitude, m => m.MapFrom(p => p.Location.Coordinate.Y))
+                                             .ForMember(d => d.Longitude, m => m.MapFrom(p => p.Location.Coordinate.X));
+            CreateMap<Poi, PoiDto>().ForMember(d => d.Latitude, m => m.MapFrom(p => p.Location.Coordinate.Y))
+                                    .ForMember(d => d.Longitude, m => m.MapFrom(p => p.Location.Coordinate.X));
         }
     }
 }

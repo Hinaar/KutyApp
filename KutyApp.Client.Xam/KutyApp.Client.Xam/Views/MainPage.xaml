@@ -37,12 +37,12 @@
                                 <behaviors:ScaleAction TargetObject="{x:Reference PetsButtonWrapper}" 
                                    FinalScale="0.95" 
                                    Duration="200" 
-                                   EasingFunction="Linear"
+                                   EasingFunction="CubicIn"
                                    Await="true"/>
                                 <behaviors:ScaleAction TargetObject="{x:Reference PetsButtonWrapper}" 
                                    FinalScale="1.0" 
                                    Duration="200" 
-                                   EasingFunction="Linear" 
+                                   EasingFunction="CubicOut" 
                                    Await="true"/>
                                 <behaviors:InvokeCommandAction Command="{Binding NavigateToPetsPage}" />
                                 <!--Converter="{StaticResource SelectedItemConverter}" 
@@ -68,12 +68,12 @@
                                 <behaviors:ScaleAction TargetObject="{x:Reference PoisButtonWrapper}" 
                                    FinalScale="0.95" 
                                    Duration="200" 
-                                   EasingFunction="Linear"
+                                   EasingFunction="CubicIn"
                                    Await="true"/>
                                 <behaviors:ScaleAction TargetObject="{x:Reference PoisButtonWrapper}" 
                                    FinalScale="1.0" 
                                    Duration="200" 
-                                   EasingFunction="Linear" 
+                                   EasingFunction="CubicOut" 
                                    Await="true"/>
                                 <behaviors:InvokeCommandAction Command="{Binding NavigateToPoisPage}" />
                             </behaviors:EventHandlerBehavior>
@@ -97,12 +97,12 @@
                                 <behaviors:ScaleAction TargetObject="{x:Reference ProfileButtonWrapper}" 
                                    FinalScale="0.95" 
                                    Duration="200" 
-                                   EasingFunction="Linear"
+                                   EasingFunction="CubicIn"
                                    Await="true"/>
                                 <behaviors:ScaleAction TargetObject="{x:Reference ProfileButtonWrapper}" 
                                    FinalScale="1.0" 
                                    Duration="200" 
-                                   EasingFunction="Linear" 
+                                   EasingFunction="CubicInOut" 
                                    Await="true"/>
                             </behaviors:EventHandlerBehavior>
                         </Button.Behaviors>
@@ -125,12 +125,12 @@
                                 <behaviors:ScaleAction TargetObject="{x:Reference AdvertsButtonWrapper}" 
                                    FinalScale="0.95" 
                                    Duration="200" 
-                                   EasingFunction="Linear"
+                                   EasingFunction="CubicIn"
                                    Await="true"/>
                                 <behaviors:ScaleAction TargetObject="{x:Reference AdvertsButtonWrapper}" 
                                    FinalScale="1.0" 
                                    Duration="200" 
-                                   EasingFunction="Linear" 
+                                   EasingFunction="CubicOut" 
                                    Await="true"/>
                             </behaviors:EventHandlerBehavior>
                         </Button.Behaviors>
