@@ -21,6 +21,7 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public PetDetailPageViewModel(INavigationService navigationService, IPetRepository petRepository, IMediaManager mediaManager) : base(navigationService)
         {
+            IsBusy = true;
             PetRepository = petRepository;
             MediaManager = mediaManager;
         }
@@ -88,6 +89,8 @@ namespace KutyApp.Client.Xam.ViewModels
             base.OnNavigatedTo(parameters);
             if (parameters.ContainsKey(ParameterKeys.PetId))
                 await LoadPet((int)parameters[ParameterKeys.PetId]);
+
+            IsBusy = false;
         }
 
         private async Task LoadPet(int id)
@@ -106,7 +109,7 @@ namespace KutyApp.Client.Xam.ViewModels
                  addOrEditPetCommand ?? (addOrEditPetCommand = new Command(
                     async () =>
                     {
-                        var dog = await PetRepository.AddOrEditDogAsync(Pet);
+                        var dog = await PetRepository.AddOrEditDogAsync(Pet ?? new Dog {Name = Name, ChipNumber = chipNumber, Gender = Gender, BirthDate = BirthDate, ImagePath = ImagePath });
                         if (dog.Id != 0)
                             await NavigationService.NavigateAsync(nameof(Views.PetsPage));
                     }));

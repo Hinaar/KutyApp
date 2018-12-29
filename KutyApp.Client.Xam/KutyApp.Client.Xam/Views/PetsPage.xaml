@@ -7,13 +7,14 @@
              xmlns:local="clr-namespace:KutyApp.Client.Xam"
              xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
-             IsBusy="{Binding IsBusy, Mode=TwoWay}"
-             x:Class="KutyApp.Client.Xam.Views.PetsPage">
+             x:Class="KutyApp.Client.Xam.Views.PetsPage"
+             BackgroundColor="DarkSlateGray">
     <ContentPage.Content>
+        <Grid>
             <ListView ItemsSource="{Binding Dogs, Mode=TwoWay}" IsPullToRefreshEnabled="True" SeparatorVisibility="Default"
                       HasUnevenRows="True" SelectionMode="None" x:Name="List">
                 <ListView.Behaviors>
-                  <b:EventToCommandBehavior EventName="ItemTapped" 
+                    <b:EventToCommandBehavior EventName="ItemTapped" 
                                               Command="{Binding NavigateToPetsDetailPage}" 
                                               EventArgsParameterPath="Item" />
                 </ListView.Behaviors>
@@ -21,28 +22,30 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:Dog">
                         <ViewCell>
-                        <ViewCell.ContextActions>
-                            <MenuItem Text="New" Command="{Binding Path=BindingContext.NewPetCommand, Source={x:Reference Name=List}}" />
-                            <MenuItem Text="Delete" IsDestructive="True" />
-                        </ViewCell.ContextActions>
-                        <StackLayout>
-                            <Grid VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" Padding="1" Margin="1">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="2*" />
-                                </Grid.ColumnDefinitions>
-                                <Image Grid.Column="0" Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />
-                                <StackLayout Grid.Column="1"  Padding="1" Margin="1" VerticalOptions="StartAndExpand"
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="New" Command="{Binding Path=BindingContext.NewPetCommand, Source={x:Reference Name=List}}" />
+                                <MenuItem Text="Delete" IsDestructive="True" Command="{Binding Path=BindingContext.DeletePetCommand, Source={x:Reference Name=List}}" CommandParameter="{Binding .}"/>
+                            </ViewCell.ContextActions>
+                            <StackLayout>
+                                <Grid VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" Padding="1" Margin="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="2*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image Grid.Column="0" Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />
+                                    <StackLayout Grid.Column="1"  Padding="1" Margin="1" VerticalOptions="StartAndExpand"
                                              HorizontalOptions="FillAndExpand">
-                                    <Label Text="{Binding Name}"/>
-                                    <Label Text="{Binding Gender}"/>
-                                    <Label Text="{Binding Age}" />
-                                </StackLayout>
-                            </Grid>
-                        </StackLayout>
+                                        <Label Text="{Binding Name}"/>
+                                        <Label Text="{Binding Gender}"/>
+                                        <Label Text="{Binding Age}" />
+                                    </StackLayout>
+                                </Grid>
+                            </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            <ActivityIndicator IsEnabled="True" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

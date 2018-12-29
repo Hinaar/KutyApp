@@ -1,13 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             IsBusy="{Binding IsBusy, Mode=TwoWay}"
-             x:Class="KutyApp.Client.Xam.Views.PetDetailPage">
+             xmlns:validator="clr-namespace:KutyApp.Client.Xam.Behaviors.Validation"
+             xmlns:local="clr-namespace:KutyApp.Client.Xam"
+             x:Class="KutyApp.Client.Xam.Views.PetDetailPage"
+             BackgroundColor="DarkSlateGray">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:InvertBooleanConverter x:Key="InvertBooleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
                 <Image Source="{Binding ImagePath}" />
-                <Entry Text="{Binding Name, Mode=TwoWay}" />
+                <Entry x:Name="NameEntry" Text="{Binding Name, Mode=TwoWay}" >
+                    <Entry.Behaviors>
+                        <validator:ValidatorBaseBehavior x:Name="baseValidator" IsRequired="True" />
+                    </Entry.Behaviors>
+                </Entry>
+                <Label Text="Name is required" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference baseValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
+                <!--<Label Text="Valid" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference baseValidator}, Path=IsValid}" />-->
                 <Entry Text="{Binding ChipNumber, Mode=TwoWay}" />
                 <Picker ItemsSource="{Binding GenderValues}" SelectedItem="{Binding Gender, Mode=TwoWay}" />
                 <DatePicker Date="{Binding BirthDate, Mode=TwoWay}" />

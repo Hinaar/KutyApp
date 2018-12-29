@@ -8,8 +8,7 @@
              x:Class="KutyApp.Client.Xam.Views.MainPage"
              NavigationPage.HasNavigationBar="True"
              Title="{Binding Title, Mode=TwoWay}"
-             IsBusy="{Binding IsBusy, Mode=TwoWay}"
-             >
+             BackgroundColor="DarkSlateGray">
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:InvertBooleanConverter x:Key="InvertBooleanConverter" />
@@ -28,7 +27,7 @@
                 </Grid.RowDefinitions>
 
                 <Grid Margin="10" Grid.Row="0" Grid.Column="0" x:Name="PetsButtonWrapper">
-                    <Grid  Padding="10" BackgroundColor="Beige">
+                    <Grid  Padding="10" BackgroundColor="#32B6A4">
                         <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />
                     </Grid>
                     <Button Opacity="1" BackgroundColor="Transparent">
@@ -50,8 +49,8 @@
                             </behaviors:EventHandlerBehavior>
                         </Button.Behaviors>
                     </Button>
-                    <Grid VerticalOptions="End" Padding="2, 0">
-                        <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                    <Grid VerticalOptions="End" Padding="0, -1">
+                        <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand" />
                         <StackLayout>
                             <Label Text="{x:Static local:Resources.Localization.Texts.Pets}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
                         </StackLayout>
@@ -59,7 +58,7 @@
                 </Grid>
 
                 <Grid Margin="10" Grid.Row="0" Grid.Column="1" x:Name="PoisButtonWrapper">
-                    <Grid  Padding="10" BackgroundColor="Beige">
+                    <Grid  Padding="10" BackgroundColor="#32B6A4">
                         <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.maps.png}"/>
                     </Grid>
                     <Button Opacity="1" BackgroundColor="Transparent">
@@ -79,8 +78,8 @@
                             </behaviors:EventHandlerBehavior>
                         </Button.Behaviors>
                     </Button>
-                    <Grid VerticalOptions="End" Padding="2, 0">
-                        <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                    <Grid VerticalOptions="End" Padding="0, -1">
+                        <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand" />
                         <StackLayout>
                             <Label Text="{x:Static local:Resources.Localization.Texts.Pois}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
                         </StackLayout>
@@ -88,7 +87,7 @@
                 </Grid>
 
                 <Grid Margin="10" Grid.Row="1" Grid.Column="0" x:Name="ProfileButtonWrapper">
-                    <Grid  Padding="10" BackgroundColor="Beige">
+                    <Grid  Padding="10" BackgroundColor="#32B6A4">
                         <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.user.png}"/>
                     </Grid>
                     <Button Opacity="1" BackgroundColor="Transparent">
@@ -107,8 +106,8 @@
                             </behaviors:EventHandlerBehavior>
                         </Button.Behaviors>
                     </Button>
-                    <Grid VerticalOptions="End" Padding="2, 0">
-                        <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                    <Grid VerticalOptions="End" Padding="0, -1">
+                        <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand" />
                         <StackLayout>
                             <Label Text="{x:Static local:Resources.Localization.Texts.Profile}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
                         </StackLayout>
@@ -116,7 +115,7 @@
                 </Grid>
 
                 <Grid Margin="10" Grid.Row="1" Grid.Column="1" x:Name="AdvertsButtonWrapper">
-                    <Grid  Padding="10" BackgroundColor="Beige" >
+                    <Grid BackgroundColor="#32B6A4" Padding="10">
                         <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.clipboard.png}"/>
                     </Grid>
                     <Button Opacity="1" BackgroundColor="Transparent">
@@ -135,10 +134,10 @@
                             </behaviors:EventHandlerBehavior>
                         </Button.Behaviors>
                     </Button>
-                    <Grid VerticalOptions="End" Padding="2, 0">
-                        <ContentView BackgroundColor="Black" Opacity="0.6" VerticalOptions="FillAndExpand" />
+                    <Grid VerticalOptions="End" Padding="0, -1">
+                        <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand" />
                         <StackLayout>
-                            <Label Text="{x:Static local:Resources.Localization.Texts.Adverts}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                            <Label Text="{x:Static local:Resources.Localization.Texts.Adverts}" HorizontalOptions="Center" VerticalOptions="End" FontAttributes="Bold" TextColor="White" FontSize="15"/>
                         </StackLayout>
                     </Grid>
                 </Grid>
@@ -147,17 +146,43 @@
             </Grid>
         </ScrollView>
         <StackLayout Orientation="Horizontal" VerticalOptions="End">
-            <Label Text="Hungarian" HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="Large" 
-                   Margin="10, 0, 0, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish, Converter={StaticResource InvertBooleanConverter}}"/>
-            <Switch HorizontalOptions="Center" IsToggled="{Binding IsEnglish}">
+            <Label x:Name="HungarianLabel" Text="Hungarian" HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
+                   Margin="10, 0, 0, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish, Converter={StaticResource InvertBooleanConverter}}">
+                <Label.Triggers>
+                    <DataTrigger Binding="{Binding Source={x:Reference HungarianLabel}, Path=IsEnabled}"
+                                 TargetType="Label"
+                                 Value="True">
+                        <Setter Property="Opacity" Value="1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Source={x:Reference HungarianLabel}, Path=IsEnabled}"
+                                 TargetType="Label"
+                                 Value="False">
+                        <Setter Property="Opacity" Value="0.5" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+            <Switch HorizontalOptions="Fill" IsToggled="{Binding IsEnglish}">
                 <Switch.Behaviors>
                     <b:EventToCommandBehavior EventName="Toggled" 
                                               Command="{Binding ChangeLanguage}">
                     </b:EventToCommandBehavior>
                 </Switch.Behaviors>
             </Switch>
-            <Label Text="English" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="Large"
-                   Margin="0, 0, 10, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish}"/>
+            <Label x:Name="EnglishLabel"  Text="English" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
+                   Margin="0, 0, 10, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish}">
+                <Label.Triggers>
+                    <DataTrigger Binding="{Binding Source={x:Reference EnglishLabel}, Path=IsEnabled}"
+                                 TargetType="Label"
+                                 Value="True">
+                        <Setter Property="Opacity" Value="1"/>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding Source={x:Reference EnglishLabel}, Path=IsEnabled}"
+                                 TargetType="Label"
+                                 Value="False">
+                        <Setter Property="Opacity" Value="0.5" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
         </StackLayout>
     </Grid>
 </ContentPage>

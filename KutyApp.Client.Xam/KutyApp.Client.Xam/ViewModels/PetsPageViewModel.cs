@@ -18,6 +18,7 @@ namespace KutyApp.Client.Xam.ViewModels
         private IPageDialogService PageDialogService { get; }
         public PetsPageViewModel(INavigationService navigationService, IPetRepository petRepository, IPageDialogService pageDialogService) : base(navigationService)
         {
+            IsBusy = true;
             this.PetRepository = petRepository;
             this.PageDialogService = pageDialogService;
             Dogs = new ObservableCollection<Dog>();
@@ -25,21 +26,23 @@ namespace KutyApp.Client.Xam.ViewModels
 
         private ICommand navigateToPetsDetailPage;
         private ICommand newPetCommand;
+        private ICommand deletePetCommand;
 
-        public ICommand NavigateToPetsDetailPage { get {
-                return navigateToPetsDetailPage ?? (navigateToPetsDetailPage = new Command(
+        public ICommand NavigateToPetsDetailPage =>
+                navigateToPetsDetailPage ?? (navigateToPetsDetailPage = new Command(
                     async param =>
                         //Debug.WriteLine(((Dog)param).Id));
                         await NavigationService.NavigateAsync(nameof(Views.PetDetailPage), new NavigationParameters { { ParameterKeys.PetId, (int)(param as Dog).Id } })));
-            }
-        }
-        public ICommand NewPetCommand { get {
-                return newPetCommand ?? (newPetCommand = new Command(
+        
+        public ICommand NewPetCommand =>
+                newPetCommand ?? (newPetCommand = new Command(
                     async () =>
                         //Debug.WriteLine(((Dog)param).Id));
                         await NavigationService.NavigateAsync(nameof(Views.PetDetailPage))));
-            }
-        }
+
+        public ICommand DeletePetCommand =>
+            deletePetCommand ?? (deletePetCommand = new Command(
+                async param => await DeletePet(param as Dog)));
 
         private ObservableCollection<Dog> dogs;
 
@@ -52,8 +55,15 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
+            IsBusy = true;
             base.OnNavigatedTo(parameters);
-            await Task.Yield();
+            await LoadMyPetsAsync();
+        }
+
+        private async Task DeletePet (Dog dog)
+        {
+            IsBusy = true;
+            await PetRepository.DeleteDogAsync(dog.Id);
             await LoadMyPetsAsync();
         }
 

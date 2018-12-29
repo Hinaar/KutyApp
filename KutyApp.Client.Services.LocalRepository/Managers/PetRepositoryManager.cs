@@ -28,6 +28,7 @@ namespace KutyApp.Client.Services.LocalRepository.Managers
 
             else
             {
+                //TODO: propertynkent
                 var tracking = dbContext.Update(dog);
                 try
                 {

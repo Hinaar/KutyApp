@@ -16,5 +16,5 @@ namespace KutyApp.Client.Xam.Views
 		{
 			InitializeComponent ();
 		}
-	}
+    }
 }

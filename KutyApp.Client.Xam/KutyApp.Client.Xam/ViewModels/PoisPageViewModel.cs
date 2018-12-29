@@ -33,6 +33,7 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public PoisPageViewModel(INavigationService navigationService, IEnvironmentApiService environmentApiService, IPageDialogService dialogService) : base(navigationService)
         {
+            IsBusy = true;
             EnvironmentApi = environmentApiService;
             PageDialogService = dialogService;
             Pois = new ObservableCollection<PoiDto>();

@@ -4,11 +4,12 @@
              xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
              xmlns:serverModels="clr-namespace:KutyApp.Client.Services.ClientConsumer.Dtos;assembly=KutyApp.Client.Services.ClientConsumer"
-             x:Class="KutyApp.Client.Xam.Views.PoisPage">
+             x:Class="KutyApp.Client.Xam.Views.PoisPage"
+             BackgroundColor="DarkSlateGray">
     <ContentPage.Content>
         <Grid>
             <ListView ItemsSource="{Binding Pois, Mode=TwoWay}" IsPullToRefreshEnabled="True" SeparatorVisibility="Default"
-                  HasUnevenRows="True" SelectionMode="Single">
+                  HasUnevenRows="True" SelectionMode="None">
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemTapped"
                                               Command="{Binding OpenExternalMapCommand}"
