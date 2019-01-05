@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:validator="clr-namespace:KutyApp.Client.Xam.Behaviors.Validation"
              xmlns:local="clr-namespace:KutyApp.Client.Xam"
+             xmlns:myControls="clr-namespace:KutyApp.Client.Xam.Controls"
              x:Class="KutyApp.Client.Xam.Views.PetDetailPage"
              BackgroundColor="DarkSlateGray">
     <ContentPage.Resources>
@@ -14,13 +15,28 @@
         <ScrollView>
             <StackLayout>
                 <Image Source="{Binding ImagePath}" />
-                <Entry x:Name="NameEntry" Text="{Binding Name, Mode=TwoWay}" >
+                <myControls:ExtraEntry Text="{Binding Name, Mode=TwoWay}" BackgroundColor="Transparent" MyBackgroundColor="#254141" TextColor="White" FontAttributes="Bold" CornerRadius="10" BorderColor="White" BorderThickness="2" Margin="5">
                     <Entry.Behaviors>
-                        <validator:ValidatorBaseBehavior x:Name="baseValidator" IsRequired="True" />
+                        <validator:ValidatorBaseBehavior x:Name="NameValidator" IsRequired="True"/>
                     </Entry.Behaviors>
-                </Entry>
-                <Label Text="Name is required" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference baseValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
-                <!--<Label Text="Valid" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference baseValidator}, Path=IsValid}" />-->
+                    <Entry.Triggers>
+                        <DataTrigger Binding="{Binding Source={x:Reference NameValidator}, Path=IsValid}"
+                                     TargetType="myControls:ExtraEntry"
+                                     Value="False">
+                            <Setter Property="MyBackgroundColor" Value="#CCFF98A0" />
+                            <Setter Property="BorderColor" Value="Red" />
+                            <Setter Property="BorderThickness" Value="5" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Source={x:Reference NameValidator}, Path=IsValid}"
+                                     TargetType="myControls:ExtraEntry"
+                                     Value="True">
+                            <Setter Property="MyBackgroundColor" Value="#254141" />
+                            <Setter Property="BorderColor" Value="White" />
+                            <Setter Property="BorderThickness" Value="2" />
+                        </DataTrigger>
+                    </Entry.Triggers>
+                </myControls:ExtraEntry>
+                <Label Margin="5, 0" Text="Name is required" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference baseValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
                 <Entry Text="{Binding ChipNumber, Mode=TwoWay}" />
                 <Picker ItemsSource="{Binding GenderValues}" SelectedItem="{Binding Gender, Mode=TwoWay}" />
                 <DatePicker Date="{Binding BirthDate, Mode=TwoWay}" />
