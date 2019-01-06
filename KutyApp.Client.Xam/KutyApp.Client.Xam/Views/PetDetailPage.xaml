@@ -14,10 +14,18 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <Frame CornerRadius="5" BorderColor="White" IsClippedToBounds="True" Padding="1" Margin="5" >
-                    <Image Source="{Binding ImagePath}" Aspect="AspectFill"/>
+                <!--Image-->
+                <Frame CornerRadius="5" BorderColor="White" BackgroundColor="Transparent" Padding="1" Margin="5" HorizontalOptions="CenterAndExpand">
+                <Image Source="{Binding ImagePath}">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped" />
+                    </Image.GestureRecognizers>
+                </Image>
                 </Frame>
-                <!--<Image Source="http://via.placeholder.com/300" />-->
+                <StackLayout Orientation="Horizontal" x:Name="PictureButtonsLayout" IsVisible="False" HorizontalOptions="CenterAndExpand">
+                    <Button Text="Take Photo" Command="{Binding TakePhotoCommand}" />
+                    <Button Text="Pick Photo" Command="{Binding PickPhotoCommand}" />
+                </StackLayout>
                 <!-- Name -->
                 <myControls:ExtraEntry Text="{Binding Name, Mode=TwoWay}" BackgroundColor="Transparent" MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" TextColor="White" FontAttributes="Bold" CornerRadius="10" BorderColor="White" BorderThickness="2" Margin="5">
                     <Entry.Behaviors>
@@ -63,14 +71,13 @@
                         </DataTrigger>
                     </Entry.Triggers>
                 </myControls:ExtraEntry>
-                <Label Margin="5, -5" Text="Name is required" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference ChipnumberValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
+                <Label Margin="5, -5" Text="Chipnumber is required" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference ChipnumberValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
 
-                <Picker ItemsSource="{Binding GenderValues}" SelectedItem="{Binding Gender, Mode=TwoWay}" />
+                <Picker ItemsSource="{Binding GenderValues}" TextColor="White" SelectedItem="{Binding Gender, Mode=TwoWay}" Margin="5" BackgroundColor="{StaticResource ExtraEntryBackgroundColor}"/>
                 <DatePicker Date="{Binding BirthDate, Mode=TwoWay}" />
                 <Button Text="UPDATE PET" Command="{Binding AddOrEditPetCommand}" />
                 <Button Text="DELETE PET" Command="{Binding DeletePetCommand}" VerticalOptions="End"/>
-                <Button Text="Take Photo" Command="{Binding TakePhotoCommand}" />
-                <Button Text="Pick Photo" Command="{Binding PickPhotoCommand}" />
+                
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
