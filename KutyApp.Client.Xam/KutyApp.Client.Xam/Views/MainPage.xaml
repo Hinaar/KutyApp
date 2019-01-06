@@ -8,7 +8,7 @@
              x:Class="KutyApp.Client.Xam.Views.MainPage"
              NavigationPage.HasNavigationBar="True"
              Title="{Binding Title, Mode=TwoWay}"
-             BackgroundColor="DarkSlateGray">
+             BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:InvertBooleanConverter x:Key="InvertBooleanConverter" />

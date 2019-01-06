@@ -79,8 +79,8 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public string ImagePath
         {
-            get { return imagePath; }
-            set { SetProperty(ref imagePath, value); }
+            get { return imagePath ?? "https://via.placeholder.com/600x500?text=Your+Pet"; }
+                set { SetProperty(ref imagePath, value); }
         }
         #endregion
 

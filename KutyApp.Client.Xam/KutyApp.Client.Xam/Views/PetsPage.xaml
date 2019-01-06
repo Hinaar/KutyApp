@@ -8,10 +8,10 @@
              xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
              x:Class="KutyApp.Client.Xam.Views.PetsPage"
-             BackgroundColor="DarkSlateGray">
+             BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Content>
         <Grid>
-            <ListView ItemsSource="{Binding Dogs, Mode=TwoWay}" IsPullToRefreshEnabled="True" SeparatorVisibility="Default"
+            <ListView ItemsSource="{Binding Dogs, Mode=TwoWay}" BackgroundColor="{StaticResource MainButtonBackgroundColor}" IsPullToRefreshEnabled="True" SeparatorVisibility="Default"
                       HasUnevenRows="True" SelectionMode="None" x:Name="List">
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemTapped" 
