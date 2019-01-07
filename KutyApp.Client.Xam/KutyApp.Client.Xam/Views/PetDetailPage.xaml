@@ -12,73 +12,94 @@
         </ResourceDictionary>
     </ContentPage.Resources>
     <ContentPage.Content>
-        <ScrollView>
-            <StackLayout>
-                <!--Image-->
-                <Frame CornerRadius="5" BorderColor="White" BackgroundColor="Transparent" Padding="1" Margin="5" HorizontalOptions="CenterAndExpand">
-                <Image Source="{Binding ImagePath}">
-                    <Image.GestureRecognizers>
-                        <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="TapGestureRecognizer_Tapped" />
-                    </Image.GestureRecognizers>
-                </Image>
-                </Frame>
-                <StackLayout Orientation="Horizontal" x:Name="PictureButtonsLayout" IsVisible="False" HorizontalOptions="CenterAndExpand">
-                    <Button Text="Take Photo" Command="{Binding TakePhotoCommand}" />
-                    <Button Text="Pick Photo" Command="{Binding PickPhotoCommand}" />
-                </StackLayout>
-                <!-- Name -->
-                <myControls:ExtraEntry Text="{Binding Name, Mode=TwoWay}" BackgroundColor="Transparent" MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" TextColor="White" FontAttributes="Bold" CornerRadius="10" BorderColor="White" BorderThickness="2" Margin="5">
-                    <Entry.Behaviors>
-                        <validator:ValidatorBaseBehavior x:Name="NameValidator" IsRequired="True"/>
-                    </Entry.Behaviors>
-                    <Entry.Triggers>
-                        <DataTrigger Binding="{Binding Source={x:Reference NameValidator}, Path=IsValid}"
-                                     TargetType="myControls:ExtraEntry"
-                                     Value="False">
-                            <Setter Property="MyBackgroundColor" Value="{StaticResource ErrorBackgroundColor}" />
-                            <Setter Property="BorderColor" Value="Red" />
-                            <Setter Property="BorderThickness" Value="5" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Source={x:Reference NameValidator}, Path=IsValid}"
-                                     TargetType="myControls:ExtraEntry"
-                                     Value="True">
-                            <Setter Property="MyBackgroundColor" Value="{StaticResource ExtraEntryBackgroundColor}" />
-                            <Setter Property="BorderColor" Value="White" />
-                            <Setter Property="BorderThickness" Value="2" />
-                        </DataTrigger>
-                    </Entry.Triggers>
-                </myControls:ExtraEntry>
-                <Label Margin="5, -5" Text="Name is required" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference NameValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
-                <!--Chipnumber-->
-                <myControls:ExtraEntry Text="{Binding ChipNumber, Mode=TwoWay}" BackgroundColor="Transparent" MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" TextColor="White" FontAttributes="Bold" CornerRadius="10" BorderColor="White" BorderThickness="2" Margin="5">
-                    <Entry.Behaviors>
-                        <validator:ValidatorBaseBehavior x:Name="ChipnumberValidator" IsRequired="True"/>
-                    </Entry.Behaviors>
-                    <Entry.Triggers>
-                        <DataTrigger Binding="{Binding Source={x:Reference ChipnumberValidator}, Path=IsValid}"
-                                     TargetType="myControls:ExtraEntry"
-                                     Value="False">
-                            <Setter Property="MyBackgroundColor" Value="{StaticResource ErrorBackgroundColor}" />
-                            <Setter Property="BorderColor" Value="Red" />
-                            <Setter Property="BorderThickness" Value="5" />
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Source={x:Reference ChipnumberValidator}, Path=IsValid}"
-                                     TargetType="myControls:ExtraEntry"
-                                     Value="True">
-                            <Setter Property="MyBackgroundColor" Value="{StaticResource ExtraEntryBackgroundColor}" />
-                            <Setter Property="BorderColor" Value="White" />
-                            <Setter Property="BorderThickness" Value="2" />
-                        </DataTrigger>
-                    </Entry.Triggers>
-                </myControls:ExtraEntry>
-                <Label Margin="5, -5" Text="Chipnumber is required" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference ChipnumberValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
-
-                <Picker ItemsSource="{Binding GenderValues}" TextColor="White" SelectedItem="{Binding Gender, Mode=TwoWay}" Margin="5" BackgroundColor="{StaticResource ExtraEntryBackgroundColor}"/>
-                <DatePicker Date="{Binding BirthDate, Mode=TwoWay}" />
-                <Button Text="UPDATE PET" Command="{Binding AddOrEditPetCommand}" />
-                <Button Text="DELETE PET" Command="{Binding DeletePetCommand}" VerticalOptions="End"/>
+        <StackLayout>
+            <Grid BackgroundColor="Black" x:Name="FullImageLayout" IsVisible="False" HeightRequest="10000" Opacity="0">
+            <myControls:ZoomImage  Source="{Binding ImagePath}" Aspect="AspectFit">
+                <myControls:ZoomImage.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="HideOrShowFullImage" />
+                </myControls:ZoomImage.GestureRecognizers>
+            </myControls:ZoomImage>
                 
-            </StackLayout>
-        </ScrollView>
+            </Grid>
+            <ScrollView x:Name="BasicLayout" IsVisible="True">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="2*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid VerticalOptions="FillAndExpand" Grid.Row="0" HorizontalOptions="Fill">
+                        <Frame CornerRadius="5" BorderColor="White" HasShadow="True" BackgroundColor="Transparent" Padding="0" Margin="5" IsClippedToBounds="True" >
+                            <Image Aspect="Fill" Source="{Binding ImagePath}">
+                                <Image.GestureRecognizers>
+                                    <SwipeGestureRecognizer Direction="Down, Up"  Swiped="OpenImageSelection"/>
+                                    <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="HideOrShowFullImage" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+                        <!--Image-->
+                    </Grid>
+                    <StackLayout Grid.Row="1">
+                        <StackLayout Orientation="Horizontal" x:Name="PictureButtonsLayout" IsVisible="False" HorizontalOptions="CenterAndExpand">
+                            <Button Text="Take Photo" Command="{Binding TakePhotoCommand}" />
+                            <Button Text="Pick Photo" Command="{Binding PickPhotoCommand}" />
+                        </StackLayout>
+                        <!-- Name -->
+                        <myControls:ExtraEntry Text="{Binding Name, Mode=TwoWay}" BackgroundColor="Transparent" MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" TextColor="White" FontAttributes="Bold" CornerRadius="10" BorderColor="White" BorderThickness="2" Margin="5">
+                            <Entry.Behaviors>
+                                <validator:ValidatorBaseBehavior x:Name="NameValidator" IsRequired="True"/>
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger Binding="{Binding Source={x:Reference NameValidator}, Path=IsValid}"
+                                     TargetType="myControls:ExtraEntry"
+                                     Value="False">
+                                    <Setter Property="MyBackgroundColor" Value="{StaticResource ErrorBackgroundColor}" />
+                                    <Setter Property="BorderColor" Value="Red" />
+                                    <Setter Property="BorderThickness" Value="5" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Source={x:Reference NameValidator}, Path=IsValid}"
+                                     TargetType="myControls:ExtraEntry"
+                                     Value="True">
+                                    <Setter Property="MyBackgroundColor" Value="{StaticResource ExtraEntryBackgroundColor}" />
+                                    <Setter Property="BorderColor" Value="White" />
+                                    <Setter Property="BorderThickness" Value="2" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </myControls:ExtraEntry>
+                        <Label Margin="5, -5" Text="Name is required" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference NameValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
+                        <!--Chipnumber-->
+                        <myControls:ExtraEntry Text="{Binding ChipNumber, Mode=TwoWay}" BackgroundColor="Transparent" MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" TextColor="White" FontAttributes="Bold" CornerRadius="10" BorderColor="White" BorderThickness="2" Margin="5">
+                            <Entry.Behaviors>
+                                <validator:ValidatorBaseBehavior x:Name="ChipnumberValidator" IsRequired="True"/>
+                            </Entry.Behaviors>
+                            <Entry.Triggers>
+                                <DataTrigger Binding="{Binding Source={x:Reference ChipnumberValidator}, Path=IsValid}"
+                                     TargetType="myControls:ExtraEntry"
+                                     Value="False">
+                                    <Setter Property="MyBackgroundColor" Value="{StaticResource ErrorBackgroundColor}" />
+                                    <Setter Property="BorderColor" Value="Red" />
+                                    <Setter Property="BorderThickness" Value="5" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Source={x:Reference ChipnumberValidator}, Path=IsValid}"
+                                     TargetType="myControls:ExtraEntry"
+                                     Value="True">
+                                    <Setter Property="MyBackgroundColor" Value="{StaticResource ExtraEntryBackgroundColor}" />
+                                    <Setter Property="BorderColor" Value="White" />
+                                    <Setter Property="BorderThickness" Value="2" />
+                                </DataTrigger>
+                            </Entry.Triggers>
+                        </myControls:ExtraEntry>
+                        <Label Margin="5, -5" Text="Chipnumber is required" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference ChipnumberValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
+
+                        <Picker ItemsSource="{Binding GenderValues}" TextColor="White" SelectedItem="{Binding Gender, Mode=TwoWay}" Margin="5" BackgroundColor="{StaticResource ExtraEntryBackgroundColor}"/>
+                        <DatePicker Date="{Binding BirthDate, Mode=TwoWay}" />
+                        <Button Text="SAVE" Command="{Binding AddOrEditPetCommand}" />
+                        <Button Text="DELETE" Command="{Binding DeletePetCommand}" VerticalOptions="End"/>
+
+                    </StackLayout>
+                </Grid>
+
+            </ScrollView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

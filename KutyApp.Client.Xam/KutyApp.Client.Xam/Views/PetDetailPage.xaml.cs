@@ -17,9 +17,27 @@ namespace KutyApp.Client.Xam.Views
 			InitializeComponent ();
 		}
 
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        private void OpenImageSelection(object sender, SwipedEventArgs e)
         {
             PictureButtonsLayout.IsVisible = !PictureButtonsLayout.IsVisible;
         }
+
+        private async void HideOrShowFullImage(object sender, EventArgs e)
+        {
+            if (BasicLayout.Opacity != 0)
+                await BasicLayout.FadeTo(0, 150);
+            else
+                await FullImageLayout.FadeTo(0, 150);
+
+            BasicLayout.IsVisible = !BasicLayout.IsVisible;
+            FullImageLayout.IsVisible = !FullImageLayout.IsVisible;
+
+            if (BasicLayout.IsVisible)
+                await BasicLayout.FadeTo(1, 150);
+            else
+                await FullImageLayout.FadeTo(1, 150);
+
+        }
+
     }
 }
