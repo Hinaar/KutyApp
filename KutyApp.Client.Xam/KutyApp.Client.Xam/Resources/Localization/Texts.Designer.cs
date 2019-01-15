@@ -22,21 +22,21 @@ namespace KutyApp.Client.Xam.Resources.Localization {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Texts {
+    internal class Texts {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        public Texts() {
+        internal Texts() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KutyApp.Client.Xam.Resources.Localization.Texts", typeof(Texts).Assembly);
@@ -51,7 +51,7 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,25 +63,61 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Adverts.
         /// </summary>
-        public static string Adverts {
+        internal static string Adverts {
             get {
                 return ResourceManager.GetString("Adverts", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The chip number is required.
+        /// </summary>
+        internal static string ChipNumberRequired {
+            get {
+                return ResourceManager.GetString("ChipNumberRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DELETE.
+        /// </summary>
+        internal static string DeleteButtonText {
+            get {
+                return ResourceManager.GetString("DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The name is required.
+        /// </summary>
+        internal static string NameRequired {
+            get {
+                return ResourceManager.GetString("NameRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pets.
         /// </summary>
-        public static string Pets {
+        internal static string Pets {
             get {
                 return ResourceManager.GetString("Pets", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pick Photo.
+        /// </summary>
+        internal static string PickPohotoButtonText {
+            get {
+                return ResourceManager.GetString("PickPohotoButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pois.
         /// </summary>
-        public static string Pois {
+        internal static string Pois {
             get {
                 return ResourceManager.GetString("Pois", resourceCulture);
             }
@@ -90,9 +126,27 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
-        public static string Profile {
+        internal static string Profile {
             get {
                 return ResourceManager.GetString("Profile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to SAVE.
+        /// </summary>
+        internal static string SaveButtonText {
+            get {
+                return ResourceManager.GetString("SaveButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Take Photo.
+        /// </summary>
+        internal static string TakePhotoButtonText {
+            get {
+                return ResourceManager.GetString("TakePhotoButtonText", resourceCulture);
             }
         }
     }

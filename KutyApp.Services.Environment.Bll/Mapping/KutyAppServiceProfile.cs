@@ -19,6 +19,8 @@ namespace KutyApp.Services.Environment.Bll.Mapping
                                              .ForMember(d => d.Longitude, m => m.MapFrom(p => p.Location.Coordinate.X));
             CreateMap<Poi, PoiDto>().ForMember(d => d.Latitude, m => m.MapFrom(p => p.Location.Coordinate.Y))
                                     .ForMember(d => d.Longitude, m => m.MapFrom(p => p.Location.Coordinate.X));
+            //DbVersion
+            CreateMap<DbVersion, DbVersionDto>();
         }
     }
 }

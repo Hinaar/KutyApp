@@ -40,9 +40,10 @@ namespace KutyApp.Client.Xam.ViewModels
         }
 
         private ObservableCollection<PoiDto> pois;
-        private ObservableCollection<Dog> dogs;
+        private bool isRefreshing;
 
         private ICommand openExternalMapCommand;
+        private ICommand refreshListCommand;
 
         public ObservableCollection<PoiDto> Pois
         {
@@ -50,10 +51,10 @@ namespace KutyApp.Client.Xam.ViewModels
             set { SetProperty(ref pois, value); }
         }
 
-        public ObservableCollection<Dog> Dogs
+        public bool IsRefreshing
         {
-            get { return dogs; }
-            set { SetProperty(ref dogs, value); }
+            get { return isRefreshing; }
+            set { SetProperty(ref isRefreshing, value); }
         }
 
         public ICommand OpenExternalMapCommand =>
@@ -61,27 +62,31 @@ namespace KutyApp.Client.Xam.ViewModels
                 async poi =>
                    await OpenExternalMapAsync(poi)));
 
+        public ICommand RefreshListCommand =>
+           refreshListCommand ?? (refreshListCommand = new Command(
+               async () => await LoadPoisAsync(true)));
+
         private async Task OpenExternalMapAsync(object poi)
         {
            var location = poi as PoiDto;
-           await CrossExternalMaps.Current.NavigateTo(null, location.Latitude, location.Longitude);
+           await CrossExternalMaps.Current.NavigateTo(location.Name, location.Latitude, location.Longitude);
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             await Task.Yield();
-            await LoadPois();
+            await LoadPoisAsync();
             base.OnNavigatedTo(parameters);
         }
 
-        private async Task LoadPois()
+        private async Task LoadPoisAsync(bool isRefresh = false)
         {
             try
             {
                 var status = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.Location);
                 if (status != PermissionStatus.Granted)
                 {
-                    //Dont call without task.yield!
+                    //task.yield!
                     var tmp = await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location);
 
                     if (await CrossPermissions.Current.ShouldShowRequestPermissionRationaleAsync(Permission.Location))
@@ -104,7 +109,7 @@ namespace KutyApp.Client.Xam.ViewModels
 
                         //UWP: only this works on desktop and only after allowing location service in location privacy settings
                         var position = await locator.GetPositionAsync();
-                        CrossLocalNotifications.Current.Show($"{position.Latitude}", $"{position.Longitude}", 101 /*DateTime.Now.AddSeconds(10)*/);
+                        //CrossLocalNotifications.Current.Show($"{position.Latitude}", $"{position.Longitude}", 101 /*DateTime.Now.AddSeconds(10)*/);
 
                         bool connected = false;
                         if (CrossConnectivity.IsSupported)
@@ -113,10 +118,17 @@ namespace KutyApp.Client.Xam.ViewModels
                         if (!connected)
                             await PageDialogService.DisplayAlertAsync("Networking", "Internet connection is down", "OK");
 
-                        IsBusy = true;
+                        if (isRefresh)
+                            IsRefreshing = true;
+                        else 
+                            IsBusy = true;
                         var poik = await EnvironmentApi.GetClosestPoisAsync(new SearchPoiDto {Latitude = position.Latitude, Longitude = position.Longitude });
                         Pois = new ObservableCollection<PoiDto>(poik);
-                        IsBusy = false;
+
+                        if (isRefresh)
+                            IsRefreshing = false;
+                        else
+                            IsBusy = false;
                     }
                 }
                 else if (status != PermissionStatus.Unknown)
@@ -126,11 +138,11 @@ namespace KutyApp.Client.Xam.ViewModels
             }
             catch (Exception ex)
             {
-                IsBusy = false;
+                IsBusy = IsRefreshing = false;
             }
             finally
             {
-                IsBusy = false;
+                IsBusy = IsRefreshing = false;
             }
         }
     }

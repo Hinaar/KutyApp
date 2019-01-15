@@ -5,14 +5,20 @@
              Title="PetPage"
              xmlns:models="clr-namespace:KutyApp.Client.Services.LocalRepository.Entities.Models;assembly=KutyApp.Client.Services.LocalRepository"
              xmlns:local="clr-namespace:KutyApp.Client.Xam"
+             xmlns:converters="clr-namespace:KutyApp.Client.Xam.Converters"
              xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
              x:Class="KutyApp.Client.Xam.Views.PetsPage"
              BackgroundColor="{StaticResource PageBackgroundColor}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:DefaultImageConverter x:Key="DefaultImageConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-            <ListView ItemsSource="{Binding Dogs, Mode=TwoWay}" BackgroundColor="{StaticResource MainButtonBackgroundColor}" IsPullToRefreshEnabled="True" SeparatorVisibility="Default"
-                      HasUnevenRows="True" SelectionMode="None" x:Name="List">
+            <ListView ItemsSource="{Binding Dogs, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshListCommand}" IsRefreshing="{Binding IsRefreshing}"
+                      SeparatorVisibility="Default" HasUnevenRows="True" SelectionMode="None" x:Name="List">
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemTapped" 
                                               Command="{Binding NavigateToPetsDetailPage}" 
@@ -26,21 +32,25 @@
                                 <MenuItem Text="New" Command="{Binding Path=BindingContext.NewPetCommand, Source={x:Reference Name=List}}" />
                                 <MenuItem Text="Delete" IsDestructive="True" Command="{Binding Path=BindingContext.DeletePetCommand, Source={x:Reference Name=List}}" CommandParameter="{Binding .}"/>
                             </ViewCell.ContextActions>
-                            <StackLayout>
-                                <Grid VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" Padding="1" Margin="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="2*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Image Grid.Column="0" Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />
-                                    <StackLayout Grid.Column="1"  Padding="1" Margin="1" VerticalOptions="StartAndExpand"
-                                             HorizontalOptions="FillAndExpand">
-                                        <Label Text="{Binding Name}"/>
-                                        <Label Text="{Binding Gender}"/>
-                                        <Label Text="{Binding Age}" />
-                                    </StackLayout>
-                                </Grid>
-                            </StackLayout>
+                            <Frame BorderColor="White" Margin="3" Padding="1" CornerRadius="15">
+                                <Frame CornerRadius="15" Padding="0" Margin="0">
+                                    <Grid VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" Padding="0" Margin="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="2*" />
+                                        </Grid.ColumnDefinitions>
+                                        <StackLayout Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource ExtraEntryBackgroundColor}" Opacity="1"/>
+                                        <!--<Image Grid.Column="0" Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />-->
+                                        <Image Grid.Column="0" Source="{Binding ImagePath, Converter={StaticResource DefaultImageConverter}, ConverterParameter={local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}}" />
+                                        <StackLayout Grid.Column="1"  Padding="0" Margin="0" VerticalOptions="StartAndExpand"
+                                                 HorizontalOptions="FillAndExpand">
+                                            <Label Text="{Binding Name}" TextColor="White"/>
+                                            <Label Text="{Binding Gender}" TextColor="White"/>
+                                            <Label Text="{Binding Age}" TextColor="White"/>
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

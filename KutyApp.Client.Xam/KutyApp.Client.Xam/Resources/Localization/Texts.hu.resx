@@ -120,13 +120,31 @@
   <data name="Adverts" xml:space="preserve">
     <value>Hírdetések</value>
   </data>
+  <data name="ChipNumberRequired" xml:space="preserve">
+    <value>A chip szám kitöltése kötelező</value>
+  </data>
+  <data name="DeleteButtonText" xml:space="preserve">
+    <value>TÖRLÉS</value>
+  </data>
+  <data name="NameRequired" xml:space="preserve">
+    <value>A név kitöltése kötelező</value>
+  </data>
   <data name="Pets" xml:space="preserve">
     <value>Állatok</value>
+  </data>
+  <data name="PickPohotoButtonText" xml:space="preserve">
+    <value>Fotó választása</value>
   </data>
   <data name="Pois" xml:space="preserve">
     <value>Helyek</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profil</value>
+  </data>
+  <data name="SaveButtonText" xml:space="preserve">
+    <value>MENTÉS</value>
+  </data>
+  <data name="TakePhotoButtonText" xml:space="preserve">
+    <value>Fotó készítése</value>
   </data>
 </root>

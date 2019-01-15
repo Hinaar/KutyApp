@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using GeoAPI.Geometries;
+using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Entities;
 using KutyApp.Services.Environment.Bll.Entities.Enums;
 using KutyApp.Services.Environment.Bll.Entities.Model;
@@ -16,11 +18,13 @@ namespace KutyApp.Services.Environment.Bll.Managers
     {
         private KutyAppServiceDbContext DbContext { get; }
         private ILocationManager LocationManager { get; }
+        private IMapper Mapper { get; }
 
-        public DatabaseManager(KutyAppServiceDbContext dbContext, ILocationManager locationManager)
+        public DatabaseManager(KutyAppServiceDbContext dbContext, ILocationManager locationManager, IMapper mapper)
         {
             DbContext = dbContext;
             LocationManager = locationManager;
+            Mapper = mapper;
         }
 
         public async Task SeedDatabaseAsync()
@@ -105,6 +109,12 @@ namespace KutyApp.Services.Environment.Bll.Managers
             tableNames.ForEach(t => query += $"ALTER TABLE {t} check constraint all;");
 
             await DbContext.Database.ExecuteSqlCommandAsync(query);
+        }
+
+        public async Task<DbVersionDto> GetDBVersionAsync()
+        {
+            var version = await DbContext.DbVerisons.OrderByDescending(d => d.Date).FirstOrDefaultAsync();
+            return Mapper.Map<DbVersionDto>(version);
         }
     }
 }

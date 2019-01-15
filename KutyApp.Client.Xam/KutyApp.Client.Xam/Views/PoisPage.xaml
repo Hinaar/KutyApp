@@ -5,11 +5,11 @@
              xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
              xmlns:serverModels="clr-namespace:KutyApp.Client.Services.ClientConsumer.Dtos;assembly=KutyApp.Client.Services.ClientConsumer"
              x:Class="KutyApp.Client.Xam.Views.PoisPage"
-             BackgroundColor="DarkSlateGray">
+             BackgroundColor="{StaticResource PageBackgroundColor}">
     <ContentPage.Content>
         <Grid>
-            <ListView ItemsSource="{Binding Pois, Mode=TwoWay}" IsPullToRefreshEnabled="True" SeparatorVisibility="Default"
-                  HasUnevenRows="True" SelectionMode="None">
+            <ListView ItemsSource="{Binding Pois, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshListCommand}" IsRefreshing="{Binding IsRefreshing}"
+                      SeparatorVisibility="Default" HasUnevenRows="True" SelectionMode="None">
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemTapped"
                                               Command="{Binding OpenExternalMapCommand}"
@@ -18,13 +18,25 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="serverModels:PoiDto">
                         <ViewCell>
-                            <StackLayout Margin="0,5">
-                                <Label Text="{Binding Name}"/>
-                                <Label Text="{Binding EnvironmentTypes}" />
-                                <Label Text="{Binding Latitude, StringFormat='Lat.: {0:N}'}" />
-                                <Label Text="{Binding Longitude, StringFormat='Long.: {0:N}'}" />
-                                <Label Text="{Binding Distance, StringFormat='{0:N} km'}" />
-                            </StackLayout>
+                            <Frame BorderColor="White" Margin="3" Padding="1" CornerRadius="15">
+                                <Frame CornerRadius="15" Padding="0" Margin="0" >
+                                    <Grid VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" Padding="0" Margin="0">
+                                        <StackLayout Margin="0" BackgroundColor="{StaticResource ExtraEntryBackgroundColor}" Opacity="1" Padding="5">
+                                            <Label Text="{Binding EnvironmentTypes}" TextColor="Magenta" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"/>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Label Text="{Binding Name}" TextColor="White" Grid.Column="0" FontAttributes="Bold"/>
+                                                <!--<Label Text="{Binding Latitude, StringFormat='Lat.: {0:N}'}" TextColor="White" />
+                                                <Label Text="{Binding Longitude, StringFormat='Long.: {0:N}'}" TextColor="White" />-->
+                                                <Label HorizontalTextAlignment="End" Text="{Binding Distance, StringFormat='{0:N} km'}" TextColor="{StaticResource MainButtonBackgroundColor}" FontAttributes="Bold" Grid.Column="1"/>
+                                            </Grid>
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                            </Frame>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>

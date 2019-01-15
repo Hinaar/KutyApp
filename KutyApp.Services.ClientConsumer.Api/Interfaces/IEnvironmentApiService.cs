@@ -20,5 +20,8 @@ namespace KutyApp.Client.Services.ClientConsumer.Interfaces
 
         [Post("/api/poi")]
         Task<PoiDto> AddOrEditPoiAsync([Body] AddOrEditPoiDto dto);
+
+        [Get("/api/database/dbversion")]
+        Task <DbVerisonDto> GetAppVersion();
     }
 }

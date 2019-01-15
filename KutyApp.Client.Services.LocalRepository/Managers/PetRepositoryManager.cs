@@ -19,28 +19,52 @@ namespace KutyApp.Client.Services.LocalRepository.Managers
 
         public async Task<Dog> AddOrEditDogAsync(Dog dog)
         {
+            Dog pet;
+
             if (dog.Id == 0)
             {
-                var tracking = await dbContext.Dogs.AddAsync(dog);
-                await dbContext.SaveChangesAsync();
-                return dog;
+                pet = new Dog
+                {
+                    Name = dog.Name,
+                    Gender = dog.Gender,
+                    ChipNumber = dog.ChipNumber,
+                    Color = dog.Color,
+                    ImagePath = dog.ImagePath,
+                    Weight = dog.Weight,
+                    BirthDate = dog.BirthDate
+                };
+                dbContext.Dogs.Add(pet);
             }
 
             else
             {
-                //TODO: propertynkent
-                var tracking = dbContext.Update(dog);
-                try
-                {
-                    await dbContext.SaveChangesAsync();
-                }
-                catch (Exception e)
-                {
+                //var tracking = dbContext.Update(dog);
+                pet = await dbContext.Dogs.FirstOrDefaultAsync(d => d.Id == dog.Id);
 
-                    throw;
-                }
-                return dog;
+                if (pet.Name != dog.Name)
+                    pet.Name = dog.Name;
+
+                if (pet.Gender != dog.Gender)
+                    pet.Gender = dog.Gender;
+
+                if (pet.ChipNumber != dog.ChipNumber)
+                    pet.ChipNumber = dog.ChipNumber;
+
+                if (pet.Color != dog.Color)
+                    pet.Color = dog.Color;
+
+                if (pet.ImagePath != dog.ImagePath)
+                    pet.ImagePath = dog.ImagePath;
+
+                if (pet.Weight != dog.Weight)
+                    pet.Weight = dog.Weight;
+
+                if (pet.BirthDate != dog.BirthDate)
+                    pet.BirthDate = dog.BirthDate;
             }
+
+            await dbContext.SaveChangesAsync();
+            return pet;
         }
 
         public async Task DeleteDogAsync(int id)

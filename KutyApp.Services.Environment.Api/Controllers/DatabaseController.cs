@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using KutyApp.Services.Environment.Bll.Dtos;
 
 namespace KutyApp.Services.Environment.Api.Controllers
 {
@@ -21,5 +22,9 @@ namespace KutyApp.Services.Environment.Api.Controllers
         [HttpGet("seed")]
         public async Task<ActionResult> SeedDatabase() =>
             await ResultAsync(DatabaseManager.SeedDatabaseAsync());
+
+        [HttpGet("dbversion")]
+        public async Task<ActionResult<DbVersionDto>> GetDBVersion() =>
+            Result(await DatabaseManager.GetDBVersionAsync());
     }
 }

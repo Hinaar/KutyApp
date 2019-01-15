@@ -27,16 +27,13 @@ namespace KutyApp.Client.Xam.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
         private IEnvironmentApiService EnvironmentApi { get; }
-        private IPetRepository PetRepository { get; }
         private IPageDialogService PageDialogService { get; }
 
         public MainPageViewModel(INavigationService navigationService, IEnvironmentApiService environmentApi, IPetRepository petRepository, IPageDialogService dialogService)
             : base(navigationService)
         {
             this.EnvironmentApi = environmentApi;
-            this.PetRepository = petRepository;
             this.PageDialogService = dialogService;
-            Title = "Main a Page";
             IsEnglish = CurrentLanguage == Languages.En || CurrentLanguage == Languages.Default;
         }
 
@@ -67,11 +64,23 @@ namespace KutyApp.Client.Xam.ViewModels
                         await NavigationService.NavigateAsync("app:///MainPage", animated: false);
                     }));
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             //TODO: xamarin essentials
 
             base.OnNavigatedTo(parameters);
+            await CheckVersion();
+        }
+
+        private async Task CheckVersion()
+        {   
+            var dbversion = await EnvironmentApi.GetAppVersion();
+            if (dbversion != null)
+            {
+                int.TryParse(dbversion.Value, out int value);
+                if (value > Config.Configurations.ApiVerison)
+                    CrossLocalNotifications.Current.Show($"{nameof(KutyApp)}", $"New Version available", 101);
+            }
         }
 
     }

@@ -7,6 +7,8 @@ namespace KutyApp.Services.Environment.Bll.Entities
     public class KutyAppServiceDbContext : DbContext
     {
         public DbSet<Poi> Pois { get; set; }
+        public DbSet<DbVersion> DbVerisons { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new PoiConfiguration());

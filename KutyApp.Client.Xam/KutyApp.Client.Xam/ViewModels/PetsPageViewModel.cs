@@ -3,9 +3,11 @@ using KutyApp.Client.Services.LocalRepository.Entities.Models;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using Prism.Navigation;
 using Prism.Services;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -27,22 +29,25 @@ namespace KutyApp.Client.Xam.ViewModels
         private ICommand navigateToPetsDetailPage;
         private ICommand newPetCommand;
         private ICommand deletePetCommand;
+        private ICommand refreshListCommand;
 
         public ICommand NavigateToPetsDetailPage =>
                 navigateToPetsDetailPage ?? (navigateToPetsDetailPage = new Command(
                     async param =>
-                        //Debug.WriteLine(((Dog)param).Id));
                         await NavigationService.NavigateAsync(nameof(Views.PetDetailPage), new NavigationParameters { { ParameterKeys.PetId, (int)(param as Dog).Id } })));
-        
+
         public ICommand NewPetCommand =>
                 newPetCommand ?? (newPetCommand = new Command(
                     async () =>
-                        //Debug.WriteLine(((Dog)param).Id));
                         await NavigationService.NavigateAsync(nameof(Views.PetDetailPage))));
 
         public ICommand DeletePetCommand =>
             deletePetCommand ?? (deletePetCommand = new Command(
                 async param => await DeletePet(param as Dog)));
+
+        public ICommand RefreshListCommand =>
+             refreshListCommand ?? (refreshListCommand = new Command(
+                 async () => await LoadMyPetsAsync(true)));
 
         private ObservableCollection<Dog> dogs;
 
@@ -52,27 +57,43 @@ namespace KutyApp.Client.Xam.ViewModels
             set { SetProperty(ref dogs, value); }
         }
 
+        private bool isRefreshing;
+
+        public bool IsRefreshing
+        {
+            get { return isRefreshing; }
+            set { SetProperty(ref isRefreshing, value); }
+        }
+
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
-            IsBusy = true;
             base.OnNavigatedTo(parameters);
             await LoadMyPetsAsync();
         }
 
-        private async Task DeletePet (Dog dog)
+        private async Task DeletePet(Dog dog)
         {
-            IsBusy = true;
             await PetRepository.DeleteDogAsync(dog.Id);
             await LoadMyPetsAsync();
         }
 
-        private async Task LoadMyPetsAsync()
+        private async Task LoadMyPetsAsync(bool isRefresh = false)
         {
-            IsBusy = true;
+            if (isRefresh)
+                IsRefreshing = true;
+            else
+                IsBusy = true;
+
             var pets = await PetRepository.GetDogsAsync();
             Dogs = new ObservableCollection<Dog>(pets);
-            IsBusy = false;
+            if (!Dogs.Any())
+                Dogs.Add(new Dog { Name = "My First Pet", BirthDate = DateTime.Now.AddYears(-1) });
+
+
+            if (isRefresh)
+                IsRefreshing = false;
+            else IsBusy = false;
         }
     }
 }

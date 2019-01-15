@@ -120,13 +120,31 @@
   <data name="Adverts" xml:space="preserve">
     <value>Adverts</value>
   </data>
+  <data name="ChipNumberRequired" xml:space="preserve">
+    <value>The chip number is required</value>
+  </data>
+  <data name="DeleteButtonText" xml:space="preserve">
+    <value>DELETE</value>
+  </data>
+  <data name="NameRequired" xml:space="preserve">
+    <value>The name is required</value>
+  </data>
   <data name="Pets" xml:space="preserve">
     <value>Pets</value>
+  </data>
+  <data name="PickPohotoButtonText" xml:space="preserve">
+    <value>Pick Photo</value>
   </data>
   <data name="Pois" xml:space="preserve">
     <value>Pois</value>
   </data>
   <data name="Profile" xml:space="preserve">
     <value>Profile</value>
+  </data>
+  <data name="SaveButtonText" xml:space="preserve">
+    <value>SAVE</value>
+  </data>
+  <data name="TakePhotoButtonText" xml:space="preserve">
+    <value>Take Photo</value>
   </data>
 </root>
