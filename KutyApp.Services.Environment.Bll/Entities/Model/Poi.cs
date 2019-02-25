@@ -16,5 +16,11 @@ namespace KutyApp.Services.Environment.Bll.Entities.Model
         public string Url { get; set; }
         public string ImageUrl { get; set; }
         public string PhoneNumber { get; set; }
+        public ICollection<UserPoi> FavouredByUsers { get; set; }
+
+        public Poi()
+        {
+            FavouredByUsers = new HashSet<UserPoi>();
+        }
     }
 }

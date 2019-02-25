@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using KutyApp.Services.Environment.Bll.DI;
 using KutyApp.Services.Environment.Bll.Entities;
+using KutyApp.Services.Environment.Bll.Entities.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -41,6 +43,18 @@ namespace KutyApp.Services.Environment.Api
                     );
             });
 
+            services.AddDefaultIdentity<User>(
+                o =>
+                {
+                    o.Password.RequireDigit = false;
+                    o.Password.RequiredLength = 6;
+                    o.Password.RequireNonAlphanumeric = false;
+                    o.Password.RequireUppercase = false;
+                    o.Password.RequireLowercase = false;
+                }
+            ).AddEntityFrameworkStores<KutyAppServiceDbContext>()
+            .AddDefaultTokenProviders();
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -52,6 +66,9 @@ namespace KutyApp.Services.Environment.Api
 
             //Filtereket majd ide
             //---
+
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_0);
 
             services.AddAutoMapper();

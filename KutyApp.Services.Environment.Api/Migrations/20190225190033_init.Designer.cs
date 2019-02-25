@@ -5,14 +5,16 @@ using KutyApp.Services.Environment.Bll.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace KutyApp.Services.Environment.Api.Migrations
 {
     [DbContext(typeof(KutyAppServiceDbContext))]
-    partial class KutyAppServiceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190225190033_init")]
+    partial class init
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
