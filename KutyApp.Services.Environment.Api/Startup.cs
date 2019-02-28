@@ -1,11 +1,17 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 using AutoMapper;
+using KutyApp.Services.Environment.Api.DI;
+using KutyApp.Services.Environment.Api.Extensions;
+using KutyApp.Services.Environment.Api.Filter;
+using KutyApp.Services.Environment.Bll.Configuration;
 using KutyApp.Services.Environment.Bll.DI;
 using KutyApp.Services.Environment.Bll.Entities;
 using KutyApp.Services.Environment.Bll.Entities.Model;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -15,6 +21,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace KutyApp.Services.Environment.Api
@@ -51,6 +58,9 @@ namespace KutyApp.Services.Environment.Api
                     o.Password.RequireNonAlphanumeric = false;
                     o.Password.RequireUppercase = false;
                     o.Password.RequireLowercase = false;
+
+                    o.User.RequireUniqueEmail = true;
+                    o.SignIn.RequireConfirmedEmail = false;
                 }
             ).AddEntityFrameworkStores<KutyAppServiceDbContext>()
             .AddDefaultTokenProviders();
@@ -63,13 +73,31 @@ namespace KutyApp.Services.Environment.Api
             });
 
             services.AddBllManagers();
+            services.AddApiManagers();
+            services.AddContext();
+
+            //configok
+            services.Configure<JwtSettings>(Configuration.GetSection(nameof(JwtSettings)));
 
             //Filtereket majd ide
             //---
 
+            services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(o =>
+            {
+                o.TokenValidationParameters = GetTokenValidationParameters();
+                o.RequireHttpsMetadata = false;
+                o.SaveToken = true;
+                o.IncludeErrorDetails = true;
+            });
 
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_0);
+            services.AddMvc(o =>
+            {
+                o.Filters.Add<KutyAppContextFilter>();
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddAutoMapper();
 
@@ -109,7 +137,36 @@ namespace KutyApp.Services.Environment.Api
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseAuthentication();
+
             app.UseMvc();
+        }
+
+        private TokenValidationParameters GetTokenValidationParameters()
+        {
+            string publicKey = $"{nameof(JwtSettings)}:{nameof(JwtSettings.PublicKey)}";
+            string issuerKey = $"{nameof(JwtSettings)}:{nameof(JwtSettings.Issuer)}";
+            string audienceKey = $"{nameof(JwtSettings)}:{nameof(JwtSettings.Audience)}";
+
+            RsaSecurityKey signingKey;
+           
+            RSA publicRsa = RSA.Create();
+            publicRsa.LoadFromXmlString(Configuration.GetSection(publicKey).Value);
+            signingKey = new RsaSecurityKey(publicRsa);
+
+            TokenValidationParameters tokenValidationParameters = new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+                ValidateIssuer = true,
+                ValidIssuer = Configuration.GetSection(issuerKey).Value,
+                ValidateAudience = true,
+                ValidAudience = Configuration.GetSection(audienceKey).Value,
+                ValidateLifetime = true,
+                ClockSkew = TimeSpan.Zero
+            };
+
+            return tokenValidationParameters;
         }
     }
 }

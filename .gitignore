@@ -259,3 +259,7 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/KutyApp.Services.Environment.Api/Areas/Identity
+/KutyApp.Services.Environment.Api/Assets
+/KutyApp.Services.Environment.Api/ScaffoldingReadme.txt
+/KutyApp.Services.Environment.Api/Pages
