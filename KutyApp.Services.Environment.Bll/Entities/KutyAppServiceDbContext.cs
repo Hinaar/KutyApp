@@ -1,6 +1,5 @@
 ﻿using KutyApp.Services.Environment.Bll.Entities.Configurations;
 using KutyApp.Services.Environment.Bll.Entities.Model;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -36,6 +35,10 @@ namespace KutyApp.Services.Environment.Bll.Entities
         }
 
         public KutyAppServiceDbContext(DbContextOptions<KutyAppServiceDbContext> options) : base(options) { }
+
+        public KutyAppServiceDbContext() : base()
+        {
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

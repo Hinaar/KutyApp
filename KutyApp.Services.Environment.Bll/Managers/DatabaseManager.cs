@@ -101,7 +101,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
                 .Where(n => n != "Logs")
                 .Distinct()
                 .ToList();
-            List<string> manyToManyTables = new List<string> { };
+            List<string> manyToManyTables = new List<string> { "PetSittings", "UserFriendships", "UserPois", "AspNetUserRoles" };
 
             tableNames.ForEach(t => query += $"ALTER TABLE {t} nocheck constraint all;");
             tableNames.ForEach(t => query += $"DELETE FROM {t};"); //truncate csak drop constrainttal megy
