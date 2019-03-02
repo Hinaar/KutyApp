@@ -1,9 +1,11 @@
 ﻿using KutyApp.Services.Environment.Api.Extensions;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace KutyApp.Services.Environment.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     public class BaseController : Controller
     {

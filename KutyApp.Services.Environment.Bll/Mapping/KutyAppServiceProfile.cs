@@ -1,16 +1,12 @@
 ﻿using AutoMapper;
-using GeoAPI.Geometries;
 using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Entities.Model;
-using KutyApp.Services.Environment.Bll.Interfaces;
-using NetTopologySuite;
+using System.Linq;
 
 namespace KutyApp.Services.Environment.Bll.Mapping
 {
     public class KutyAppServiceProfile : Profile
     {
-        private ILocationManager LocationManager { get; }
-
         public KutyAppServiceProfile()
         {
             //Poi
@@ -21,6 +17,19 @@ namespace KutyApp.Services.Environment.Bll.Mapping
                                     .ForMember(d => d.Longitude, m => m.MapFrom(p => p.Location.Coordinate.X));
             //DbVersion
             CreateMap<DbVersion, DbVersionDto>();
+
+
+            //User
+            CreateMap<User, UserDto>();
+            //Pet
+            CreateMap<Habit, HabitDto>();
+            CreateMap<HabitDto, Habit>();
+            CreateMap<AddOrEditHabitDto, Habit>();
+            CreateMap<MedicalTreatment, MedicalTreatmentDto>();
+            CreateMap<AddOrEditMedicalTreatmentDto, MedicalTreatment>();
+            CreateMap<Pet, PetDto>().ForMember(p => p.Sitters, m => m.MapFrom(p => p.PetSittings.Select(ps => ps.Sitter).ToList() ?? Enumerable.Empty<User>()))
+                                    .ForMember(p => p.IsMyPet, m => m.MapFrom<PetOwnershipResolver>());
+            
         }
     }
 }

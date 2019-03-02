@@ -1,5 +1,5 @@
 ﻿using KutyApp.Services.Environment.Api.Managers;
-using KutyApp.Services.Environment.Bll.Interfaces.Managers;
+using KutyApp.Services.Environment.Bll.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace KutyApp.Services.Environment.Api.DI

@@ -9,6 +9,12 @@ namespace KutyApp.Services.Environment.Api.Extensions
         public static string GetClientIpAddress(this HttpContext context)
         {
             string ip = null;
+
+            ip = context.Connection.RemoteIpAddress?.ToString();
+
+            if (!string.IsNullOrWhiteSpace(ip))
+                return ip;
+
             if (context.Request.Headers.TryGetValue("X-Forwarded-For", out StringValues value))
                 ip = value.FirstOrDefault();
 

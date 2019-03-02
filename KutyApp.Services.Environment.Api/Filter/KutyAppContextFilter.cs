@@ -1,5 +1,5 @@
 ﻿using KutyApp.Services.Environment.Api.Extensions;
-using KutyApp.Services.Environment.Bll.Interfaces.Context;
+using KutyApp.Services.Environment.Bll.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;

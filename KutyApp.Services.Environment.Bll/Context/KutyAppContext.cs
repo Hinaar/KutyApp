@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Entities;
-using KutyApp.Services.Environment.Bll.Interfaces.Context;
+using KutyApp.Services.Environment.Bll.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace KutyApp.Services.Environment.Bll.Context

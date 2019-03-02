@@ -13,7 +13,7 @@ namespace KutyApp.Services.Environment.Bll.Entities.Model
         public ICollection<UserPoi> FavoritePlaces { get; set; }
         public ICollection<PetSitting> PetSittings { get; set; }
 
-        public User()
+        public User() : base ()
         {
             Adverts = new HashSet<Advert>();
             Pets = new HashSet<Pet>();

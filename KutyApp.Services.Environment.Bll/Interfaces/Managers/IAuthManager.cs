@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using KutyApp.Services.Environment.Bll.Dtos;
 using System.Threading.Tasks;
 
-namespace KutyApp.Services.Environment.Bll.Interfaces.Managers
+namespace KutyApp.Services.Environment.Bll.Interfaces
 {
     public interface IAuthManager
     {
-        Task<string> GetTokenAsync(string email, string password);
-        Task<string> RegisterAsync(string email, string password, string confirmPassword);
+        Task<string> GetTokenAsync(LoginDto dto);
+        Task<string> RegisterAsync(RegisterDto dto);
+        Task<string> GetUserIdAsync(string userName);
     }
 }

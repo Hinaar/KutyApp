@@ -1,16 +1,17 @@
-﻿using System;
+﻿using KutyApp.Services.Environment.Api.Extensions;
+using KutyApp.Services.Environment.Bll.Configuration;
+using KutyApp.Services.Environment.Bll.Dtos;
+using KutyApp.Services.Environment.Bll.Entities.Model;
+using KutyApp.Services.Environment.Bll.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-using KutyApp.Services.Environment.Api.Extensions;
-using KutyApp.Services.Environment.Bll.Configuration;
-using KutyApp.Services.Environment.Bll.Entities.Model;
-using KutyApp.Services.Environment.Bll.Interfaces.Managers;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
 namespace KutyApp.Services.Environment.Api.Managers
 {
@@ -26,14 +27,14 @@ namespace KutyApp.Services.Environment.Api.Managers
             UserManager = userManager;
             JwtSettings = jwtSettings.Value;
         }
-        public async Task<string> GetTokenAsync(string userName, string password)
+        public async Task<string> GetTokenAsync(LoginDto dto)
         {
-            var result = await SignInManager.PasswordSignInAsync(userName, password, false, false);
+            var result = await SignInManager.PasswordSignInAsync(dto.Email, dto.Password, false, false);
 
             if (result.Succeeded)
             {
                 //var user = await UserManager.FindByNameAsync(userName);
-                var user = await UserManager.FindByEmailAsync(userName);
+                var user = await UserManager.FindByEmailAsync(dto.Email);
 
                 var claims = new List<Claim>
                 {
@@ -65,16 +66,28 @@ namespace KutyApp.Services.Environment.Api.Managers
                 throw new Exception("nmjo bejelentkezes");
         }
 
-        public async Task<string> RegisterAsync(string email, string password, string confirmPassword)
+        public async Task<string> RegisterAsync(RegisterDto dto)
         {
-            var user = new User { UserName = email, Email = email };
-            var result = await UserManager.CreateAsync(user, password);
+            if (dto.Password != dto.PasswordConfirm)
+                throw new Exception("pass doesnt match");
+
+            var user = new User { UserName = dto.Email, Email = dto.Email };
+            var result = await UserManager.CreateAsync(user, dto.Password);
 
             if (result.Succeeded)
             {
-                return await GetTokenAsync(email, password);
+                return await GetTokenAsync(new LoginDto { Email = dto.Email, Password = dto.Password });
             }
             else throw new Exception("sikertelen resgisztralas");
+        }
+
+        public async Task<string> GetUserIdAsync(string userName)
+        {
+            var user = await UserManager.FindByNameAsync(userName);
+            if (user == null)
+                throw new Exception("notfound");
+
+            else return user.Id;
         }
     }
 }

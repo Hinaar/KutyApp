@@ -1,8 +1,7 @@
-﻿using KutyApp.Services.Environment.Bll.Managers;
+﻿using KutyApp.Services.Environment.Bll.Context;
 using KutyApp.Services.Environment.Bll.Interfaces;
+using KutyApp.Services.Environment.Bll.Managers;
 using Microsoft.Extensions.DependencyInjection;
-using KutyApp.Services.Environment.Bll.Interfaces.Context;
-using KutyApp.Services.Environment.Bll.Context;
 
 namespace KutyApp.Services.Environment.Bll.DI
 {
@@ -13,7 +12,7 @@ namespace KutyApp.Services.Environment.Bll.DI
             services.AddTransient<IDatabaseManager, DatabaseManager>();
             services.AddTransient<IPoiManager, PoiManager>();
             services.AddTransient<ILocationManager, LocationManager>();
-
+            services.AddTransient<IPetManager, PetManager>();
             return services;
         }
 

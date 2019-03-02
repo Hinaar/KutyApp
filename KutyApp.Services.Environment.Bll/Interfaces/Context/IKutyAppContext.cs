@@ -1,7 +1,7 @@
 ﻿using KutyApp.Services.Environment.Bll.Dtos;
 using System.Threading.Tasks;
 
-namespace KutyApp.Services.Environment.Bll.Interfaces.Context
+namespace KutyApp.Services.Environment.Bll.Interfaces
 {
     public interface IKutyAppContext
     {

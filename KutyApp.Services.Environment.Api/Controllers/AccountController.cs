@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using KutyApp.Services.Environment.Bll.Entities.Model;
+﻿using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Interfaces;
-using KutyApp.Services.Environment.Bll.Interfaces.Managers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace KutyApp.Services.Environment.Api.Controllers
 {
@@ -21,16 +17,15 @@ namespace KutyApp.Services.Environment.Api.Controllers
 
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> Login(string username, string password) =>
-           Result(await AuthManager.GetTokenAsync(username, password));
+        public async Task<ActionResult<string>> Login(LoginDto dto) =>
+           Result(await AuthManager.GetTokenAsync(dto));
 
         [HttpPost("register")]
         [AllowAnonymous]
-        public async Task<ActionResult<string>> Register(string email, string password, string confirmPassword) =>
-           Result(await AuthManager.RegisterAsync(email, password, confirmPassword));
+        public async Task<ActionResult<string>> Register(RegisterDto dto) =>
+           Result(await AuthManager.RegisterAsync(dto));
 
         [HttpGet("ping")]
-        [Authorize]
         public IActionResult Ping() =>
             Ok();
     }
