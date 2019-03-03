@@ -188,6 +188,9 @@ namespace KutyApp.Services.Environment.Bll.Managers
             if (pet == null)
                 throw new System.Exception("notdound");
 
+            if (pet.OwnerId != KutyAppContext.CurrentUser.Id)
+                throw new System.Exception("no rights");
+
             DbContext.Pets.Remove(pet);
 
             await DbContext.SaveChangesAsync();

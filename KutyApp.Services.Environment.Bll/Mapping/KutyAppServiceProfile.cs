@@ -9,6 +9,10 @@ namespace KutyApp.Services.Environment.Bll.Mapping
     {
         public KutyAppServiceProfile()
         {
+            //Advert
+            CreateMap<Advert, AdvertDto>();
+            CreateMap<AddOrEditAdvertDto, Advert>();
+            
             //Poi
             CreateMap<AddOrEditPoiDto, Poi>().ForMember(p => p.Location, m => m.MapFrom<LocationResolver>());
             CreateMap<Poi, AddOrEditPoiDto>().ForMember(d => d.Latitude, m => m.MapFrom(p => p.Location.Coordinate.Y))
