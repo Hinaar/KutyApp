@@ -13,6 +13,7 @@ namespace KutyApp.Services.Environment.Bll.DI
             services.AddTransient<IPoiManager, PoiManager>();
             services.AddTransient<ILocationManager, LocationManager>();
             services.AddTransient<IPetManager, PetManager>();
+            services.AddTransient<IDataManager, DataManager>();
             return services;
         }
 

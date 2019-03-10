@@ -1,5 +1,7 @@
-﻿using KutyApp.Services.Environment.Bll.Dtos;
+﻿using KutyApp.Services.Environment.Api.ModelBinders;
+using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -17,8 +19,12 @@ namespace KutyApp.Services.Environment.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<PetDto>> AddOrEditPoi(AddOrEditPetDto dto) =>
+        public async Task<ActionResult<PetDto>> AddOrEditPet(AddOrEditPetDto dto) =>
             Result(await PetManager.AddOrEditPetAsync(dto));
+
+        [HttpPost("complex")]
+        public async Task<ActionResult<PetDto>> AddorEditComplexPet([ModelBinder(typeof(JsonModelBinder))]AddOrEditPetDto dto, IFormFile file) =>
+            Result(await PetManager.AddOrEditComplexPetAsync(dto, file));
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePet(int id) =>

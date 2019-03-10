@@ -103,7 +103,6 @@ namespace KutyApp.Services.Environment.Bll.Managers
 
         public async Task DeleteAdvertAsync(int id)
         {
-            //TODO: favoritok torles
             var advert = await DbContext.Adverts.SingleOrDefaultAsync(a => a.Id == id);
             if (advert == null)
                 throw new Exception("notdound");
@@ -121,5 +120,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
 
             return Mapper.Map<AdvertDto>(advert);
         }
+
+        //TODO favoritok
     }
 }

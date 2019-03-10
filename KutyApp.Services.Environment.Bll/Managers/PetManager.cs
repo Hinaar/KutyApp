@@ -6,7 +6,9 @@ using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Entities;
 using KutyApp.Services.Environment.Bll.Entities.Model;
 using KutyApp.Services.Environment.Bll.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 
 namespace KutyApp.Services.Environment.Bll.Managers
 {
@@ -16,13 +18,15 @@ namespace KutyApp.Services.Environment.Bll.Managers
         private IMapper Mapper { get; }
         private IKutyAppContext KutyAppContext { get; }
         private IAuthManager AuthManager { get; }
+        private IDataManager DataManager { get; }
 
-        public PetManager(KutyAppServiceDbContext dbContext, IMapper mapper, IKutyAppContext kutyAppContext, IAuthManager authManager)
+        public PetManager(KutyAppServiceDbContext dbContext, IMapper mapper, IKutyAppContext kutyAppContext, IAuthManager authManager, IDataManager dataManager)
         {
             DbContext = dbContext;
             Mapper = mapper;
             KutyAppContext = kutyAppContext;
             AuthManager = authManager;
+            DataManager = dataManager;
         }
 
         public async Task<PetDto> AddOrEditPetAsync(AddOrEditPetDto addOrEditPet)
@@ -67,8 +71,8 @@ namespace KutyApp.Services.Environment.Bll.Managers
                 if (pet.Color != addOrEditPet.Color)
                     pet.Color = addOrEditPet.Color;
 
-                if (pet.ImagePath != addOrEditPet.ImagePath)
-                    pet.ImagePath = addOrEditPet.ImagePath;
+                //if (pet.ImagePath != addOrEditPet.ImagePath)
+                //    pet.ImagePath = addOrEditPet.ImagePath;
 
                 if (pet.Weight != addOrEditPet.Weight)
                     pet.Weight = addOrEditPet.Weight;
@@ -249,6 +253,176 @@ namespace KutyApp.Services.Environment.Bll.Managers
                                            .AsNoTracking().ToListAsync();
 
             return Mapper.Map<List<PetDto>>(pets ?? Enumerable.Empty<Pet>());
+        }
+
+        public async Task<PetDto> AddOrEditComplexPetAsync(AddOrEditPetDto dto, IFormFile file)
+        {
+            Pet pet;
+            if (!dto.Id.HasValue)
+            {
+                pet = new Pet
+                {
+                    Name = dto.Name,
+                    Gender = dto.Gender,
+                    ChipNumber = dto.ChipNumber,
+                    Color = dto.Color,
+                    //ImagePath = dto.ImagePath,
+                    Weight = dto.Weight,
+                    BirthDate = dto.BirthDate,
+                    Kind = dto.Kind
+                };
+
+                pet.Habits = Mapper.Map<List<Habit>>((object)(dto.Habits ?? Enumerable.Empty<AddOrEditHabitDto>()));
+                pet.MedicalTreatments = Mapper.Map<List<MedicalTreatment>>((object)(dto.MedicalTreatments ?? Enumerable.Empty<AddOrEditMedicalTreatmentDto>()));
+
+                pet.OwnerId = KutyAppContext.CurrentUser.Id;
+
+                DbContext.Pets.Add(pet);
+
+                using (IDbContextTransaction transaction = await DbContext.Database.BeginTransactionAsync())
+                {
+                    await DbContext.SaveChangesAsync();
+
+                    if(file != null)
+                    {
+                        var path = await DataManager.SaveFileAsync(file);
+                        pet.ImagePath = path;
+                    }
+
+                    await DbContext.SaveChangesAsync();
+                    transaction.Commit();
+                }
+            }
+            else
+            {
+                pet = await DbContext.Pets.FirstOrDefaultAsync(d => d.Id == dto.Id);
+                if (pet == null)
+                    throw new System.Exception("notfound");
+
+                if (pet.Name != dto.Name)
+                    pet.Name = dto.Name;
+
+                if (pet.Gender != dto.Gender)
+                    pet.Gender = dto.Gender;
+
+                if (pet.ChipNumber != dto.ChipNumber)
+                    pet.ChipNumber = dto.ChipNumber;
+
+                if (pet.Color != dto.Color)
+                    pet.Color = dto.Color;
+
+                //if (pet.ImagePath != addOrEditPet.ImagePath)
+                //    pet.ImagePath = addOrEditPet.ImagePath;
+
+                if (pet.Weight != dto.Weight)
+                    pet.Weight = dto.Weight;
+
+                if (pet.BirthDate != dto.BirthDate)
+                    pet.BirthDate = dto.BirthDate;
+
+                if (pet.Kind != dto.Kind)
+                    pet.Kind = dto.Kind;
+
+                #region habits
+                //delted habit
+                foreach (var habit in pet.Habits.ToList().Where(h => !dto.Habits.Any(ha => ha.Id == h.Id)))
+                    pet.Habits.Remove(habit);
+
+                //new habit
+                foreach (var habitDto in dto.Habits.Where(h => !h.Id.HasValue))
+                    pet.Habits.Add(Mapper.Map<Habit>(habitDto));
+
+                //edited habit
+                foreach (var habitDto in dto.Habits.Where(h => h.Id.HasValue))
+                {
+                    var originalHabit = pet.Habits.SingleOrDefault(h => h.Id == habitDto.Id);
+                    if (originalHabit == null)
+                        throw new System.Exception("notfound");
+
+                    if (originalHabit.Title != habitDto.Title)
+                        originalHabit.Title = habitDto.Title;
+
+                    if (originalHabit.Description != habitDto.Description)
+                        originalHabit.Description = habitDto.Description;
+
+                    if (originalHabit.StartTime != habitDto.StartTime)
+                        originalHabit.StartTime = habitDto.StartTime;
+
+                    if (originalHabit.EndTime != habitDto.EndTime)
+                        originalHabit.EndTime = habitDto.EndTime;
+
+                    if (originalHabit.Amount != habitDto.Amount)
+                        originalHabit.Amount = habitDto.Amount;
+
+                    if (originalHabit.Unit != habitDto.Unit)
+                        originalHabit.Unit = habitDto.Unit;
+                }
+                #endregion
+
+                #region MedicalTreatments
+                //deleted treatment
+                foreach (var medicalTreatment in pet.MedicalTreatments.ToList().Where(m => !dto.MedicalTreatments.Any(me => me.Id == m.Id)))
+                    pet.MedicalTreatments.Remove(medicalTreatment);
+
+                //new treatment
+                foreach (var treatmentDto in dto.MedicalTreatments.Where(h => !h.Id.HasValue))
+                    pet.MedicalTreatments.Add(Mapper.Map<MedicalTreatment>(treatmentDto));
+
+                //edited treatment
+                foreach (var medicalTreatmentDto in dto.MedicalTreatments.Where(m => m.Id.HasValue))
+                {
+                    var originalTreatment = pet.MedicalTreatments.SingleOrDefault(m => m.Id == medicalTreatmentDto.Id);
+                    if (originalTreatment == null)
+                        throw new System.Exception("notfound");
+
+                    if (originalTreatment.Name != medicalTreatmentDto.Name)
+                        originalTreatment.Name = medicalTreatmentDto.Name;
+
+                    if (originalTreatment.Type != medicalTreatmentDto.Type)
+                        originalTreatment.Type = medicalTreatmentDto.Type;
+
+                    if (originalTreatment.Description != medicalTreatmentDto.Name)
+                        originalTreatment.Description = medicalTreatmentDto.Name;
+
+                    if (originalTreatment.Date != medicalTreatmentDto.Date)
+                        originalTreatment.Date = medicalTreatmentDto.Date;
+
+                    if (originalTreatment.Place != medicalTreatmentDto.Place)
+                        originalTreatment.Place = medicalTreatmentDto.Place;
+
+                    if (originalTreatment.Tender != medicalTreatmentDto.Tender)
+                        originalTreatment.Tender = medicalTreatmentDto.Tender;
+
+                    if (originalTreatment.Price != medicalTreatmentDto.Price)
+                        originalTreatment.Price = medicalTreatmentDto.Price;
+
+                    if (originalTreatment.Currency != medicalTreatmentDto.Currency)
+                        originalTreatment.Currency = medicalTreatmentDto.Currency;
+                }
+                #endregion
+
+                using (IDbContextTransaction transaction = await DbContext.Database.BeginTransactionAsync())
+                {
+                    await DbContext.SaveChangesAsync();
+
+                    if(pet.ImagePath != dto.ImagePath)
+                    {
+                        if (!string.IsNullOrEmpty(pet.ImagePath))
+                            DataManager.DeleteFile(pet.ImagePath);
+
+                        if(file != null)
+                        {
+                            var path = await DataManager.SaveFileAsync(file);
+                            pet.ImagePath = path;
+                        }
+                    }
+
+                    await DbContext.SaveChangesAsync();
+                    transaction.Commit();
+                }
+            }
+
+            return await GetPetAsync(pet.Id);
         }
     }
 }

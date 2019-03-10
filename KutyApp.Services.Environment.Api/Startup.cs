@@ -79,6 +79,7 @@ namespace KutyApp.Services.Environment.Api
 
             //configok
             services.Configure<JwtSettings>(Configuration.GetSection(nameof(JwtSettings)));
+            services.Configure<FileSettings>(Configuration.GetSection(nameof(FileSettings)));
 
             //Filtereket majd ide
             //---

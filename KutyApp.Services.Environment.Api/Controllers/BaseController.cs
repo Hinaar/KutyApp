@@ -27,7 +27,7 @@ namespace KutyApp.Services.Environment.Api.Controllers
             return new EmptyResult();
         }
 
-        protected ActionResult<FileContentResult> FileResult(byte[] content, string filename) =>
+        protected FileContentResult FileResult(byte[] content, string filename) =>
             File(content, filename.GetMimeType(), filename);
     }
 }
