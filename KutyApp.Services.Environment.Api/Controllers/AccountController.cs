@@ -2,13 +2,14 @@
 using KutyApp.Services.Environment.Bll.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 
 namespace KutyApp.Services.Environment.Api.Controllers
 {
     public class AccountController : BaseController
     {
-        public IAuthManager AuthManager { get; }
+        private IAuthManager AuthManager { get; }
 
         public AccountController(IAuthManager authManager)
         {
@@ -26,7 +27,13 @@ namespace KutyApp.Services.Environment.Api.Controllers
            Result(await AuthManager.RegisterAsync(dto));
 
         [HttpGet("ping")]
+        [AllowAnonymous]
         public IActionResult Ping() =>
             Ok();
+
+        [HttpGet("error")]
+        [AllowAnonymous]
+        public IActionResult Error(string message) =>
+            throw new System.Exception(message);
     }
 }

@@ -6,7 +6,6 @@ using KutyApp.Services.Environment.Bll.Dtos;
 
 namespace KutyApp.Services.Environment.Api.Controllers
 {
-    [AllowAnonymous]
     [Route("api/database")]
     public class DatabaseController : BaseController
     {

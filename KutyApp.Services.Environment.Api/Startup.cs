@@ -7,6 +7,7 @@ using AutoMapper;
 using KutyApp.Services.Environment.Api.DI;
 using KutyApp.Services.Environment.Api.Extensions;
 using KutyApp.Services.Environment.Api.Filter;
+using KutyApp.Services.Environment.Api.Middlewares;
 using KutyApp.Services.Environment.Bll.Configuration;
 using KutyApp.Services.Environment.Bll.DI;
 using KutyApp.Services.Environment.Bll.Entities;
@@ -23,6 +24,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Serilog;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace KutyApp.Services.Environment.Api
@@ -73,6 +75,14 @@ namespace KutyApp.Services.Environment.Api
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddSingleton<Serilog.ILogger>(o =>
+            {
+                var connString = Configuration["Serilog:DefaultConnection"];
+                var tablename = Configuration["Serilog:TableName"];
+                return new LoggerConfiguration()
+                    .WriteTo.MSSqlServer(connString, tablename, restrictedToMinimumLevel: Serilog.Events.LogEventLevel.Information, autoCreateSqlTable: true)
+                    .CreateLogger();
+            });
             services.AddBllManagers();
             services.AddApiManagers();
             services.AddContext();
@@ -129,6 +139,12 @@ namespace KutyApp.Services.Environment.Api
 
             //Middlewareket majd ide
             //---
+            app.UseMiddleware<ErrorHandlingMiddleware>();
+
+            //app.UseHsts();
+            //app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
 
             app.UseSwagger();
 
@@ -139,9 +155,7 @@ namespace KutyApp.Services.Environment.Api
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            //app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseCookiePolicy();
+           //****--
 
             app.UseAuthentication();
 

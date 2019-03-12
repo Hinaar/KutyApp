@@ -1,6 +1,7 @@
 ﻿using KutyApp.Services.Environment.Api.Extensions;
 using KutyApp.Services.Environment.Bll.Interfaces;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,10 +13,12 @@ namespace KutyApp.Services.Environment.Api.Filter
     public class KutyAppContextFilter : IAsyncActionFilter
     {
         private IKutyAppContext Context { get; }
+        private Serilog.ILogger Logger { get; }
 
-        public KutyAppContextFilter(IKutyAppContext context)
+        public KutyAppContextFilter(IKutyAppContext context, Serilog.ILogger logger)
         {
             Context = context;
+            Logger = logger;
         }
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
@@ -28,7 +31,7 @@ namespace KutyApp.Services.Environment.Api.Filter
             }
 
             Context.IpAddress = context.HttpContext.GetClientIpAddress();
-
+            Logger.Information($"{Context.CurrentUser?.Name} from {Context.IpAddress} - {context.HttpContext.Request.Method}: {context.HttpContext.Request.Path}{context.HttpContext.Request.QueryString}");
             await next();
         }
     }
