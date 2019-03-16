@@ -59,6 +59,7 @@ namespace KutyApp.Client.Xam.ViewModels
             changeLanguage ?? (changeLanguage = new Command(
                 async () =>
                     {
+                        //TODO: visszalepes utan lefut a nav
                         //already shows the required language
                         CurrentLanguage = IsEnglish ? Languages.En : Languages.Hu;
                         await NavigationService.NavigateAsync("app:///MainPage", animated: false);
@@ -73,14 +74,16 @@ namespace KutyApp.Client.Xam.ViewModels
         }
 
         private async Task CheckVersion()
-        {   
-            var dbversion = await EnvironmentApi.GetAppVersion();
-            if (dbversion != null)
-            {
-                int.TryParse(dbversion.Value, out int value);
-                if (value > Config.Configurations.ApiVerison)
-                    CrossLocalNotifications.Current.Show($"{nameof(KutyApp)}", $"New Version available", 101);
-            }
+        {
+            await Task.Delay(0);
+            //TODO
+            //var dbversion = await EnvironmentApi.GetAppVersion();
+            //if (dbversion != null)
+            //{
+            //    int.TryParse(dbversion.ToString(), out int value);
+            //    if (value > Config.Configurations.ApiVerison)
+            //        CrossLocalNotifications.Current.Show($"{nameof(KutyApp)}", $"New Version available", 101);
+            //}
         }
 
     }

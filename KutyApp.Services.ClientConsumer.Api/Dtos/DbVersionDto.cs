@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace KutyApp.Client.Services.ClientConsumer.Dtos
 {
-    public class DbVerisonDto
+    public class DbVersionDto
     {
         public int Id { get; set; }
         public string Value { get; set; }

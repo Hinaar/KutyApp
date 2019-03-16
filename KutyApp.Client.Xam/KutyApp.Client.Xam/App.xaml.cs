@@ -8,6 +8,7 @@ using KutyApp.Client.Xam.Views;
 using Prism;
 using Prism.Ioc;
 using Refit;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -37,13 +38,17 @@ namespace KutyApp.Client.Xam
             InitializeComponent();
 
             //await NavigationService.NavigateAsync("NavigationPage/MainPage");
-            await NavigationService.NavigateAsync(nameof(Views.MainPage));
+            await NavigationService.NavigateAsync(nameof(Views.LoginPage));
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.RegisterInstance(RestService.For<IEnvironmentApiService>(Configurations.ConnectionBase));
+            containerRegistry.RegisterInstance(RestService.For<IEnvironmentApiService>(Configurations.ConnectionBase, new RefitSettings()
+            {
+                AuthorizationHeaderValueGetter = () => Task.FromResult(Configurations.ApiToken) 
+            }));
             containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<PetsPage, PetsPageViewModel>();
             containerRegistry.RegisterForNavigation<PetDetailPage, PetDetailPageViewModel>();

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:myControls="clr-namespace:KutyApp.Client.Xam.Controls"
+             x:Class="KutyApp.Client.Xam.Views.LoginPage"
+             BackgroundColor="BlueViolet">
+    <ContentPage.Content>
+            <Frame CornerRadius="15" Margin="20" BackgroundColor="LightPink" HorizontalOptions="Fill" VerticalOptions="CenterAndExpand">
+                <Grid>
+                <StackLayout BackgroundColor="Transparent" HorizontalOptions="Fill">
+                    <myControls:ExtraEntry BackgroundColor="Transparent" CornerRadius="15" Text="{Binding UserName}" Margin="0, 5" MyBackgroundColor="Cyan"/>
+                    <myControls:ExtraEntry BackgroundColor="Transparent" IsPassword="True" CornerRadius="15" Text="{Binding Password}" Margin="0, 5" MyBackgroundColor="Cyan"/>
+                    <Button Text="Login" CornerRadius="10" HorizontalOptions="Center" BackgroundColor="LightGray" Command="{Binding LoginCommand}" />
+                </StackLayout>
+                <ActivityIndicator IsEnabled="True" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" />
+                </Grid>
+            </Frame>
+    </ContentPage.Content>
+</ContentPage>
