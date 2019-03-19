@@ -9,6 +9,7 @@ using Prism;
 using Prism.Ioc;
 using Prism.Plugin.Popups;
 using Refit;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -44,7 +45,12 @@ namespace KutyApp.Client.Xam
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterPopupNavigationService();
-            containerRegistry.RegisterInstance(RestService.For<IEnvironmentApiService>(Configurations.ConnectionBase));
+
+            containerRegistry.RegisterInstance(RestService.For<IEnvironmentApiService>(Configurations.ConnectionBase, new RefitSettings()
+            {
+                AuthorizationHeaderValueGetter = () => Task.FromResult(Configurations.ApiToken) 
+            }));
+
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<PetsPage, PetsPageViewModel>();

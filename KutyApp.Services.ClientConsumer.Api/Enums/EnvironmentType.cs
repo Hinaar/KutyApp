@@ -1,5 +1,5 @@
 ﻿namespace KutyApp.Client.Services.ClientConsumer.Enums
-{ 
+{
     public enum EnvironmentType
     {
         Cosmetics = 0,
