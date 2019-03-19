@@ -5,14 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
+using Rg.Plugins.Popup.Services;
 
 namespace KutyApp.Client.Xam.Views
 {
     public partial class MainPage : ContentPage
     {
+        private TempPage loginpage;
         public MainPage()
         {
             InitializeComponent();
+            loginpage = new TempPage();
         }
     }
 }

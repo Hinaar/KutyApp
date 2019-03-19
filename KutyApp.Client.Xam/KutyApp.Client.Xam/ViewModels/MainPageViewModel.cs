@@ -64,6 +64,12 @@ namespace KutyApp.Client.Xam.ViewModels
                         await NavigationService.NavigateAsync("app:///MainPage", animated: false);
                     }));
 
+        private ICommand openPopupCommand;
+
+        public ICommand OpenPopupCommand =>
+            openPopupCommand ?? (openPopupCommand = new Command(
+                async () => await NavigationService.NavigateAsync("TempPage")));
+
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             //TODO: xamarin essentials

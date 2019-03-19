@@ -136,16 +136,15 @@
                         </Button.Behaviors>
                     </Button>
                     <Grid VerticalOptions="End" Padding="0, -1">
-                        <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand" />
+                        <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand"/>
                         <StackLayout>
                             <Label Text="{x:Static local:Resources.Localization.Texts.Adverts}" HorizontalOptions="Center" VerticalOptions="End" FontAttributes="Bold" TextColor="White" FontSize="15"/>
                         </StackLayout>
                     </Grid>
                 </Grid>
-
-
             </Grid>
         </ScrollView>
+        <Button Text="TmpLogin" Command="{Binding OpenPopupCommand}" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Micro" Padding="2" Margin="2"/>
         <StackLayout Orientation="Horizontal" VerticalOptions="End">
             <Label x:Name="HungarianLabel" Text="Hungarian" HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
                    Margin="10, 0, 0, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish, Converter={StaticResource InvertBooleanConverter}}">

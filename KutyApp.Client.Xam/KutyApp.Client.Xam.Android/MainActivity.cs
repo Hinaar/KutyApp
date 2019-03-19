@@ -25,6 +25,8 @@ namespace KutyApp.Client.Xam.Droid
             var dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), Common.Constants.Paths.DbName);
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
 
+            Rg.Plugins.Popup.Popup.Init(this, bundle);
+
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App(new AndroidInitializer(dbPath)));
         }
@@ -33,6 +35,19 @@ namespace KutyApp.Client.Xam.Droid
         {
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        public override void OnBackPressed()
+        {
+            //base.OnBackPressed();
+            if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
+            {
+
+            }
+            else
+            {
+
+            }
         }
     }
 
