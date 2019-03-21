@@ -30,7 +30,7 @@ namespace KutyApp.Client.Xam.Droid.Renderers
         {
             base.OnElementChanged(e);
             if (e.NewElement == null) return;
-
+            
             var customEntry = e.NewElement as ExtraEntry;
             if (customEntry == null) return;
 

@@ -24,6 +24,7 @@ namespace KutyApp.Client.Xam.Droid
 
             var dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), Common.Constants.Paths.DbName);
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
+            Xamarin.Essentials.Platform.Init(this, bundle);
 
             Rg.Plugins.Popup.Popup.Init(this, bundle);
 
@@ -34,6 +35,8 @@ namespace KutyApp.Client.Xam.Droid
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+            Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 

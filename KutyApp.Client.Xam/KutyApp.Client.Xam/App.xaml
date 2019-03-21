@@ -6,5 +6,6 @@
              x:Class="KutyApp.Client.Xam.App">
 	<Application.Resources>
         <ResourceDictionary Source="Resources/Colors.xaml" />
+        <ResourceDictionary Source="Resources/Converters.xaml" />
     </Application.Resources>
 </prism:PrismApplication>

@@ -21,6 +21,7 @@ using Xamarin.Forms;
 using KutyApp.Client.Common.Constants;
 using System.Diagnostics;
 using KutyApp.Client.Xam.Views;
+using KutyApp.Client.Services.ServiceCollector.Interfaces;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -28,18 +29,42 @@ namespace KutyApp.Client.Xam.ViewModels
     {
         private IEnvironmentApiService EnvironmentApi { get; }
         private IPageDialogService PageDialogService { get; }
+        private IKutyAppClientContext KutyAppClientContext { get; }
+        private bool LoginAsked { get; set; }
 
-        public MainPageViewModel(INavigationService navigationService, IEnvironmentApiService environmentApi, IPetRepository petRepository, IPageDialogService dialogService)
+        public MainPageViewModel(INavigationService navigationService, IEnvironmentApiService environmentApi, IPetRepository petRepository, IPageDialogService dialogService, IKutyAppClientContext kutyAppClientContext)
             : base(navigationService)
         {
             this.EnvironmentApi = environmentApi;
             this.PageDialogService = dialogService;
+            KutyAppClientContext = kutyAppClientContext;
             IsEnglish = CurrentLanguage == Languages.En || CurrentLanguage == Languages.Default;
         }
 
-        private bool isEnglish;
+        public override async void OnNavigatingTo(INavigationParameters parameters)
+        {
+            base.OnNavigatingTo(parameters);
+            await KutyAppClientContext.LoadSettingsAsync();
+        }
 
+        public override async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            //TODO: xamarin essentials
+            base.OnNavigatedTo(parameters);
+
+            this.IsLoggedIn = KutyAppClientContext.IsLoggedIn;
+
+            if (!KutyAppClientContext.IsLoggedIn && !LoginAsked)
+            {
+                await NavigationService.NavigateAsync(nameof(LoginPopupPage));
+                LoginAsked = true;
+            }
+        }
+
+        private bool isEnglish;
+        private bool isLoggedIn;
         public bool IsEnglish { get => isEnglish; set => SetProperty(ref isEnglish, value); }
+        public bool IsLoggedIn { get => isLoggedIn; set => SetProperty(ref isLoggedIn, value); }
 
         private ICommand navigateToPetsPage;
         private ICommand navigateToPoisPage;
@@ -69,13 +94,6 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public ICommand OpenPopupCommand =>
             openPopupCommand ?? (openPopupCommand = new Command(
-                async () => await NavigationService.NavigateAsync("TempPage")));
-
-        public override async void OnNavigatedTo(INavigationParameters parameters)
-        {
-            //TODO: xamarin essentials
-
-            base.OnNavigatedTo(parameters);
-        }
+                async () => await NavigationService.NavigateAsync(nameof(LoginPopupPage))));
     }
 }

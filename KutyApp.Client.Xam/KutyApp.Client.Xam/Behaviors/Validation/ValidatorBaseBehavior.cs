@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace KutyApp.Client.Xam.Behaviors.Validation
 {
@@ -8,7 +9,7 @@ namespace KutyApp.Client.Xam.Behaviors.Validation
 
         public static readonly BindableProperty ExternalIsValidProperty = BindableProperty.Create("ExternalIsValid", typeof(bool?), typeof(ValidatorBaseBehavior), null);
 
-        static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(ValidatorBaseBehavior), false);
+        static readonly BindablePropertyKey IsValidPropertyKey = BindableProperty.CreateReadOnly("IsValid", typeof(bool), typeof(ValidatorBaseBehavior), true);
 
         public static readonly BindableProperty IsValidProperty = IsValidPropertyKey.BindableProperty;
 
@@ -42,11 +43,21 @@ namespace KutyApp.Client.Xam.Behaviors.Validation
 
         protected override void OnAttachedTo(Entry bindable)
         {
-            bindable.TextChanged += Validate;
+            bindable.Focused += FocusGained;
+        }
+
+        private void FocusGained(object sender, FocusEventArgs e)
+        {
+           if(sender is Entry entry)
+            {
+                entry.TextChanged -= Validate;
+                entry.TextChanged += Validate;
+            }
         }
 
         protected override void OnDetachingFrom(Entry bindable)
         {
+            bindable.Unfocused -= FocusGained;
             bindable.TextChanged -= Validate;
         }
 
@@ -56,10 +67,7 @@ namespace KutyApp.Client.Xam.Behaviors.Validation
                 IsValid = ExternalIsValid.Value;
             else
             {
-                if (!IsRequired && string.IsNullOrWhiteSpace(e.NewTextValue))
-                    IsValid = true;
-
-                if (IsRequired && string.IsNullOrWhiteSpace(e.NewTextValue))
+                if (IsRequired && string.IsNullOrEmpty(e.NewTextValue))
                     IsValid = false;
                 else
                     IsValid = true;

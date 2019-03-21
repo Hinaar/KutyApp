@@ -46,9 +46,10 @@ namespace KutyApp.Client.Xam
         {
             containerRegistry.RegisterPopupNavigationService();
 
+            containerRegistry.RegisterSingleton<IKutyAppClientContext, KutyAppClientContext>();
             containerRegistry.RegisterInstance(RestService.For<IEnvironmentApiService>(Configurations.ConnectionBase, new RefitSettings()
             {
-                AuthorizationHeaderValueGetter = () => Task.FromResult(Configurations.ApiToken) 
+                AuthorizationHeaderValueGetter = () => GetApiKey() 
             }));
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -57,9 +58,12 @@ namespace KutyApp.Client.Xam
             containerRegistry.RegisterForNavigation<PetDetailPage, PetDetailPageViewModel>();
             containerRegistry.RegisterForNavigation<PoisPage, PoisPageViewModel>();
             containerRegistry.RegisterForNavigation<TempPage>(); //vm automatikusan
+            containerRegistry.RegisterForNavigation<LoginPopupPage>();
             containerRegistry.Register<IPermissionManager, PermissionManager>();
             containerRegistry.Register<IMediaManager, MediaManager>();
             //containerRegistry.RegisterInstance<IPetRepository>(new PetRepositoryManager(localDbPath));
         }
+
+        private async Task<string> GetApiKey() => await Container.Resolve<IKutyAppClientContext>().ReturnApiKeyAsync();
     }
 }
