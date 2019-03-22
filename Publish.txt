@@ -1,0 +1,1 @@
+cmd -> publish build -> ds-re home-ba -> elozot torolni -> ssh majd benn contenert compilolni -> ebbol imaget, BEALLITASOK!

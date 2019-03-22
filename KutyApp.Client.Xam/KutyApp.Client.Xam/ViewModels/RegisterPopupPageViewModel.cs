@@ -1,52 +1,35 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
+﻿using KutyApp.Client.Services.ClientConsumer.Dtos;
 using KutyApp.Client.Services.ClientConsumer.Interfaces;
-using KutyApp.Client.Services.LocalRepository.Interfaces;
-using Plugin.Connectivity;
-using Plugin.Geolocator;
-using Plugin.Geolocator.Abstractions;
+using KutyApp.Client.Services.ServiceCollector.Interfaces;
+using Newtonsoft.Json;
+using Prism.Navigation;
+using Refit;
 using System.Threading.Tasks;
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
-using Prism.Services;
-using Plugin.LocalNotifications;
 using System.Windows.Input;
 using Xamarin.Forms;
-using KutyApp.Client.Common.Constants;
-using System.Diagnostics;
-using KutyApp.Client.Xam.Views;
-using KutyApp.Client.Services.ClientConsumer.Dtos;
-using KutyApp.Client.Services.ServiceCollector.Interfaces;
-using Refit;
-using Newtonsoft.Json;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
-    public class LoginPopupPageViewModel : ViewModelBase
+    public class RegisterPopupPageViewModel : ViewModelBase
     {
         private IEnvironmentApiService EnvironmentApiService { get; }
         private IKutyAppClientContext KutyAppClientContext { get; }
 
-        public LoginPopupPageViewModel(INavigationService navigationService, IEnvironmentApiService environmentApi, IKutyAppClientContext kutyAppClientContext)
+        public RegisterPopupPageViewModel(INavigationService navigationService, IEnvironmentApiService environmentApi, IKutyAppClientContext kutyAppClientContext)
             : base(navigationService)
         {
-            Title = "login vm title";
+            Title = "register vm title";
             EnvironmentApiService = environmentApi;
             KutyAppClientContext = kutyAppClientContext;
         }
 
         private string userName;
+        private string email;
         private string password;
+        private string passwordConfirm;
+        private string phoneNumber;
         private string errorMessage;
-        private bool rememberMe;
         private bool hasError;
-        private ICommand loginCommand;
         private ICommand registerCommand;
 
         public string UserName
@@ -55,10 +38,28 @@ namespace KutyApp.Client.Xam.ViewModels
             set => SetProperty(ref userName, value);
         }
 
+        public string Email
+        {
+            get => email;
+            set => SetProperty(ref email, value);
+        }
+
         public string Password
         {
             get => password;
             set => SetProperty(ref password, value);
+        }
+
+        public string PasswordConfirm
+        {
+            get => passwordConfirm;
+            set => SetProperty(ref passwordConfirm, value);
+        }
+
+        public string PhoneNumber
+        {
+            get => phoneNumber;
+            set => SetProperty(ref phoneNumber, value);
         }
 
         public string ErrorMessage
@@ -73,21 +74,11 @@ namespace KutyApp.Client.Xam.ViewModels
             set => SetProperty(ref hasError, value);
         }
 
-        public bool RememberMe
-        {
-            get => rememberMe;
-            set => SetProperty(ref rememberMe, value);
-        }
-
-        public ICommand LoginCommand =>
-            loginCommand ?? (loginCommand = new Command(
-                async () => await LoginAsync()));
-
         public ICommand RegisterCommand =>
             registerCommand ?? (registerCommand = new Command(
-                async () => await NavigationService.NavigateAsync(nameof(RegisterPopupPage))));
+                async () => await RegisterAsync()));
 
-        private async Task LoginAsync()
+        private async Task RegisterAsync()
         {
             if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password))
             {
@@ -96,16 +87,8 @@ namespace KutyApp.Client.Xam.ViewModels
                     IsBusy = true;
                     var response = await EnvironmentApiService.LoginAsync(new LoginDto { Email = UserName, Password = Password, RememberMe = false });
 
-                    if (RememberMe)
-                    {
-                        await KutyAppClientContext.SaveSettingsAsync(response, null);
-                    }
-                    else
-                    {
-                        KutyAppClientContext.SetTemporaryApiKey(response);
-                    }
+                    KutyAppClientContext.SetTemporaryApiKey(response);
 
-                    //await NavigationService.NavigateAsync(nameof(Views.MainPage));
                     await NavigationService.ClearPopupStackAsync();
                 }
                 catch (ValidationApiException validationException)
@@ -118,12 +101,10 @@ namespace KutyApp.Client.Xam.ViewModels
                     var error = JsonConvert.DeserializeObject<ErrorDto>(exception.Content);
                     HasError = true;
                     ErrorMessage = error.Message;
-                    // other exception handling
                 }
                 catch (System.Exception e)
                 {
-                    //TODO: bejelentk. hiba
-
+                    //TODO
                     //throw;
                 }
             }

@@ -59,6 +59,7 @@ namespace KutyApp.Client.Xam
             containerRegistry.RegisterForNavigation<PoisPage, PoisPageViewModel>();
             containerRegistry.RegisterForNavigation<TempPage>(); //vm automatikusan
             containerRegistry.RegisterForNavigation<LoginPopupPage>();
+            containerRegistry.RegisterForNavigation<RegisterPopupPage>();
             containerRegistry.Register<IPermissionManager, PermissionManager>();
             containerRegistry.Register<IMediaManager, MediaManager>();
             //containerRegistry.RegisterInstance<IPetRepository>(new PetRepositoryManager(localDbPath));

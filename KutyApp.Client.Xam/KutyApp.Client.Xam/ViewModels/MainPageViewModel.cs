@@ -1,27 +1,12 @@
-﻿using Prism.Commands;
-using Prism.Mvvm;
-using Prism.Navigation;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
+﻿using KutyApp.Client.Common.Constants;
 using KutyApp.Client.Services.ClientConsumer.Interfaces;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
-using Plugin.Connectivity;
-using Plugin.Geolocator;
-using Plugin.Geolocator.Abstractions;
-using System.Threading.Tasks;
-using Plugin.Permissions;
-using Plugin.Permissions.Abstractions;
+using KutyApp.Client.Services.ServiceCollector.Interfaces;
+using KutyApp.Client.Xam.Views;
+using Prism.Navigation;
 using Prism.Services;
-using Plugin.LocalNotifications;
 using System.Windows.Input;
 using Xamarin.Forms;
-using KutyApp.Client.Common.Constants;
-using System.Diagnostics;
-using KutyApp.Client.Xam.Views;
-using KutyApp.Client.Services.ServiceCollector.Interfaces;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -39,6 +24,7 @@ namespace KutyApp.Client.Xam.ViewModels
             this.PageDialogService = dialogService;
             KutyAppClientContext = kutyAppClientContext;
             IsEnglish = CurrentLanguage == Languages.En || CurrentLanguage == Languages.Default;
+            IsLoggedIn = false;
         }
 
         public override async void OnNavigatingTo(INavigationParameters parameters)
@@ -84,7 +70,6 @@ namespace KutyApp.Client.Xam.ViewModels
             changeLanguage ?? (changeLanguage = new Command(
                 async () =>
                     {
-                        //TODO: visszalepes utan lefut a nav
                         //already shows the required language
                         CurrentLanguage = IsEnglish ? Languages.En : Languages.Hu;
                         await NavigationService.NavigateAsync("app:///MainPage", animated: false);

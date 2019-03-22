@@ -95,6 +95,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Texts.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\RegisterPopupPage.xaml.cs">
+      <DependentUpon>RegisterPopupPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\LoginPopupPage.xaml.cs">
       <DependentUpon>LoginPopupPage.xaml</DependentUpon>
     </Compile>

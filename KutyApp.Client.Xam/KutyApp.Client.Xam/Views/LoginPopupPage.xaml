@@ -8,6 +8,7 @@
              xmlns:myControls="clr-namespace:KutyApp.Client.Xam.Controls"
              xmlns:XLabControls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
              xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" 
+             xmlns:local="clr-namespace:KutyApp.Client.Xam"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="KutyApp.Client.Xam.Views.LoginPopupPage">
     <pages:PopupPage.Animation>
@@ -23,7 +24,8 @@
         <ScrollView HorizontalOptions="Center" VerticalOptions="Center">
             <Frame x:Name="FrameContainer" Margin="0" HorizontalOptions="CenterAndExpand" BackgroundColor="#32B6A4"
                    CornerRadius="5" BorderColor="Black" Padding="0">
-                <StackLayout IsClippedToBounds="True" Padding="5, 30, 5, 10" Spacing="3" HorizontalOptions="Fill">
+                <StackLayout IsClippedToBounds="True" Padding="5, 30, 5, 10" Spacing="3" HorizontalOptions="Fill" x:Name="PageStack">
+                   
                     <myControls:ExtraEntry Text="{Binding UserName, Mode=TwoWay}" 
                                            BackgroundColor="Transparent" 
                                            MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" 
@@ -37,7 +39,8 @@
                                            x:Name="UsernameEntry"
                                            HorizontalTextAlignment="Center"
                                            Placeholder="Username"
-                                           PlaceholderColor="#D9D0D0D0">
+                                           PlaceholderColor="#D9D0D0D0"
+                                           Keyboard="Email">
                         <Entry.Behaviors>
                             <validator:ValidatorBaseBehavior x:Name="NameValidator" IsRequired="True"/>
                         </Entry.Behaviors>
@@ -58,6 +61,8 @@
                             </DataTrigger>
                         </Entry.Triggers>
                     </myControls:ExtraEntry>
+                    <Label Margin="10, -5, 10, 0" Text="{x:Static local:Resources.Localization.Texts.NameRequired}" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference NameValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
+                    
                     <myControls:ExtraEntry Text="{Binding Password, Mode=TwoWay}" 
                                            BackgroundColor="Transparent" 
                                            MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" 
@@ -93,7 +98,10 @@
                             </DataTrigger>
                         </Entry.Triggers>
                     </myControls:ExtraEntry>
+                    <Label Margin="10, -5, 10, 0" Text="{x:Static local:Resources.Localization.Texts.NameRequired}" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference PasswordValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
+                   
                     <XLabControls:CheckBox Checked="{Binding RememberMe}" DefaultText="Remember me" x:Name="RememberCheckBox" />
+                    
                     <StackLayout Orientation="Horizontal">
                         <Button 
                             BorderColor="Black" 
@@ -105,7 +113,18 @@
                             HorizontalOptions="Fill"
                             x:Name="LoginButton"
                             Text="Login" 
-                            Command="{Binding LoginCommand}"/>
+                            Command="{Binding LoginCommand}"
+                            IsEnabled="False">
+                            <Button.Triggers>
+                                <MultiTrigger TargetType="Button">
+                                    <MultiTrigger.Conditions>
+                                        <BindingCondition Binding="{Binding Source={x:Reference NameValidator}, Path=IsValid}" Value="True" />
+                                        <BindingCondition Binding="{Binding Source={x:Reference PasswordValidator}, Path=IsValid}" Value="True" />
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True" />
+                                </MultiTrigger>
+                            </Button.Triggers>
+                        </Button>
                         <Label HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="Or" x:Name="OrEntry"/>
                         <Button
                             BorderColor="Black" 
@@ -118,6 +137,7 @@
                             x:Name="RegisterButton" 
                             Command="{Binding RegisterCommand}"/>
                     </StackLayout>
+                    
                     <Label x:Name="ErrorLabel" Margin="10, 5" HorizontalTextAlignment="Center" Text="{Binding ErrorMessage}" TextColor="Red" FontSize="Micro" IsVisible="{Binding HasError}" />
                     <ActivityIndicator x:Name="LoadingActivityIndicator" IsEnabled="True" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" />
                 </StackLayout>

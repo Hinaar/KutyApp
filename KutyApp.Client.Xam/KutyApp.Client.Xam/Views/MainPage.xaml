@@ -15,184 +15,184 @@
             <converters:InvertBooleanConverter x:Key="InvertBooleanConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Frame BorderColor="Red" BackgroundColor="Transparent">
-        <Frame.Triggers>
-            <DataTrigger TargetType="Frame" Binding="{Binding IsLoggedIn}" Value="True">
-                <Setter Property="Padding" Value="0" />
-            </DataTrigger>
-            <DataTrigger TargetType="Frame" Binding="{Binding IsLoggedIn}" Value="False">
-                <Setter Property="Padding" Value="3" />
-            </DataTrigger>
-        </Frame.Triggers>
-        <Grid>
-            <ScrollView Margin="10">
-                <Grid Margin="10, 20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
+        <Frame Padding="2" BackgroundColor="Red" HorizontalOptions="FillAndExpand" HasShadow="false">
+            <Frame.Triggers>
+                <DataTrigger TargetType="Frame" Binding="{Binding IsLoggedIn}" Value="True">
+                    <Setter Property="Padding" Value="0"/>
+                </DataTrigger>
+                <DataTrigger TargetType="Frame" Binding="{Binding IsLoggedIn}" Value="False">
+                    <Setter Property="Padding" Value="2" />
+                </DataTrigger>
+            </Frame.Triggers>
+            <Grid BackgroundColor="{StaticResource PageBackgroundColor}">
+                <ScrollView Margin="10">
+                    <Grid Margin="10, 20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-                    <Grid Margin="10" Grid.Row="0" Grid.Column="0" x:Name="PetsButtonWrapper">
-                        <Grid  Padding="10" BackgroundColor="#32B6A4">
-                            <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />
-                        </Grid>
-                        <Button Opacity="1" BackgroundColor="Transparent">
-                            <Button.Behaviors>
-                                <behaviors:EventHandlerBehavior EventName="Clicked">
-                                    <behaviors:ScaleAction TargetObject="{x:Reference PetsButtonWrapper}" 
+                        <Grid Margin="10" Grid.Row="0" Grid.Column="0" x:Name="PetsButtonWrapper">
+                            <Grid  Padding="10" BackgroundColor="#32B6A4">
+                                <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />
+                            </Grid>
+                            <Button Opacity="1" BackgroundColor="Transparent">
+                                <Button.Behaviors>
+                                    <behaviors:EventHandlerBehavior EventName="Clicked">
+                                        <behaviors:ScaleAction TargetObject="{x:Reference PetsButtonWrapper}" 
                                    FinalScale="0.95" 
                                    Duration="200" 
                                    EasingFunction="CubicIn"
                                    Await="true"/>
-                                    <behaviors:ScaleAction TargetObject="{x:Reference PetsButtonWrapper}" 
+                                        <behaviors:ScaleAction TargetObject="{x:Reference PetsButtonWrapper}" 
                                    FinalScale="1.0" 
                                    Duration="200" 
                                    EasingFunction="CubicOut" 
                                    Await="true"/>
-                                    <behaviors:InvokeCommandAction Command="{Binding NavigateToPetsPage}" />
-                                    <!--Converter="{StaticResource SelectedItemConverter}" 
+                                        <behaviors:InvokeCommandAction Command="{Binding NavigateToPetsPage}" />
+                                        <!--Converter="{StaticResource SelectedItemConverter}" 
                                            ConverterParameter="35" />-->
-                                </behaviors:EventHandlerBehavior>
-                            </Button.Behaviors>
-                        </Button>
-                        <Grid VerticalOptions="End" Padding="0, -1">
-                            <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand" />
-                            <StackLayout>
-                                <Label Text="{x:Static local:Resources.Localization.Texts.Pets}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
-                            </StackLayout>
+                                    </behaviors:EventHandlerBehavior>
+                                </Button.Behaviors>
+                            </Button>
+                            <Grid VerticalOptions="End" Padding="0, -1">
+                                <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand" />
+                                <StackLayout>
+                                    <Label Text="{x:Static local:Resources.Localization.Texts.Pets}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                                </StackLayout>
+                            </Grid>
                         </Grid>
-                    </Grid>
 
-                    <Grid Margin="10" Grid.Row="0" Grid.Column="1" x:Name="PoisButtonWrapper">
-                        <Grid  Padding="10" BackgroundColor="#32B6A4">
-                            <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.maps.png}"/>
-                        </Grid>
-                        <Button Opacity="1" BackgroundColor="Transparent">
-                            <Button.Behaviors>
-                                <behaviors:EventHandlerBehavior EventName="Clicked">
-                                    <behaviors:ScaleAction TargetObject="{x:Reference PoisButtonWrapper}" 
+                        <Grid Margin="10" Grid.Row="0" Grid.Column="1" x:Name="PoisButtonWrapper">
+                            <Grid  Padding="10" BackgroundColor="#32B6A4">
+                                <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.maps.png}"/>
+                            </Grid>
+                            <Button Opacity="1" BackgroundColor="Transparent">
+                                <Button.Behaviors>
+                                    <behaviors:EventHandlerBehavior EventName="Clicked">
+                                        <behaviors:ScaleAction TargetObject="{x:Reference PoisButtonWrapper}" 
                                    FinalScale="0.95" 
                                    Duration="200" 
                                    EasingFunction="CubicIn"
                                    Await="true"/>
-                                    <behaviors:ScaleAction TargetObject="{x:Reference PoisButtonWrapper}" 
+                                        <behaviors:ScaleAction TargetObject="{x:Reference PoisButtonWrapper}" 
                                    FinalScale="1.0" 
                                    Duration="200" 
                                    EasingFunction="CubicOut" 
                                    Await="true"/>
-                                    <behaviors:InvokeCommandAction Command="{Binding NavigateToPoisPage}" />
-                                </behaviors:EventHandlerBehavior>
-                            </Button.Behaviors>
-                        </Button>
-                        <Grid VerticalOptions="End" Padding="0, -1">
-                            <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand" />
-                            <StackLayout>
-                                <Label Text="{x:Static local:Resources.Localization.Texts.Pois}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
-                            </StackLayout>
+                                        <behaviors:InvokeCommandAction Command="{Binding NavigateToPoisPage}" />
+                                    </behaviors:EventHandlerBehavior>
+                                </Button.Behaviors>
+                            </Button>
+                            <Grid VerticalOptions="End" Padding="0, -1">
+                                <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand" />
+                                <StackLayout>
+                                    <Label Text="{x:Static local:Resources.Localization.Texts.Pois}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                                </StackLayout>
+                            </Grid>
                         </Grid>
-                    </Grid>
 
-                    <Grid Margin="10" Grid.Row="1" Grid.Column="0" x:Name="ProfileButtonWrapper">
-                        <Grid  Padding="10" BackgroundColor="#32B6A4">
-                            <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.user.png}"/>
-                        </Grid>
-                        <Button Opacity="1" BackgroundColor="Transparent">
-                            <Button.Behaviors>
-                                <behaviors:EventHandlerBehavior EventName="Clicked">
-                                    <behaviors:ScaleAction TargetObject="{x:Reference ProfileButtonWrapper}" 
+                        <Grid Margin="10" Grid.Row="1" Grid.Column="0" x:Name="ProfileButtonWrapper">
+                            <Grid  Padding="10" BackgroundColor="#32B6A4">
+                                <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.user.png}"/>
+                            </Grid>
+                            <Button Opacity="1" BackgroundColor="Transparent">
+                                <Button.Behaviors>
+                                    <behaviors:EventHandlerBehavior EventName="Clicked">
+                                        <behaviors:ScaleAction TargetObject="{x:Reference ProfileButtonWrapper}" 
                                    FinalScale="0.95" 
                                    Duration="200" 
                                    EasingFunction="CubicIn"
                                    Await="true"/>
-                                    <behaviors:ScaleAction TargetObject="{x:Reference ProfileButtonWrapper}" 
+                                        <behaviors:ScaleAction TargetObject="{x:Reference ProfileButtonWrapper}" 
                                    FinalScale="1.0" 
                                    Duration="200" 
                                    EasingFunction="CubicInOut" 
                                    Await="true"/>
-                                </behaviors:EventHandlerBehavior>
-                            </Button.Behaviors>
-                        </Button>
-                        <Grid VerticalOptions="End" Padding="0, -1">
-                            <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand" />
-                            <StackLayout>
-                                <Label Text="{x:Static local:Resources.Localization.Texts.Profile}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
-                            </StackLayout>
+                                    </behaviors:EventHandlerBehavior>
+                                </Button.Behaviors>
+                            </Button>
+                            <Grid VerticalOptions="End" Padding="0, -1">
+                                <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand" />
+                                <StackLayout>
+                                    <Label Text="{x:Static local:Resources.Localization.Texts.Profile}" HorizontalOptions="Center" VerticalOptions="End" Margin="0" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                                </StackLayout>
+                            </Grid>
                         </Grid>
-                    </Grid>
 
-                    <Grid Margin="10" Grid.Row="1" Grid.Column="1" x:Name="AdvertsButtonWrapper">
-                        <Grid BackgroundColor="#32B6A4" Padding="10">
-                            <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.clipboard.png}"/>
-                        </Grid>
-                        <Button Opacity="1" BackgroundColor="Transparent">
-                            <Button.Behaviors>
-                                <behaviors:EventHandlerBehavior EventName="Clicked">
-                                    <behaviors:ScaleAction TargetObject="{x:Reference AdvertsButtonWrapper}" 
+                        <Grid Margin="10" Grid.Row="1" Grid.Column="1" x:Name="AdvertsButtonWrapper">
+                            <Grid BackgroundColor="#32B6A4" Padding="10">
+                                <Image Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.clipboard.png}"/>
+                            </Grid>
+                            <Button Opacity="1" BackgroundColor="Transparent">
+                                <Button.Behaviors>
+                                    <behaviors:EventHandlerBehavior EventName="Clicked">
+                                        <behaviors:ScaleAction TargetObject="{x:Reference AdvertsButtonWrapper}" 
                                    FinalScale="0.95" 
                                    Duration="200" 
                                    EasingFunction="CubicIn"
                                    Await="true"/>
-                                    <behaviors:ScaleAction TargetObject="{x:Reference AdvertsButtonWrapper}" 
+                                        <behaviors:ScaleAction TargetObject="{x:Reference AdvertsButtonWrapper}" 
                                    FinalScale="1.0" 
                                    Duration="200" 
                                    EasingFunction="CubicOut" 
                                    Await="true"/>
-                                </behaviors:EventHandlerBehavior>
-                            </Button.Behaviors>
-                        </Button>
-                        <Grid VerticalOptions="End" Padding="0, -1">
-                            <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand"/>
-                            <StackLayout>
-                                <Label Text="{x:Static local:Resources.Localization.Texts.Adverts}" HorizontalOptions="Center" VerticalOptions="End" FontAttributes="Bold" TextColor="White" FontSize="15"/>
-                            </StackLayout>
+                                    </behaviors:EventHandlerBehavior>
+                                </Button.Behaviors>
+                            </Button>
+                            <Grid VerticalOptions="End" Padding="0, -1">
+                                <ContentView BackgroundColor="Black" Opacity="0.7" VerticalOptions="FillAndExpand"/>
+                                <StackLayout>
+                                    <Label Text="{x:Static local:Resources.Localization.Texts.Adverts}" HorizontalOptions="Center" VerticalOptions="End" FontAttributes="Bold" TextColor="White" FontSize="15"/>
+                                </StackLayout>
+                            </Grid>
                         </Grid>
                     </Grid>
-                </Grid>
-            </ScrollView>
-            <Button Text="TmpLogin" Command="{Binding OpenPopupCommand}" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Micro" Padding="2" Margin="2"/>
-            <StackLayout Orientation="Horizontal" VerticalOptions="End">
-                <Label x:Name="HungarianLabel" Text="Hungarian" HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
+                </ScrollView>
+                <Button Text="TmpLogin" Command="{Binding OpenPopupCommand}" HorizontalOptions="Center" VerticalOptions="Start" FontSize="Micro" Padding="2" Margin="2"/>
+                <StackLayout Orientation="Horizontal" VerticalOptions="End">
+                    <Label x:Name="HungarianLabel" Text="Hungarian" HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
                    Margin="10, 0, 0, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish, Converter={StaticResource InvertBooleanConverter}}">
-                    <Label.Triggers>
-                        <DataTrigger Binding="{Binding Source={x:Reference HungarianLabel}, Path=IsEnabled}"
+                        <Label.Triggers>
+                            <DataTrigger Binding="{Binding Source={x:Reference HungarianLabel}, Path=IsEnabled}"
                                  TargetType="Label"
                                  Value="True">
-                            <Setter Property="Opacity" Value="1"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Source={x:Reference HungarianLabel}, Path=IsEnabled}"
+                                <Setter Property="Opacity" Value="1"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Source={x:Reference HungarianLabel}, Path=IsEnabled}"
                                  TargetType="Label"
                                  Value="False">
-                            <Setter Property="Opacity" Value="0.5" />
-                        </DataTrigger>
-                    </Label.Triggers>
-                </Label>
-                <Switch HorizontalOptions="Fill" IsToggled="{Binding IsEnglish}">
-                    <Switch.Behaviors>
-                        <b:EventToCommandBehavior EventName="Toggled" 
+                                <Setter Property="Opacity" Value="0.5" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                    <Switch HorizontalOptions="Fill" IsToggled="{Binding IsEnglish}">
+                        <Switch.Behaviors>
+                            <b:EventToCommandBehavior EventName="Toggled" 
                                               Command="{Binding ChangeLanguage}">
-                        </b:EventToCommandBehavior>
-                    </Switch.Behaviors>
-                </Switch>
-                <Label x:Name="EnglishLabel"  Text="English" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
+                            </b:EventToCommandBehavior>
+                        </Switch.Behaviors>
+                    </Switch>
+                    <Label x:Name="EnglishLabel"  Text="English" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
                    Margin="0, 0, 10, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish}">
-                    <Label.Triggers>
-                        <DataTrigger Binding="{Binding Source={x:Reference EnglishLabel}, Path=IsEnabled}"
+                        <Label.Triggers>
+                            <DataTrigger Binding="{Binding Source={x:Reference EnglishLabel}, Path=IsEnabled}"
                                  TargetType="Label"
                                  Value="True">
-                            <Setter Property="Opacity" Value="1"/>
-                        </DataTrigger>
-                        <DataTrigger Binding="{Binding Source={x:Reference EnglishLabel}, Path=IsEnabled}"
+                                <Setter Property="Opacity" Value="1"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Source={x:Reference EnglishLabel}, Path=IsEnabled}"
                                  TargetType="Label"
                                  Value="False">
-                            <Setter Property="Opacity" Value="0.5" />
-                        </DataTrigger>
-                    </Label.Triggers>
-                </Label>
-            </StackLayout>
-        </Grid>
-    </Frame>
+                                <Setter Property="Opacity" Value="0.5" />
+                            </DataTrigger>
+                        </Label.Triggers>
+                    </Label>
+                </StackLayout>
+            </Grid>
+        </Frame>
 </ContentPage>

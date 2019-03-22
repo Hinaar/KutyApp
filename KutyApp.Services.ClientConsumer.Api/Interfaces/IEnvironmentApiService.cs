@@ -34,5 +34,8 @@ namespace KutyApp.Client.Services.ClientConsumer.Interfaces
 
         [Post("/login")]
         Task<string> LoginAsync([Body] LoginDto dto);
+
+        [Post("/register")]
+        Task<string> RegisterAsync([Body] RegisterDto dto);
     }
 }

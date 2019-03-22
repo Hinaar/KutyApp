@@ -11,6 +11,7 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
         public bool IsLoggedIn { get; set; } = false;
         public string ApiKey { get; protected set; } = string.Empty;
         public CultureInfo SavedLanguage { get; set; } = Languages.Default;
+        private bool IsSettingsLoaded { get; set; } = false;
 
         public void SetTemporaryApiKey(string key)
         {
@@ -23,35 +24,41 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
 
         public async Task LoadSettingsAsync()
         {
-            string apiKey = string.Empty;
-            try
+            if (!IsSettingsLoaded)
             {
-                apiKey = await SecureStorage.GetAsync($"{nameof(KutyApp)}.{nameof(ApiKey)}");
-            }
-            catch (System.Exception)
-            {
-                apiKey = Preferences.Get($"{nameof(KutyApp)}.{nameof(ApiKey)}", string.Empty);
-            }
-            if (!string.IsNullOrEmpty(apiKey))
-            {
-                ApiKey = apiKey;
-                IsLoggedIn = true;
-            }
-
-            string cultureString = Preferences.Get($"{nameof(KutyApp)}.{nameof(SavedLanguage)}", string.Empty);
-            if (!string.IsNullOrEmpty(cultureString))
-            {
+                string apiKey = string.Empty;
                 try
                 {
-                    SavedLanguage = new CultureInfo(cultureString);
+                    apiKey = await SecureStorage.GetAsync($"{nameof(KutyApp)}.{nameof(ApiKey)}");
                 }
                 catch (System.Exception)
                 {
-                    SavedLanguage = Languages.Default;
+                    apiKey = Preferences.Get($"{nameof(KutyApp)}.{nameof(ApiKey)}", string.Empty);
                 }
+                if (!string.IsNullOrEmpty(apiKey))
+                {
+                    ApiKey = apiKey;
+                    IsLoggedIn = true;
+                }
+
+                string cultureString = Preferences.Get($"{nameof(KutyApp)}.{nameof(SavedLanguage)}", string.Empty);
+                if (!string.IsNullOrEmpty(cultureString))
+                {
+                    try
+                    {
+                        SavedLanguage = new CultureInfo(cultureString);
+                    }
+                    catch (System.Exception)
+                    {
+                        SavedLanguage = Languages.Default;
+                    }
+                }
+                else
+                    SavedLanguage = Languages.Default;
+
+                IsSettingsLoaded = true;
             }
-            else
-                SavedLanguage = Languages.Default;
+            
         }
 
         public void RemoveApiKey()
@@ -71,11 +78,11 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
 
                 try
                 {
-                    await SecureStorage.SetAsync($"{nameof(KutyApp)}.{nameof(apiKey)}", apiKey);
+                    await SecureStorage.SetAsync($"{nameof(KutyApp)}.{nameof(ApiKey)}", apiKey);
                 }
                 catch (System.Exception)
                 {
-                    Preferences.Set($"{nameof(KutyApp)}.{nameof(apiKey)}", apiKey);
+                    Preferences.Set($"{nameof(KutyApp)}.{nameof(ApiKey)}", apiKey);
                 }
             }
 
