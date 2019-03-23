@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Rg.Plugins.Popup.Services;
+using Behaviors;
 
 namespace KutyApp.Client.Xam.Views
 {

@@ -98,6 +98,8 @@ namespace KutyApp.Client.Xam.Views
                 OrEntry.ScaleTo(1),
                 OrEntry.FadeTo(1)
                 );
+
+            LoginButton.IsEnabled = false;
         }
 
         protected override async Task OnDisappearingAnimationBeginAsync()

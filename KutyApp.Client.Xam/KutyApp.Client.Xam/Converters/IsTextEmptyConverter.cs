@@ -4,15 +4,10 @@ using Xamarin.Forms;
 
 namespace KutyApp.Client.Xam.Converters
 {
-    public class InvertBooleanConverter : IValueConverter
+    public class IsTextEmptyConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is bool)
-                return !(bool)value;
-
-            return value;
-        }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture) =>
+            string.IsNullOrEmpty((value ?? string.Empty) as string);
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {

@@ -88,6 +88,8 @@ namespace KutyApp.Client.Xam.Views
                 RegisterButton.ScaleTo(1),
                 RegisterButton.FadeTo(1)
                 );
+
+            RegisterButton.IsEnabled = false;
         }
 
         protected override async Task OnDisappearingAnimationBeginAsync()

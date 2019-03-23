@@ -13,6 +13,7 @@
     <None Remove="Resources\Images\clipboard.png" />
     <None Remove="Resources\Images\dog.png" />
     <None Remove="Resources\Images\maps.png" />
+    <None Remove="Resources\Images\plus.png" />
     <None Remove="Resources\Images\user.png" />
   </ItemGroup>
 
@@ -20,6 +21,7 @@
     <EmbeddedResource Include="Resources\Images\clipboard.png" />
     <EmbeddedResource Include="Resources\Images\dog.png" />
     <EmbeddedResource Include="Resources\Images\maps.png" />
+    <EmbeddedResource Include="Resources\Images\plus.png" />
     <EmbeddedResource Include="Resources\Images\user.png" />
   </ItemGroup>
 

@@ -120,6 +120,8 @@
                                     <MultiTrigger.Conditions>
                                         <BindingCondition Binding="{Binding Source={x:Reference NameValidator}, Path=IsValid}" Value="True" />
                                         <BindingCondition Binding="{Binding Source={x:Reference PasswordValidator}, Path=IsValid}" Value="True" />
+                                        <BindingCondition Binding="{Binding UserName, Converter={StaticResource IsTextEmptyConverter}}" Value="False" />
+                                        <BindingCondition Binding="{x:Binding Password, Converter={StaticResource IsTextEmptyConverter}}" Value="False" />
                                     </MultiTrigger.Conditions>
                                     <Setter Property="IsEnabled" Value="True" />
                                 </MultiTrigger>

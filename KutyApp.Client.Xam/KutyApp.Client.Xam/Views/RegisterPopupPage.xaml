@@ -213,6 +213,10 @@
                                     <BindingCondition Binding="{Binding Source={x:Reference EmailValidator}, Path=IsValid}" Value="True" />
                                     <BindingCondition Binding="{Binding Source={x:Reference PasswordValidator}, Path=IsValid}" Value="True" />
                                     <BindingCondition Binding="{Binding Source={x:Reference PasswordConfirmValidator}, Path=IsValid}" Value="True" />
+                                    <BindingCondition Binding="{Binding UserName, Converter={StaticResource IsTextEmptyConverter}}" Value="False" />
+                                    <BindingCondition Binding="{Binding Email, Converter={StaticResource IsTextEmptyConverter}}" Value="False" />
+                                    <BindingCondition Binding="{Binding Password, Converter={StaticResource IsTextEmptyConverter}}" Value="False" />
+                                    <BindingCondition Binding="{Binding PasswordConfirm, Converter={StaticResource IsTextEmptyConverter}}" Value="False" />
                                 </MultiTrigger.Conditions>
                                 <Setter Property="IsEnabled" Value="True" />
                             </MultiTrigger>
