@@ -1,4 +1,4 @@
-﻿using KutyApp.Client.Services.LocalRepository.Entities.Enums;
+﻿using KutyApp.Client.Services.ClientConsumer.Enums;
 using System;
 
 namespace KutyApp.Client.Services.LocalRepository.Entities.Models

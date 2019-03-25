@@ -1,6 +1,7 @@
 ﻿using KutyApp.Client.Common.Constants;
-using KutyApp.Client.Services.LocalRepository.Entities.Enums;
-using KutyApp.Client.Services.LocalRepository.Entities.Models;
+using KutyApp.Client.Services.ClientConsumer.Dtos;
+using KutyApp.Client.Services.ClientConsumer.Enums;
+using KutyApp.Client.Services.ClientConsumer.Interfaces;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using Prism.Navigation;
@@ -17,13 +18,16 @@ namespace KutyApp.Client.Xam.ViewModels
     {
         private IPetRepository PetRepository { get; }
         private IMediaManager MediaManager { get; }
-        private Dog Pet { get; set; }
+        private IEnvironmentApiService EnvironmentApiService { get; }
+        private IKutyAppClientContext KutyAppClientContext { get; }
+        private PetDto Pet { get; set; }
 
-        public PetDetailPageViewModel(INavigationService navigationService, IPetRepository petRepository, IMediaManager mediaManager) : base(navigationService)
+        public PetDetailPageViewModel(INavigationService navigationService, IPetRepository petRepository, IMediaManager mediaManager, IEnvironmentApiService environmentApiService, IKutyAppClientContext kutyAppClientContext) : base(navigationService)
         {
-            IsBusy = true;
             PetRepository = petRepository;
             MediaManager = mediaManager;
+            EnvironmentApiService = environmentApiService;
+            KutyAppClientContext = kutyAppClientContext;
         }
 
         private string name;
@@ -80,7 +84,7 @@ namespace KutyApp.Client.Xam.ViewModels
         public string ImagePath
         {
             get { return imagePath ?? "https://via.placeholder.com/600x500?text=Your+Pet"; }
-                set { SetProperty(ref imagePath, value); }
+            set { SetProperty(ref imagePath, value); }
         }
         #endregion
 
@@ -89,13 +93,13 @@ namespace KutyApp.Client.Xam.ViewModels
             base.OnNavigatedTo(parameters);
             if (parameters.ContainsKey(ParameterKeys.PetId))
                 await LoadPet((int)parameters[ParameterKeys.PetId]);
-
-            IsBusy = false;
         }
 
         private async Task LoadPet(int id)
         {
-            Pet = await PetRepository.GetDogByIdAsync(id);
+            IsBusy = true;
+
+            Pet = await PetRepository.GetDetailedPetByIdAsync(id);
             Name = Pet.Name;
             ChipNumber = Pet.ChipNumber;
             Gender = Pet.Gender;
@@ -103,23 +107,27 @@ namespace KutyApp.Client.Xam.ViewModels
             Age = Pet.Age;
             Id = Pet.Id;
             ImagePath = Pet.ImagePath;
+
+            IsBusy = false;
         }
 
         public ICommand AddOrEditPetCommand =>
                  addOrEditPetCommand ?? (addOrEditPetCommand = new Command(
                     async () =>
                     {
-                        var dog = await PetRepository.AddOrEditDogAsync(Pet ?? new Dog {Name = Name, ChipNumber = chipNumber, Gender = Gender, BirthDate = BirthDate, ImagePath = ImagePath });
-                        if (dog.Id != 0)
-                            await NavigationService.NavigateAsync(nameof(Views.PetsPage));
+                        ////TODO
+                        //var dog = await PetRepository.AddOrEditDogAsync(Pet ?? new Dog {Name = Name, ChipNumber = chipNumber, Gender = Gender, BirthDate = BirthDate, ImagePath = ImagePath });
+                        //if (dog.Id != 0)
+                        //    await NavigationService.NavigateAsync(nameof(Views.PetsPage));
                     }));
 
         public ICommand DeletePetCommand =>
                 deletePetCommand ?? (deletePetCommand = new Command(
                     async () =>
                     {
-                        await PetRepository.DeleteDogAsync(id);
-                        await NavigationService.NavigateAsync(nameof(Views.PetsPage));
+                        //TODO:
+                        //await PetRepository.DeleteDogAsync(id);
+                        //await NavigationService.NavigateAsync(nameof(Views.PetsPage));
                     }));
 
 

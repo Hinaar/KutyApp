@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -404,11 +405,13 @@ namespace KutyApp.Services.Environment.Bll.Managers
                 using (IDbContextTransaction transaction = await DbContext.Database.BeginTransactionAsync())
                 {
                     await DbContext.SaveChangesAsync();
-
                     if(pet.ImagePath != dto.ImagePath)
                     {
                         if (!string.IsNullOrEmpty(pet.ImagePath))
+                        {
                             DataManager.DeleteFile(pet.ImagePath);
+                            pet.ImagePath = null;
+                        }
 
                         if(file != null)
                         {
@@ -423,6 +426,13 @@ namespace KutyApp.Services.Environment.Bll.Managers
             }
 
             return await GetPetAsync(pet.Id);
+        }
+
+        public async Task<List<UserDto>> ListAvailableSittersAsync(string username)
+        {
+            var users = await DbContext.Users.AsNoTracking().Where(u => u.UserName.Contains(username ?? string.Empty, StringComparison.CurrentCultureIgnoreCase)).ToListAsync();
+
+            return Mapper.Map<List<UserDto>>(users);
         }
     }
 }

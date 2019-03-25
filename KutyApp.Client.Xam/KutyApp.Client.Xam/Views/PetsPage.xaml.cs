@@ -14,7 +14,7 @@ namespace KutyApp.Client.Xam.Views
 	{
 		public PetsPage ()
 		{
-			InitializeComponent ();
+             InitializeComponent();
 		}
     }
 }

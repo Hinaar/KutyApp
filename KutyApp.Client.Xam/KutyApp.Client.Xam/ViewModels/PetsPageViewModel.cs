@@ -1,12 +1,13 @@
 ﻿using KutyApp.Client.Common.Constants;
-using KutyApp.Client.Services.LocalRepository.Entities.Models;
+using KutyApp.Client.Services.ClientConsumer.Dtos;
+using KutyApp.Client.Services.ClientConsumer.Interfaces;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
+using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using Prism.Navigation;
 using Prism.Services;
-using System;
+using System.Collections.Async;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -18,12 +19,15 @@ namespace KutyApp.Client.Xam.ViewModels
     {
         private IPetRepository PetRepository { get; }
         private IPageDialogService PageDialogService { get; }
-        public PetsPageViewModel(INavigationService navigationService, IPetRepository petRepository, IPageDialogService pageDialogService) : base(navigationService)
+        private IEnvironmentApiService EnvironmentApi { get; }
+        private IKutyAppClientContext KutyAppClientContext { get; }
+        public PetsPageViewModel(INavigationService navigationService, IPetRepository petRepository, IPageDialogService pageDialogService, IEnvironmentApiService environmentApi, IKutyAppClientContext kutyAppClientContext) : base(navigationService)
         {
-            IsBusy = true;
             this.PetRepository = petRepository;
             this.PageDialogService = pageDialogService;
-            Dogs = new ObservableCollection<Dog>();
+            this.EnvironmentApi = environmentApi;
+            this.KutyAppClientContext = kutyAppClientContext;
+            //Pets = new ObservableCollection<PetsListItemViewModel>();
         }
 
         private ICommand navigateToPetsDetailPage;
@@ -34,7 +38,7 @@ namespace KutyApp.Client.Xam.ViewModels
         public ICommand NavigateToPetsDetailPage =>
                 navigateToPetsDetailPage ?? (navigateToPetsDetailPage = new Command(
                     async param =>
-                        await NavigationService.NavigateAsync(nameof(Views.PetDetailPage), new NavigationParameters { { ParameterKeys.PetId, (int)(param as Dog).Id } })));
+                        await NavigationService.NavigateAsync(nameof(Views.PetDetailPage), new NavigationParameters { { ParameterKeys.PetId, (int)(param as PetDto).Id } })));
 
         public ICommand NewPetCommand =>
                 newPetCommand ?? (newPetCommand = new Command(
@@ -43,18 +47,18 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public ICommand DeletePetCommand =>
             deletePetCommand ?? (deletePetCommand = new Command(
-                async param => await DeletePet(param as Dog)));
+                async param => await DeletePet(param as PetDto)));
 
         public ICommand RefreshListCommand =>
              refreshListCommand ?? (refreshListCommand = new Command(
                  async () => await LoadMyPetsAsync(true)));
 
-        private ObservableCollection<Dog> dogs;
+        private ObservableCollection<PetsListItemViewModel> pets;
 
-        public ObservableCollection<Dog> Dogs
+        public ObservableCollection<PetsListItemViewModel> Pets
         {
-            get { return dogs; }
-            set { SetProperty(ref dogs, value); }
+            get { return pets; }
+            set { SetProperty(ref pets, value); }
         }
 
         private bool isRefreshing;
@@ -64,7 +68,10 @@ namespace KutyApp.Client.Xam.ViewModels
             get { return isRefreshing; }
             set { SetProperty(ref isRefreshing, value); }
         }
-
+        public override void OnNavigatingTo(INavigationParameters parameters)
+        {
+            base.OnNavigatingTo(parameters);
+        }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -72,10 +79,18 @@ namespace KutyApp.Client.Xam.ViewModels
             await LoadMyPetsAsync();
         }
 
-        private async Task DeletePet(Dog dog)
+        private async Task DeletePet(PetDto pet)
         {
-            await PetRepository.DeleteDogAsync(dog.Id);
-            await LoadMyPetsAsync();
+            if (KutyAppClientContext.IsLoggedIn)
+            {
+                await EnvironmentApi.DeletePetAsync(pet.Id);
+                await LoadMyPetsAsync();
+            }
+            else
+            {
+                await PageDialogService.DisplayAlertAsync("warning", "csak online lehet torolni", "OK");
+                //await PetRepository.DeleteDogAsync(pet.Id);
+            }
         }
 
         private async Task LoadMyPetsAsync(bool isRefresh = false)
@@ -85,15 +100,19 @@ namespace KutyApp.Client.Xam.ViewModels
             else
                 IsBusy = true;
 
-            var pets = await PetRepository.GetDogsAsync();
-            Dogs = new ObservableCollection<Dog>(pets);
-            if (!Dogs.Any())
-                Dogs.Add(new Dog { Name = "My First Pet", BirthDate = DateTime.Now.AddYears(-1) });
+            IEnumerable<PetDto> pets;
 
+            if (KutyAppClientContext.IsLoggedIn)
+                pets = await EnvironmentApi.GetMyPetsAsync();
+            else
+                pets = await PetRepository.GetMyPetsAsync();
 
+            Pets = new ObservableCollection<PetsListItemViewModel>(pets.Select(p => new PetsListItemViewModel(EnvironmentApi, p)));
             if (isRefresh)
                 IsRefreshing = false;
             else IsBusy = false;
+
+            await Pets.ParallelForEachAsync(async p => await p.LoadImageAsync(), maxDegreeOfParalellism: 4);
         }
     }
 }

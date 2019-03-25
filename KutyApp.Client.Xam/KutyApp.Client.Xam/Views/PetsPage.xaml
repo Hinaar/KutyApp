@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             NavigationPage.HasNavigationBar="True"
+             NavigationPage.HasNavigationBar="False"
              Title="PetPage"
-             xmlns:models="clr-namespace:KutyApp.Client.Services.LocalRepository.Entities.Models;assembly=KutyApp.Client.Services.LocalRepository"
+             xmlns:models="clr-namespace:KutyApp.Client.Services.ClientConsumer.Dtos;assembly=KutyApp.Client.Services.ClientConsumer"
              xmlns:local="clr-namespace:KutyApp.Client.Xam"
              xmlns:converters="clr-namespace:KutyApp.Client.Xam.Converters"
              xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
@@ -17,8 +17,8 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-            <ListView ItemsSource="{Binding Dogs, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshListCommand}" IsRefreshing="{Binding IsRefreshing}"
-                      SeparatorVisibility="Default" HasUnevenRows="True" SelectionMode="None" x:Name="List">
+            <ListView ItemsSource="{Binding Petvms, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshListCommand}" IsRefreshing="{Binding IsRefreshing}"
+                      SeparatorVisibility="Default" HasUnevenRows="True" SelectionMode="None" x:Name="List2">
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemTapped" 
                                               Command="{Binding NavigateToPetsDetailPage}" 
@@ -26,11 +26,11 @@
                 </ListView.Behaviors>
                 <!--TODO: Dog helyett dogviewmodel-eket tartalmazzon -> hosszan nyomott commandok egybol tudnak hivatkozni a benne levo dolgokra pl. delete-->
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models:Dog">
+                    <DataTemplate x:DataType="local:ViewModels.PetsListItemViewModel">
                         <ViewCell>
                             <ViewCell.ContextActions>
-                                <MenuItem Text="New" Command="{Binding Path=BindingContext.NewPetCommand, Source={x:Reference Name=List}}" />
-                                <MenuItem Text="Delete" IsDestructive="True" Command="{Binding Path=BindingContext.DeletePetCommand, Source={x:Reference Name=List}}" CommandParameter="{Binding .}"/>
+                                <MenuItem Text="New" Command="{Binding Path=BindingContext.NewPetCommand, Source={x:Reference Name=List2}}" />
+                                <MenuItem Text="Delete" IsDestructive="True" Command="{Binding Path=BindingContext.DeletePetCommand, Source={x:Reference Name=List2}}" CommandParameter="{Binding .}"/>
                             </ViewCell.ContextActions>
                             <Frame BorderColor="White" Margin="3" Padding="1" CornerRadius="15">
                                 <Frame CornerRadius="15" Padding="0" Margin="0">
@@ -39,15 +39,15 @@
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="2*" />
                                         </Grid.ColumnDefinitions>
+
                                         <StackLayout Grid.Column="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource ExtraEntryBackgroundColor}" Opacity="1"/>
-                                        <!--<Image Grid.Column="0" Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}" />-->
-                                        <Image Grid.Column="0" Source="{Binding ImagePath, Converter={StaticResource DefaultImageConverter}, ConverterParameter={local:ImageResource KutyApp.Client.Xam.Resources.Images.dog.png}}" />
                                         <StackLayout Grid.Column="1"  Padding="0" Margin="0" VerticalOptions="StartAndExpand"
                                                  HorizontalOptions="FillAndExpand">
-                                            <Label Text="{Binding Name}" TextColor="White"/>
-                                            <Label Text="{Binding Gender}" TextColor="White"/>
-                                            <Label Text="{Binding Age}" TextColor="White"/>
+                                            <Label Text="{Binding PetDto.Name}" TextColor="White"/>
+                                            <Label Text="{Binding PetDto.Gender}" TextColor="White"/>
+                                            <Label Text="{Binding PetDto.Age}" TextColor="White"/>
                                         </StackLayout>
+                                        <Image Source="{Binding PetImageSource, Mode=TwoWay}" HeightRequest="60" />
                                     </Grid>
                                 </Frame>
                             </Frame>
@@ -55,6 +55,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
+            
             <Frame x:Name="FloatingButtonWrapper" CornerRadius="100" WidthRequest="20" HeightRequest="20" BackgroundColor="#eb3a77" HorizontalOptions="End" VerticalOptions="End" Margin="20">
                 <ImageButton Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.plus.png}"
                              Aspect="AspectFit"

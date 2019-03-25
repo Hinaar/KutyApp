@@ -10,7 +10,10 @@ namespace KutyApp.Client.Services.LocalRepository.Entities
     {
         private readonly string dbPath;
 
-        public DbSet<Dog> Dogs { get; set; }
+        //public DbSet<Dog> Dogs { get; set; }
+        public DbSet<Pet> Pets { get; set; }
+        public DbSet<MedicalTreatment> MedicalTreatments { get; set; }
+        public DbSet<Habit> Habits { get; set; }
 
         public PetDbContext(string path) : base()
         {
@@ -27,13 +30,19 @@ namespace KutyApp.Client.Services.LocalRepository.Entities
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Dog>().HasKey(d => d.Id);
-            builder.Entity<Dog>().Property(d => d.Name).IsRequired();
-            builder.Entity<Dog>().Property(d => d.Gender).IsRequired();
+            builder.Entity<Pet>().HasKey(d => d.Id);
+            builder.Entity<Pet>().HasMany(p => p.Habits).WithOne(h => h.Pet);
+            builder.Entity<Pet>().HasMany(p => p.MedicalTreatments).WithOne(m => m.Pet);
+
+            builder.Entity<Habit>().HasKey(h => h.Id);
+            builder.Entity<Habit>().HasOne(h => h.Pet).WithMany(p => p.Habits);
+
+            builder.Entity<MedicalTreatment>().HasKey(m => m.Id);
+            builder.Entity<MedicalTreatment>().HasOne(m => m.Pet).WithMany(p => p.MedicalTreatments);
             //base.OnModelCreating(modelBuilder);
 
-            builder.Entity<Dog>()
-                .HasData(new Dog { Id = 1, Name = "TestDog", BirthDate = new DateTime(2015,08,08), ChipNumber = "MA0165858003D", Color = "brown", Gender = Enums.Gender.Male, Weight = 13.2});
+            //builder.Entity<Dog>()
+            //    .HasData(new Dog { Id = 1, Name = "TestDog", BirthDate = new DateTime(2015,08,08), ChipNumber = "MA0165858003D", Color = "brown", Gender = Enums.Gender.Male, Weight = 13.2});
         }
     }
 }

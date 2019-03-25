@@ -38,6 +38,10 @@ namespace KutyApp.Services.Environment.Api.Controllers
         public async Task<ActionResult> RemovePetSitter(AddOrRemovePetSitterDto dto) =>
             await ResultAsync(PetManager.RemovePetSitter(dto));
 
+        [HttpGet("availableSitters")]
+        public async Task<ActionResult<List<UserDto>>> ListAvailableSitters(string username) =>
+            Result(await PetManager.ListAvailableSittersAsync(username));
+
         [HttpGet("{id}")]
         public async Task<ActionResult<PetDto>> GetPet(int id) =>
             Result(await PetManager.GetPetAsync(id));

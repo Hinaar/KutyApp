@@ -2,9 +2,9 @@
 using System;
 using System.Collections.Generic;
 
-namespace KutyApp.Client.Services.ClientConsumer.Dtos
+namespace KutyApp.Client.Services.LocalRepository.Entities.Models
 {
-    public class PetDto
+    public class Pet
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -24,11 +24,14 @@ namespace KutyApp.Client.Services.ClientConsumer.Dtos
                 0;
             private set { }
         }
-        public UserDto Owner { get; set; }
-        public bool IsMyPet { get; set; } = false;
-        public List<HabitDto> Habits { get; set; }
-        public List<MedicalTreatmentDto> MedicalTreatments { get; set; }
-        public List<UserDto> Sitters { get; set; }
-        //public ICollection<AddOrPetSittingDto> PetSittings { get; set; }
+        public ICollection<Habit> Habits { get; set; }
+        public ICollection<MedicalTreatment> MedicalTreatments { get; set; }
+        public string OwnerId { get; set; }
+
+        public Pet()
+        {
+            Habits = new HashSet<Habit>();
+            MedicalTreatments = new HashSet<MedicalTreatment>();
+        }
     }
 }

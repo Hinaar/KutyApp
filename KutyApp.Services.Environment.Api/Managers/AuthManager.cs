@@ -1,4 +1,5 @@
-﻿using KutyApp.Services.Environment.Api.Extensions;
+﻿using AutoMapper;
+using KutyApp.Services.Environment.Api.Extensions;
 using KutyApp.Services.Environment.Bll.Configuration;
 using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Entities.Model;
@@ -9,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -54,7 +56,7 @@ namespace KutyApp.Services.Environment.Api.Managers
                         issuer: JwtSettings.Issuer,
                         audience: JwtSettings.Audience,
                         notBefore: DateTime.Now,
-                        expires: DateTime.Now.AddMinutes(JwtSettings.ExpiricyInMinutes),
+                        expires: dto.RememberMe ? (DateTime?)null : DateTime.Now.AddMinutes(JwtSettings.ExpiricyInMinutes),
                         signingCredentials: signingCredentials,
                         claims: claims
                     );

@@ -16,5 +16,6 @@ namespace KutyApp.Services.Environment.Bll.Interfaces
         Task<List<PetDto>> ListMyPetsAsync();
         Task<List<PetDto>> ListMySittedPetsAsync();
         Task<PetDto> AddOrEditComplexPetAsync(AddOrEditPetDto dto, IFormFile file);
+        Task<List<UserDto>> ListAvailableSittersAsync(string username);
     }
 }
