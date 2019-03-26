@@ -17,7 +17,7 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <Grid>
-            <ListView ItemsSource="{Binding Petvms, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshListCommand}" IsRefreshing="{Binding IsRefreshing}"
+            <ListView ItemsSource="{Binding Pets, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding RefreshListCommand}" IsRefreshing="{Binding IsRefreshing}"
                       SeparatorVisibility="Default" HasUnevenRows="True" SelectionMode="None" x:Name="List2">
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemTapped" 

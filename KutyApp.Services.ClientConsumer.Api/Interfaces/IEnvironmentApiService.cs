@@ -84,7 +84,7 @@ namespace KutyApp.Client.Services.ClientConsumer.Interfaces
 
         [Get("/api/pet/{id}")]
         [Headers("Authorization: Bearer")]
-        Task GetPetAsync(int id);
+        Task<PetDto> GetPetAsync(int id);
 
         [Get("/api/pet/myPets")]
         [Headers("Authorization: Bearer")]

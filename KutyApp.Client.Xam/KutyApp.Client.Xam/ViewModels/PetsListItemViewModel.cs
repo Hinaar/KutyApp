@@ -1,5 +1,6 @@
 ﻿using KutyApp.Client.Services.ClientConsumer.Dtos;
 using KutyApp.Client.Services.ClientConsumer.Interfaces;
+using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
@@ -13,16 +14,13 @@ namespace KutyApp.Client.Xam.ViewModels
 {
     public class PetsListItemViewModel : BindableBase
     {
-        IEnvironmentApiService EnvironmentApiService { get; }
+        private IEnvironmentApiService EnvironmentApiService { get; }
+        private IKutyAppClientContext KutyAppClientContext { get; }
 
-        public PetsListItemViewModel(IEnvironmentApiService environmentApiService)
+        public PetsListItemViewModel(IEnvironmentApiService environmentApiService, IKutyAppClientContext kutyAppClientContext, PetDto dto)
         {
             EnvironmentApiService = environmentApiService;
-        }
-
-        public PetsListItemViewModel(IEnvironmentApiService environmentApiService, PetDto dto)
-        {
-            EnvironmentApiService = environmentApiService;
+            KutyAppClientContext = kutyAppClientContext;
             PetDto = dto;
         }
 
@@ -38,9 +36,24 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public async Task LoadImageAsync()
         {
-            var content = await EnvironmentApiService.GetImageAsync(PetDto.ImagePath);
-            InnerStream = await content.ReadAsStreamAsync();
-            PetImageSource = ImageSource.FromStream(() =>InnerStream);
+            try
+            {
+                if (!string.IsNullOrEmpty(PetDto.ImagePath))
+                {
+                    if (KutyAppClientContext.IsLoggedIn)
+                    {
+                        var content = await EnvironmentApiService.GetImageAsync(PetDto.ImagePath);
+                        InnerStream = await content.ReadAsStreamAsync();
+                        PetImageSource = ImageSource.FromStream(() => InnerStream);
+                    }
+                    else
+                        PetImageSource = ImageSource.FromFile(PetDto.ImagePath);
+                }
+            }
+            catch (Exception e)
+            {
+                //notfound exc
+            }
         }
 
     }

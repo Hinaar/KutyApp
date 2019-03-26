@@ -38,7 +38,7 @@ namespace KutyApp.Client.Xam.ViewModels
         public ICommand NavigateToPetsDetailPage =>
                 navigateToPetsDetailPage ?? (navigateToPetsDetailPage = new Command(
                     async param =>
-                        await NavigationService.NavigateAsync(nameof(Views.PetDetailPage), new NavigationParameters { { ParameterKeys.PetId, (int)(param as PetDto).Id } })));
+                        await NavigationService.NavigateAsync(nameof(Views.PetDetailPage), new NavigationParameters { { ParameterKeys.PetId, (int)(param as PetsListItemViewModel).PetDto.Id } })));
 
         public ICommand NewPetCommand =>
                 newPetCommand ?? (newPetCommand = new Command(
@@ -47,7 +47,7 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public ICommand DeletePetCommand =>
             deletePetCommand ?? (deletePetCommand = new Command(
-                async param => await DeletePet(param as PetDto)));
+                async param => await DeletePet((param as PetsListItemViewModel).PetDto)));
 
         public ICommand RefreshListCommand =>
              refreshListCommand ?? (refreshListCommand = new Command(
@@ -107,12 +107,20 @@ namespace KutyApp.Client.Xam.ViewModels
             else
                 pets = await PetRepository.GetMyPetsAsync();
 
-            Pets = new ObservableCollection<PetsListItemViewModel>(pets.Select(p => new PetsListItemViewModel(EnvironmentApi, p)));
+            //TODO: ures listanal a parallel elszal
+            if (pets.Any())
+            {
+                Pets = new ObservableCollection<PetsListItemViewModel>(pets.Select(p => new PetsListItemViewModel(EnvironmentApi, KutyAppClientContext,p)));
+
+                if (isRefresh)
+                    IsRefreshing = false;
+                else IsBusy = false;
+                await Pets.ParallelForEachAsync(async p => await p.LoadImageAsync(), maxDegreeOfParalellism: 4);
+            }
+
             if (isRefresh)
                 IsRefreshing = false;
             else IsBusy = false;
-
-            await Pets.ParallelForEachAsync(async p => await p.LoadImageAsync(), maxDegreeOfParalellism: 4);
         }
     }
 }

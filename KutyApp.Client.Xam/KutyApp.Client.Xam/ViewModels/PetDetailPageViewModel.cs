@@ -7,6 +7,7 @@ using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -38,6 +39,8 @@ namespace KutyApp.Client.Xam.ViewModels
         private int? age;
         private int id;
         private string imagePath;
+        private ImageSource petImageSource;
+        private bool isOnline;
 
         private ICommand addOrEditPetCommand;
         private ICommand deletePetCommand;
@@ -83,8 +86,20 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public string ImagePath
         {
-            get { return imagePath ?? "https://via.placeholder.com/600x500?text=Your+Pet"; }
+            get { return imagePath; }
             set { SetProperty(ref imagePath, value); }
+        }
+
+        public ImageSource PetImageSource
+        {
+            get => petImageSource ?? ImageSource.FromUri(new Uri("https://via.placeholder.com/600x500?text=Your+Pet"));
+            set => SetProperty(ref petImageSource, value);
+        }
+
+        public bool IsOnline
+        {
+            get => isOnline;
+            set => SetProperty(ref isOnline, value);
         }
         #endregion
 
@@ -93,13 +108,15 @@ namespace KutyApp.Client.Xam.ViewModels
             base.OnNavigatedTo(parameters);
             if (parameters.ContainsKey(ParameterKeys.PetId))
                 await LoadPet((int)parameters[ParameterKeys.PetId]);
+
+            IsOnline = KutyAppClientContext.IsLoggedIn;
         }
 
         private async Task LoadPet(int id)
         {
             IsBusy = true;
 
-            Pet = await PetRepository.GetDetailedPetByIdAsync(id);
+            Pet = KutyAppClientContext.IsLoggedIn ? await EnvironmentApiService.GetPetAsync(id) : await PetRepository.GetDetailedPetByIdAsync(id);
             Name = Pet.Name;
             ChipNumber = Pet.ChipNumber;
             Gender = Pet.Gender;
@@ -108,26 +125,84 @@ namespace KutyApp.Client.Xam.ViewModels
             Id = Pet.Id;
             ImagePath = Pet.ImagePath;
 
+            if (!string.IsNullOrEmpty(ImagePath))
+                await LoadImage();
+
             IsBusy = false;
+        }
+
+        private Stream innerStream; 
+        private async Task LoadImage(bool pickedPhoto = false)
+        {
+            try
+            {
+                if (KutyAppClientContext.IsLoggedIn && !pickedPhoto)
+                {
+                    var content = await EnvironmentApiService.GetImageAsync(ImagePath);
+                    innerStream = await content.ReadAsStreamAsync();
+                    PetImageSource = ImageSource.FromStream(() => innerStream);
+                }
+                else
+                    PetImageSource = ImageSource.FromFile(ImagePath);
+            }
+            catch (Exception e)
+            {
+
+            }
         }
 
         public ICommand AddOrEditPetCommand =>
                  addOrEditPetCommand ?? (addOrEditPetCommand = new Command(
-                    async () =>
-                    {
-                        ////TODO
-                        //var dog = await PetRepository.AddOrEditDogAsync(Pet ?? new Dog {Name = Name, ChipNumber = chipNumber, Gender = Gender, BirthDate = BirthDate, ImagePath = ImagePath });
-                        //if (dog.Id != 0)
-                        //    await NavigationService.NavigateAsync(nameof(Views.PetsPage));
-                    }));
+                    async () => await AddOrEditPet()
+                    ));
+
+        private async Task AddOrEditPet()
+        {
+            try
+            {
+            //TODO: habit, medicaltreatment
+            var dto = new AddOrEditPetDto
+            {
+                Id = Pet?.Id,
+                BirthDate = BirthDate,
+                ChipNumber = ChipNumber,
+                //Color = Color,
+                Gender = Gender,
+                Name = Name,
+                //Weight = Weight,
+                Habits = new List<AddOrEditHabitDto>(),
+                MedicalTreatments = new List<AddOrEditMedicalTreatmentDto>()
+            };
+
+            if(ImagePath != Pet?.ImagePath)
+            {
+                using (FileStream file = new FileStream(ImagePath, FileMode.Open))
+                {
+                    var res = await EnvironmentApiService.AddOrEditComplexPetAsync(dto,  new Refit.StreamPart(file, Path.GetFileName(ImagePath)));
+                    if (res.Id != 0)
+                        await NavigationService.NavigateAsync(nameof(Views.PetsPage));
+                }
+            }
+            else
+            {
+                var res = await EnvironmentApiService.AddOrEditPetAsync(dto);
+                if (res.Id != 0)
+                    await NavigationService.NavigateAsync(nameof(Views.PetsPage));
+            }
+            }
+            catch (Exception e)
+            {
+
+            }
+        }
 
         public ICommand DeletePetCommand =>
                 deletePetCommand ?? (deletePetCommand = new Command(
                     async () =>
                     {
-                        //TODO:
-                        //await PetRepository.DeleteDogAsync(id);
-                        //await NavigationService.NavigateAsync(nameof(Views.PetsPage));
+                        //TODO: tenyleg akarja e torolni dialogservice
+                        await EnvironmentApiService.DeletePetAsync(id);
+                        await NavigationService.NavigateAsync(nameof(Views.PetsPage));
                     }));
 
 
@@ -145,10 +220,10 @@ namespace KutyApp.Client.Xam.ViewModels
             if(file != null)
             {
                 //TODO: save picked image into private library
-
-                Pet.ImagePath = file.Path;
                 ImagePath = file.Path;
                 file.Dispose();
+
+                await LoadImage(true);
             }
         }
 
@@ -158,9 +233,10 @@ namespace KutyApp.Client.Xam.ViewModels
 
             if (file != null)
             {
-                Pet.ImagePath = file.Path;
                 ImagePath = file.Path;
                 file.Dispose();
+
+                await LoadImage(true);
             }
         }
     }
