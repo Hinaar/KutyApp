@@ -2,16 +2,8 @@
 
 namespace KutyApp.Client.Xam.Controls
 {
-    public class ExtraEntry : Entry
+    public class ExtraPicker : Picker
     {
-        public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create("CornerRadius", typeof(int), typeof(ExtraEntry), default(int));
-
-        public int CornerRadius
-        {
-            get { return (int)GetValue(CornerRadiusProperty); }
-            set { SetValue(CornerRadiusProperty, value); }
-        }
-
         public static readonly BindableProperty MyBackgroundColorProperty = BindableProperty.Create("MyBackgroundColor", typeof(Color), typeof(ExtraEntry), default(Color));
 
         public Color MyBackgroundColor
@@ -34,6 +26,14 @@ namespace KutyApp.Client.Xam.Controls
         {
             get { return (int)GetValue(BorderThicknessProperty); }
             set { SetValue(BorderThicknessProperty, value); }
+        }
+
+        public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create("CornerRadius", typeof(int), typeof(ExtraEntry), default(int));
+
+        public int CornerRadius
+        {
+            get { return (int)GetValue(CornerRadiusProperty); }
+            set { SetValue(CornerRadiusProperty, value); }
         }
     }
 }

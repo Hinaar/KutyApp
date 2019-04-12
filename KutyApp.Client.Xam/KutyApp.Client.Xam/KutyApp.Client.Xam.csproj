@@ -10,6 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Implementations\**" />
+    <EmbeddedResource Remove="Implementations\**" />
+    <None Remove="Implementations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Resources\Images\clipboard.png" />
     <None Remove="Resources\Images\dog.png" />
     <None Remove="Resources\Images\maps.png" />
@@ -28,6 +34,7 @@
   <ItemGroup>
     <PackageReference Include="AsyncEnumerator" Version="2.2.2" />
     <PackageReference Include="Behaviors.Forms" Version="1.4.0" />
+    <PackageReference Include="CarouselView.FormsPlugin" Version="5.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.0" />
     <PackageReference Include="Plugin.Permissions" Version="3.0.0.12" />
     <PackageReference Include="Prism.Plugin.Popups" Version="2.2.0.293" />
@@ -64,22 +71,30 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Texts.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\PetDetailPage.xaml">
+    <EmbeddedResource Update="Views\ContentViews\PetDetailView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\PetsPage.xaml">
+    <EmbeddedResource Update="Views\ContentViews\PetHabitsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\PoisPage.xaml">
+    <EmbeddedResource Update="Views\Pages\PetDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Pages\PetsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Pages\PoisPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Pages\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TempPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Implementations\" />
+    <EmbeddedResource Update="Views\View1.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>
@@ -98,10 +113,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Texts.resx</DependentUpon>
     </Compile>
-    <Compile Update="Views\RegisterPopupPage.xaml.cs">
+    <Compile Update="Views\Pages\Popup\PetHabitPopupPage.xaml.cs">
+      <DependentUpon>PetHabitPopupPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Pages\Popup\RegisterPopupPage.xaml.cs">
       <DependentUpon>RegisterPopupPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="Views\LoginPopupPage.xaml.cs">
+    <Compile Update="Views\Pages\Popup\LoginPopupPage.xaml.cs">
       <DependentUpon>LoginPopupPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>

@@ -8,22 +8,22 @@ using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ExportRenderer(typeof(ExtraEntry), typeof(ExtraEntryRendererDroid))]
+[assembly: ExportRenderer(typeof(ExtraTimePicker), typeof(ExtraTimePickerRendererDroid))]
 namespace KutyApp.Client.Xam.Droid.Renderers
 {
-    public class ExtraEntryRendererDroid : EntryRenderer
+    public class ExtraTimePickerRendererDroid : TimePickerRenderer
     {
-        public ExtraEntryRendererDroid(Context context) : base(context)
+        public ExtraTimePickerRendererDroid(Context context) : base(context)
         {
             AutoPackage = false;
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<TimePicker> e)
         {
             base.OnElementChanged(e);
             if (e.NewElement == null) return;
             
-            var customEntry = e.NewElement as ExtraEntry;
+            var customEntry = e.NewElement as ExtraTimePicker;
             if (customEntry == null) return;
 
             GradientDrawable gd = new GradientDrawable();
@@ -33,12 +33,12 @@ namespace KutyApp.Client.Xam.Droid.Renderers
             Control.SetBackground(gd);
         }
 
-        private string[] customRenderValues = { nameof(ExtraEntry.MyBackgroundColor), nameof(ExtraEntry.CornerRadius), nameof(ExtraEntry.BorderThickness), nameof(ExtraEntry.BorderColor) };
+        private string[] customRenderValues = { nameof(ExtraTimePicker.MyBackgroundColor), nameof(ExtraTimePicker.CornerRadius), nameof(ExtraTimePicker.BorderThickness), nameof(ExtraTimePicker.BorderColor) };
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            var customEntry = sender as ExtraEntry;
+            var customEntry = sender as ExtraTimePicker;
 
             if (customRenderValues.Contains(e.PropertyName))
             {

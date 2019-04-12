@@ -14,5 +14,6 @@ namespace KutyApp.Client.Services.LocalRepository.Interfaces
         Task<List<PetDto>> GetMyPetsAsync();
         Task<PetDto> GetDetailedPetByIdAsync(int petId);
         Task DeletePetsAsync();
+        Task SaveMyPetsAsync(List<PetDto> dtos);
     }
 }

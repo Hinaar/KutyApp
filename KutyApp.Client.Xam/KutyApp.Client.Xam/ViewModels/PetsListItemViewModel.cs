@@ -27,7 +27,7 @@ namespace KutyApp.Client.Xam.ViewModels
         private ImageSource petImageSource;
         public ImageSource PetImageSource
         {
-            get => petImageSource ?? ImageSource.FromUri(new Uri("https://via.placeholder.com/600x500?text=Your+Pet"));
+            get => petImageSource ?? ImageSource.FromUri(new Uri("http://via.placeholder.com/600x500?text=Your+Pet"));
             set => SetProperty(ref petImageSource, value);
         }
         public PetDto PetDto { get; private set; }

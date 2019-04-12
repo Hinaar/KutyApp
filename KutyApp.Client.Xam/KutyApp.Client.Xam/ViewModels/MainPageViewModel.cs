@@ -25,6 +25,7 @@ namespace KutyApp.Client.Xam.ViewModels
             KutyAppClientContext = kutyAppClientContext;
             IsEnglish = CurrentLanguage == Languages.En || CurrentLanguage == Languages.Default;
             IsLoggedIn = false;
+            Title = "main vm ciim";
         }
 
         public override async void OnNavigatingTo(INavigationParameters parameters)
@@ -54,7 +55,10 @@ namespace KutyApp.Client.Xam.ViewModels
 
         private ICommand navigateToPetsPage;
         private ICommand navigateToPoisPage;
+        private ICommand navigateToProfilePage;
         private ICommand changeLanguage;
+        private ICommand navigateToAdvertPage;
+        private ICommand openPopupCommand;
 
         public ICommand NavigateToPetsPage =>
                 navigateToPetsPage ?? (navigateToPetsPage = new Command(
@@ -66,6 +70,10 @@ namespace KutyApp.Client.Xam.ViewModels
                     async () => 
                         await NavigationService.NavigateAsync(nameof(Views.PoisPage))));
 
+        public ICommand NavigateToProfilePage =>
+            navigateToProfilePage ?? (navigateToProfilePage = new Command(
+                async () => await NavigationService.NavigateAsync(nameof(Views.ProfilePage))));
+
         public ICommand ChangeLanguage =>
             changeLanguage ?? (changeLanguage = new Command(
                 async () =>
@@ -75,7 +83,9 @@ namespace KutyApp.Client.Xam.ViewModels
                         await NavigationService.NavigateAsync("app:///MainPage", animated: false);
                     }));
 
-        private ICommand openPopupCommand;
+        public ICommand NavigateToAdvertPage =>
+            navigateToAdvertPage ?? (navigateToAdvertPage = new Command(
+                async () => await NavigationService.NavigateAsync(nameof(TempPage))));
 
         public ICommand OpenPopupCommand =>
             openPopupCommand ?? (openPopupCommand = new Command(

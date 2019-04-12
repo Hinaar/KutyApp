@@ -57,9 +57,10 @@ namespace KutyApp.Client.Xam
             containerRegistry.RegisterForNavigation<PetsPage, PetsPageViewModel>();
             containerRegistry.RegisterForNavigation<PetDetailPage, PetDetailPageViewModel>();
             containerRegistry.RegisterForNavigation<PoisPage, PoisPageViewModel>();
-            containerRegistry.RegisterForNavigation<TempPage>(); //vm automatikusan
+            containerRegistry.RegisterForNavigation<ProfilePage, ProfilePageViewModel>();
             containerRegistry.RegisterForNavigation<LoginPopupPage>();
             containerRegistry.RegisterForNavigation<RegisterPopupPage>();
+            containerRegistry.RegisterForNavigation<PetHabitPopupPage>();
             containerRegistry.Register<IPermissionManager, PermissionManager>();
             containerRegistry.Register<IMediaManager, MediaManager>();
             //containerRegistry.RegisterInstance<IPetRepository>(new PetRepositoryManager(localDbPath));

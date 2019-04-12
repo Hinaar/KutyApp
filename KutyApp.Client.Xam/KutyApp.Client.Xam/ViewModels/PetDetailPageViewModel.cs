@@ -4,9 +4,12 @@ using KutyApp.Client.Services.ClientConsumer.Enums;
 using KutyApp.Client.Services.ClientConsumer.Interfaces;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using KutyApp.Client.Services.ServiceCollector.Interfaces;
+using KutyApp.Client.Xam.Navigation;
+using KutyApp.Client.Xam.Views;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,6 +32,10 @@ namespace KutyApp.Client.Xam.ViewModels
             MediaManager = mediaManager;
             EnvironmentApiService = environmentApiService;
             KutyAppClientContext = kutyAppClientContext;
+
+            Title = "petdetail";
+            SwipeEnabled = true;
+            CarouselViews = new ObservableCollection<View>(new List<View> { new PetDetailView(), new PetHabitsView()});
         }
 
         private string name;
@@ -40,12 +47,17 @@ namespace KutyApp.Client.Xam.ViewModels
         private int id;
         private string imagePath;
         private ImageSource petImageSource;
+        private ImageSource petBigImageSource;
         private bool isOnline;
+        private ObservableCollection<View> carouselViews;
+        private ObservableCollection<HabitDto> habits = new ObservableCollection<HabitDto>();
+        private bool swipeEnabled;
 
         private ICommand addOrEditPetCommand;
         private ICommand deletePetCommand;
         private ICommand takePhotoCommand;
         private ICommand pickPhotoCommand;
+        private ICommand newHabitCommand;
 
         #region Public Properties
         public string Name
@@ -92,14 +104,38 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public ImageSource PetImageSource
         {
-            get => petImageSource ?? ImageSource.FromUri(new Uri("https://via.placeholder.com/600x500?text=Your+Pet"));
+            get => petImageSource ?? ImageSource.FromUri(new Uri("http://via.placeholder.com/600x500?text=Your+Pet"));
             set => SetProperty(ref petImageSource, value);
+        }
+
+        public ImageSource PetBigImageSource
+        {
+            get => petBigImageSource ?? ImageSource.FromUri(new Uri("http://via.placeholder.com/600x500?text=Your+Pet"));
+            set => SetProperty(ref petBigImageSource, value);
         }
 
         public bool IsOnline
         {
             get => isOnline;
             set => SetProperty(ref isOnline, value);
+        }
+        
+        public ObservableCollection<View> CarouselViews
+        {
+            get => carouselViews;
+            set => SetProperty(ref carouselViews, value);
+        }
+
+        public ObservableCollection<HabitDto> Habits
+        {
+            get => habits;
+            set => SetProperty(ref habits, value);
+        }
+
+        public bool SwipeEnabled
+        {
+            get => swipeEnabled;
+            set => SetProperty(ref swipeEnabled, value);
         }
         #endregion
 
@@ -128,10 +164,11 @@ namespace KutyApp.Client.Xam.ViewModels
             if (!string.IsNullOrEmpty(ImagePath))
                 await LoadImage();
 
+            Habits = new ObservableCollection<HabitDto>(Pet.Habits);
+
             IsBusy = false;
         }
 
-        private Stream innerStream; 
         private async Task LoadImage(bool pickedPhoto = false)
         {
             try
@@ -139,8 +176,12 @@ namespace KutyApp.Client.Xam.ViewModels
                 if (KutyAppClientContext.IsLoggedIn && !pickedPhoto)
                 {
                     var content = await EnvironmentApiService.GetImageAsync(ImagePath);
-                    innerStream = await content.ReadAsStreamAsync();
-                    PetImageSource = ImageSource.FromStream(() => innerStream);
+                    var pictureArray = await content.ReadAsByteArrayAsync();
+                    var original = new MemoryStream(pictureArray.ToArray());
+                    var copy = new MemoryStream(pictureArray.ToArray());
+
+                    PetImageSource = ImageSource.FromStream(() => original);
+                    PetBigImageSource = ImageSource.FromStream(() => copy);
                 }
                 else
                     PetImageSource = ImageSource.FromFile(ImagePath);
@@ -213,6 +254,10 @@ namespace KutyApp.Client.Xam.ViewModels
         public ICommand PickPhotoCommand =>
             pickPhotoCommand ?? (pickPhotoCommand = new Command(
                 async () => await PickPhotoAsync()));
+
+        public ICommand NewHabitCommand =>
+            newHabitCommand ?? (newHabitCommand = new Command(
+                async () => await NavigationService.NavigateAsync(nameof(PetHabitPopupPage))));
 
         private async Task PickPhotoAsync()
         {

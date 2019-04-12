@@ -75,15 +75,15 @@
                                 <Button.Behaviors>
                                     <behaviors:EventHandlerBehavior EventName="Clicked">
                                         <behaviors:ScaleAction TargetObject="{x:Reference PoisButtonWrapper}" 
-                                   FinalScale="0.95" 
-                                   Duration="200" 
-                                   EasingFunction="CubicIn"
-                                   Await="true"/>
+                                            FinalScale="0.95" 
+                                            Duration="200" 
+                                            EasingFunction="CubicIn"
+                                            Await="true"/>
                                         <behaviors:ScaleAction TargetObject="{x:Reference PoisButtonWrapper}" 
-                                   FinalScale="1.0" 
-                                   Duration="200" 
-                                   EasingFunction="CubicOut" 
-                                   Await="true"/>
+                                            FinalScale="1.0" 
+                                            Duration="200" 
+                                            EasingFunction="CubicOut" 
+                                            Await="true"/>
                                         <behaviors:InvokeCommandAction Command="{Binding NavigateToPoisPage}" />
                                     </behaviors:EventHandlerBehavior>
                                 </Button.Behaviors>
@@ -104,16 +104,17 @@
                                 <Button.Behaviors>
                                     <behaviors:EventHandlerBehavior EventName="Clicked">
                                         <behaviors:ScaleAction TargetObject="{x:Reference ProfileButtonWrapper}" 
-                                   FinalScale="0.95" 
-                                   Duration="200" 
-                                   EasingFunction="CubicIn"
-                                   Await="true"/>
+                                            FinalScale="0.95" 
+                                            Duration="200" 
+                                            EasingFunction="CubicIn"
+                                            Await="true"/>
                                         <behaviors:ScaleAction TargetObject="{x:Reference ProfileButtonWrapper}" 
-                                   FinalScale="1.0" 
-                                   Duration="200" 
-                                   EasingFunction="CubicInOut" 
-                                   Await="true"/>
-                                    </behaviors:EventHandlerBehavior>
+                                            FinalScale="1.0" 
+                                            Duration="200" 
+                                            EasingFunction="CubicInOut" 
+                                            Await="true"/>
+                                        <behaviors:InvokeCommandAction Command="{Binding NavigateToProfilePage}" />
+                                </behaviors:EventHandlerBehavior>
                                 </Button.Behaviors>
                             </Button>
                             <Grid VerticalOptions="End" Padding="0, -1">
@@ -132,16 +133,17 @@
                                 <Button.Behaviors>
                                     <behaviors:EventHandlerBehavior EventName="Clicked">
                                         <behaviors:ScaleAction TargetObject="{x:Reference AdvertsButtonWrapper}" 
-                                   FinalScale="0.95" 
-                                   Duration="200" 
-                                   EasingFunction="CubicIn"
-                                   Await="true"/>
+                                            FinalScale="0.95" 
+                                            Duration="200" 
+                                            EasingFunction="CubicIn"
+                                            Await="true"/>
                                         <behaviors:ScaleAction TargetObject="{x:Reference AdvertsButtonWrapper}" 
-                                   FinalScale="1.0" 
-                                   Duration="200" 
-                                   EasingFunction="CubicOut" 
-                                   Await="true"/>
-                                    </behaviors:EventHandlerBehavior>
+                                            FinalScale="1.0" 
+                                            Duration="200" 
+                                            EasingFunction="CubicOut" 
+                                            Await="true" />
+                                        <behaviors:InvokeCommandAction Command="{Binding NavigateToAdvertPage}" />
+                                </behaviors:EventHandlerBehavior>
                                 </Button.Behaviors>
                             </Button>
                             <Grid VerticalOptions="End" Padding="0, -1">

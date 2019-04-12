@@ -5,4 +5,5 @@
   <converters:InvertBooleanConverter x:Key="InvertBooleanConverter" />
   <converters:IsTextEmptyConverter x:Key="IsTextEmptyConverter" />
   <converters:DefaultImageConverter x:Key="DefaultImageConverter" />
+  <converters:TimeSpanToStringConverter x:Key="TimeSpantoStringConverter" />
 </ResourceDictionary>

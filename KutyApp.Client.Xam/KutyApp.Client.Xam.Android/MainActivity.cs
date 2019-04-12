@@ -2,6 +2,7 @@
 using Android.Content.PM;
 using Android.OS;
 using Android.Runtime;
+using CarouselView.FormsPlugin.Android;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using KutyApp.Client.Services.LocalRepository.Managers;
 using Plugin.Permissions;
@@ -25,6 +26,7 @@ namespace KutyApp.Client.Xam.Droid
             var dbPath = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), Common.Constants.Paths.DbName);
             Plugin.CurrentActivity.CrossCurrentActivity.Current.Init(this, bundle);
             Xamarin.Essentials.Platform.Init(this, bundle);
+            CarouselViewRenderer.Init();
 
             Rg.Plugins.Popup.Popup.Init(this, bundle);
 

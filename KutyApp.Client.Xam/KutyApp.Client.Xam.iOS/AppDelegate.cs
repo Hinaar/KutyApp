@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿using CarouselView.FormsPlugin.iOS;
+using Foundation;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using KutyApp.Client.Services.LocalRepository.Managers;
 using Prism;
@@ -47,7 +48,7 @@ namespace KutyApp.Client.Xam.iOS
 
                 UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
             }
-
+            CarouselViewRenderer.Init();
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App(new iOSInitializer(dbPath)));
 

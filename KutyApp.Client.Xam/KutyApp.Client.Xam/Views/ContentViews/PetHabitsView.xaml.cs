@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace KutyApp.Client.Xam.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class TempPage : ContentPage
+	public partial class PetHabitsView : ContentView
 	{
-		public TempPage ()
+		public PetHabitsView ()
 		{
 			InitializeComponent ();
 		}

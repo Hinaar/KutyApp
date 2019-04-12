@@ -2,6 +2,7 @@
 using KutyApp.Client.Services.ClientConsumer.Dtos;
 using KutyApp.Client.Services.LocalRepository.Entities;
 using KutyApp.Client.Services.LocalRepository.Entities.Configuration;
+using KutyApp.Client.Services.LocalRepository.Entities.Models;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -40,6 +41,15 @@ namespace KutyApp.Client.Services.LocalRepository.Managers
         {
              var pets = await dbContext.Pets.AsNoTracking().ToListAsync();
              return mapper.Map<List<PetDto>>(pets);
+        }
+
+        public async Task SaveMyPetsAsync(List<PetDto> dtos)
+        {
+            var pets = mapper.Map<List<Pet>>(dtos);
+            pets.ForEach(p => p.ImagePath = string.Empty);
+
+            dbContext.Pets.AddRange(pets);
+            await dbContext.SaveChangesAsync();
         }
 
         //TODO: delete
