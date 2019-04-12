@@ -18,7 +18,7 @@ namespace KutyApp.Client.Xam.Views
 			InitializeComponent ();
 		}
 
-        private void OpenImageSelection(object sender, SwipedEventArgs e)
+        private void OpenImageSelection(object sender, EventArgs e)
         {
             PictureButtonsLayout.IsVisible = !PictureButtonsLayout.IsVisible;
         }

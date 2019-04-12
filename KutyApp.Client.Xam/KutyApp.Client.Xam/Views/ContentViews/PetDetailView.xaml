@@ -24,9 +24,9 @@
 
                 <Grid VerticalOptions="FillAndExpand" Grid.Row="0" HorizontalOptions="Fill">
                     <Frame CornerRadius="5" BorderColor="White" HasShadow="True" BackgroundColor="Transparent" Padding="0" Margin="5" IsClippedToBounds="True">
-                        <Image Aspect="AspectFill" Source="{Binding PetImageSource}">
+                        <Image Aspect="AspectFill" Source="{Binding PetImageSource}" x:Name="kepem">
                             <Image.GestureRecognizers>
-                                <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="OpenImageSelection" /> 
+                                <TapGestureRecognizer NumberOfTapsRequired="2" Tapped="OpenImageSelection"/> 
                                 <PinchGestureRecognizer PinchUpdated="ShowFullImage" />
                             </Image.GestureRecognizers>
                         </Image>
