@@ -113,6 +113,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Texts.resx</DependentUpon>
     </Compile>
+    <Compile Update="Views\ContentViews\PetMedicalTreatMentsView.xaml.cs">
+      <DependentUpon>PetMedicalTreatMentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Pages\Popup\PetMedicalTreatmentPopupPage.xaml.cs">
+      <DependentUpon>PetMedicalTreatmentPopupPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\Pages\Popup\PetHabitPopupPage.xaml.cs">
       <DependentUpon>PetHabitPopupPage.xaml</DependentUpon>
     </Compile>

@@ -119,7 +119,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Renderers\ExtraLabelRendererDroid.cs" />
     <Compile Include="Renderers\ExtraEditorRendererDroid.cs" />
+    <Compile Include="Renderers\ExtraDatePickerRendererDroid.cs" />
     <Compile Include="Renderers\ExtraTimePickerRendererDroid.cs" />
     <Compile Include="Renderers\ExtraPickerRendererDroid.cs" />
     <Compile Include="Renderers\ExtraEntryRendererDroid.cs" />

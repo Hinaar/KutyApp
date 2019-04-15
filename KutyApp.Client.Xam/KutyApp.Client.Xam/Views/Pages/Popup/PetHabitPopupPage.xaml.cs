@@ -27,34 +27,28 @@ namespace KutyApp.Client.Xam.Views
 
             if (!IsAnimationEnabled)
             {
-                //CloseImage.Rotation = 0;
-                //CloseImage.Scale = 1;
-                //CloseImage.Opacity = 1;
+                EditButton.Scale = 1;
+                EditButton.Opacity = 1;
+                SaveButton.Scale = 1;
+                SaveButton.Opacity = 1;
+                DeleteButton.Scale = 1;
+                DeleteButton.Opacity = 1;
 
-                LoginButton.Scale = 1;
-                LoginButton.Opacity = 1;
-                RegisterButton.Scale = 1;
-                RegisterButton.Opacity = 1;
-                //OrEntry.Scale = 1;
-                //OrEntry.Opacity = 1;
-                
+                //TODO
                 //UsernameEntry.TranslationX = PasswordEntry.TranslationX = RememberCheckBox.TranslationX = 0;
                 //UsernameEntry.Opacity = PasswordEntry.Opacity = RememberCheckBox.Opacity = 1;
 
                 return;
             }
 
-            //CloseImage.Rotation = 30;
-            //CloseImage.Scale = 0.3;
-            //CloseImage.Opacity = 0;
+            EditButton.Scale = 0.3;
+            EditButton.Opacity = 0;
+            SaveButton.Scale = 0.3;
+            SaveButton.Opacity = 0;
+            DeleteButton.Scale = 0.3;
+            DeleteButton.Opacity = 0;
 
-            LoginButton.Scale = 0.3;
-            LoginButton.Opacity = 0;
-            RegisterButton.Scale = 0.3;
-            RegisterButton.Opacity = 0;
-            //OrEntry.Scale = 0.3;
-            //OrEntry.Opacity = 0;
-
+            //TODO
             //UsernameEntry.TranslationX = PasswordEntry.TranslationX = RememberCheckBox.TranslationX = -10;
             //UsernameEntry.Opacity = PasswordEntry.Opacity = RememberCheckBox.Opacity = 0;
         }
@@ -88,15 +82,12 @@ namespace KutyApp.Client.Xam.Views
                 );
 
             await Task.WhenAll(
-                //CloseImage.FadeTo(1),
-                //CloseImage.ScaleTo(1, easing: Easing.SpringOut),
-                //CloseImage.RotateTo(0),
-                LoginButton.ScaleTo(1),
-                LoginButton.FadeTo(1),
-                RegisterButton.ScaleTo(1),
-                RegisterButton.FadeTo(1)
-                //OrEntry.ScaleTo(1),
-                //OrEntry.FadeTo(1)
+                EditButton.ScaleTo(1),
+                EditButton.FadeTo(1),
+                SaveButton.ScaleTo(1),
+                SaveButton.FadeTo(1),
+                DeleteButton.ScaleTo(1),
+                DeleteButton.FadeTo(1)
                 );
 
         }

@@ -97,7 +97,16 @@
                                             BorderThickness="2"
                                             Margin="5"/>
 
-                        <DatePicker Date="{Binding BirthDate, Mode=TwoWay}" />
+                        <myControls:ExtraDatePicker Date="{Binding BirthDate, Mode=TwoWay}"
+                                            BackgroundColor="Transparent"
+                                            MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}"
+                                            TextColor="White" 
+                                            FontAttributes="Bold"
+                                            CornerRadius="10" 
+                                            BorderColor="White" 
+                                            BorderThickness="2"
+                                            Margin="5"
+                                                    />
                         <StackLayout Orientation="Horizontal" Padding="10, 0">
                             <Button Text="{x:Static local:Resources.Localization.Texts.SaveButtonText}" Command="{Binding AddOrEditPetCommand}" 
                                 BackgroundColor="{StaticResource MainButtonBackgroundColor}" TextColor="White" CornerRadius="5"

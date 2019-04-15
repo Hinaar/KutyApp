@@ -35,9 +35,10 @@ namespace KutyApp.Client.Xam.ViewModels
 
             Title = "petdetail";
             SwipeEnabled = true;
-            CarouselViews = new ObservableCollection<View>(new List<View> { new PetDetailView(), new PetHabitsView()});
+            CarouselViews = new ObservableCollection<View>(new List<View> { new PetDetailView(), new PetHabitsView(), new PetMedicalTreatMentsView()});
         }
 
+        #region Private Properties
         private string name;
         private string chipNumber;
         private Gender gender;
@@ -51,6 +52,7 @@ namespace KutyApp.Client.Xam.ViewModels
         private bool isOnline;
         private ObservableCollection<View> carouselViews;
         private ObservableCollection<HabitDto> habits = new ObservableCollection<HabitDto>();
+        private ObservableCollection<MedicalTreatmentDto> medicalTreatments = new ObservableCollection<MedicalTreatmentDto>();
         private bool swipeEnabled;
 
         private ICommand addOrEditPetCommand;
@@ -58,6 +60,10 @@ namespace KutyApp.Client.Xam.ViewModels
         private ICommand takePhotoCommand;
         private ICommand pickPhotoCommand;
         private ICommand newHabitCommand;
+        private ICommand openHabitCommand;
+        private ICommand newMedicalTreatmentCommand;
+        private ICommand openMedicalTreatmentCommand;
+        #endregion
 
         #region Public Properties
         public string Name
@@ -137,6 +143,12 @@ namespace KutyApp.Client.Xam.ViewModels
             get => swipeEnabled;
             set => SetProperty(ref swipeEnabled, value);
         }
+
+        public ObservableCollection<MedicalTreatmentDto> MedicalTreatments
+        {
+            get => medicalTreatments;
+            set => SetProperty(ref medicalTreatments, value);
+        }
         #endregion
 
         public async override void OnNavigatedTo(INavigationParameters parameters)
@@ -144,6 +156,55 @@ namespace KutyApp.Client.Xam.ViewModels
             base.OnNavigatedTo(parameters);
             if (parameters.ContainsKey(ParameterKeys.PetId))
                 await LoadPet((int)parameters[ParameterKeys.PetId]);
+
+            if (parameters.ContainsKey(nameof(NavigationHelper)))
+            {
+                var helper = (NavigationHelper)parameters[nameof(NavigationHelper)];
+
+                switch (helper.ParameterTypeName)
+                {
+                    case nameof(HabitDto):
+                        var habit = helper.Parameter as HabitDto;
+
+                        switch (helper.Action)
+                        {
+                            case Common.Enums.NavigationAction.Delete:
+                                Habits.RemoveAt(Habits.ToList().FindIndex(h => h.Id == habit.Id));
+                                break;
+
+                            case Common.Enums.NavigationAction.Add:
+                                habit.Id = (new Random()).Next(0, int.MaxValue) * -1;
+                                Habits.Add(habit);
+                                break;
+
+                            case Common.Enums.NavigationAction.Edit:
+                                Habits[Habits.ToList().FindIndex(h => h.Id == habit.Id)] = habit;
+                                break;
+                        }
+
+                        break;
+                    case nameof(MedicalTreatmentDto):
+                        var treatment = helper.Parameter as MedicalTreatmentDto;
+
+                        switch (helper.Action)
+                        {
+                            case Common.Enums.NavigationAction.Delete:
+                                MedicalTreatments.RemoveAt(MedicalTreatments.ToList().FindIndex(m => m.Id == treatment.Id));
+                                break;
+
+                            case Common.Enums.NavigationAction.Add:
+                                treatment.Id = (new Random()).Next(0, int.MaxValue) * -1;
+                                MedicalTreatments.Add(treatment);
+                                break;
+
+                            case Common.Enums.NavigationAction.Edit:
+                                MedicalTreatments[MedicalTreatments.ToList().FindIndex(m => m.Id == treatment.Id)] = treatment;
+                                break;
+                        }
+
+                        break;
+                }
+            }
 
             IsOnline = KutyAppClientContext.IsLoggedIn;
         }
@@ -165,6 +226,7 @@ namespace KutyApp.Client.Xam.ViewModels
                 await LoadImage();
 
             Habits = new ObservableCollection<HabitDto>(Pet.Habits);
+            MedicalTreatments = new ObservableCollection<MedicalTreatmentDto>(Pet.MedicalTreatments);
 
             IsBusy = false;
         }
@@ -177,11 +239,11 @@ namespace KutyApp.Client.Xam.ViewModels
                 {
                     var content = await EnvironmentApiService.GetImageAsync(ImagePath);
                     var pictureArray = await content.ReadAsByteArrayAsync();
-                    var original = new MemoryStream(pictureArray.ToArray());
-                    var copy = new MemoryStream(pictureArray.ToArray());
+                    //var original = new MemoryStream(pictureArray.ToArray());
+                    //var copy = new MemoryStream(pictureArray.ToArray());
 
-                    PetImageSource = ImageSource.FromStream(() => original);
-                    PetBigImageSource = ImageSource.FromStream(() => copy);
+                    PetImageSource = ImageSource.FromStream(() => new MemoryStream(pictureArray.ToArray()));
+                    PetBigImageSource = ImageSource.FromStream(() => new MemoryStream(pictureArray.ToArray()));
                 }
                 else
                     PetImageSource = ImageSource.FromFile(ImagePath);
@@ -201,18 +263,18 @@ namespace KutyApp.Client.Xam.ViewModels
         {
             try
             {
-            //TODO: habit, medicaltreatment
+            //TODO: color + weight
             var dto = new AddOrEditPetDto
             {
                 Id = Pet?.Id,
                 BirthDate = BirthDate,
                 ChipNumber = ChipNumber,
-                //Color = Color,
+                Color = Pet?.Color,
                 Gender = Gender,
                 Name = Name,
-                //Weight = Weight,
-                Habits = new List<AddOrEditHabitDto>(),
-                MedicalTreatments = new List<AddOrEditMedicalTreatmentDto>()
+                Weight = Pet?.Weight,
+                Habits = Habits.Select(h => new AddOrEditHabitDto { Id = h.Id >= 0 ? (int?)h.Id : null, Amount = h.Amount, Description = h.Description, StartTime = h.StartTime, EndTime = h.EndTime, Title = h.Title, Unit = h.Unit }).ToList(),
+                MedicalTreatments = MedicalTreatments.Select(m => new AddOrEditMedicalTreatmentDto { Id = m.Id >=0 ? (int?)m.Id : null, Currency = m.Currency, Date = m.Date, Description = m.Description, Name = m.Name, Place = m.Place, Price = m.Price, Tender = m.Tender, Type = m.Type }).ToList()
             };
 
             if(ImagePath != Pet?.ImagePath)
@@ -257,7 +319,43 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public ICommand NewHabitCommand =>
             newHabitCommand ?? (newHabitCommand = new Command(
-                async () => await NavigationService.NavigateAsync(nameof(PetHabitPopupPage))));
+                async () => await NavigationService.NavigateAsync(nameof(PetHabitPopupPage), 
+                    new NavigationParameters
+                    {
+                        {
+                            nameof(NavigationHelper), new NavigationHelper { Action = Common.Enums.NavigationAction.Add}
+                        }
+                    })));
+
+        public ICommand OpenHabitCommand =>
+            openHabitCommand ?? (openHabitCommand = new Command(
+                async (clickedHabit) => await NavigationService.NavigateAsync(nameof(PetHabitPopupPage),
+                    new NavigationParameters
+                    {
+                        {
+                            nameof(NavigationHelper), new NavigationHelper { Action = Common.Enums.NavigationAction.Edit, Parameter = clickedHabit, ParameterTypeName = nameof(HabitDto)}
+                        }
+                    })));
+
+        public ICommand NewMedicalTreatmentCommand =>
+            newMedicalTreatmentCommand ?? (newMedicalTreatmentCommand = new Command(
+                async () => await NavigationService.NavigateAsync(nameof(PetMedicalTreatmentPopupPage),
+                    new NavigationParameters
+                    {
+                        {
+                            nameof(NavigationHelper), new NavigationHelper { Action = Common.Enums.NavigationAction.Add }
+                        }
+                    })));
+
+        public ICommand OpenMedicalTreatmendCommand =>
+            openMedicalTreatmentCommand ?? (openMedicalTreatmentCommand = new Command(
+                async (clickedTreatment) => await NavigationService.NavigateAsync(nameof(PetMedicalTreatmentPopupPage),
+                    new NavigationParameters
+                    {
+                        {
+                            nameof(NavigationHelper), new NavigationHelper { Action = Common.Enums.NavigationAction.Edit, Parameter = clickedTreatment, ParameterTypeName = nameof(MedicalTreatmentDto)}
+                        }
+                    })));
 
         private async Task PickPhotoAsync()
         {

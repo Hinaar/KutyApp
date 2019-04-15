@@ -1,46 +1,66 @@
 ﻿using KutyApp.Client.Services.ClientConsumer.Dtos;
+using KutyApp.Client.Services.ClientConsumer.Enums;
 using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using KutyApp.Client.Xam.Navigation;
 using Prism.Navigation;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
-    public class PetHabitPopupPageViewModel : ViewModelBase
+    public class PetMedicalTreatmentPopupPageViewModel : ViewModelBase
     {
         private IKutyAppClientContext KutyAppClientContext { get; }
 
-        public PetHabitPopupPageViewModel(INavigationService navigationService, IKutyAppClientContext kutyAppClientContext)
+        public PetMedicalTreatmentPopupPageViewModel(INavigationService navigationService, IKutyAppClientContext kutyAppClientContext)
             : base(navigationService)
         {
             KutyAppClientContext = kutyAppClientContext;
         }
 
-        private HabitDto originalHabit;
-        private string habitTitle;
-        private string description;
-        private TimeSpan startTime;
-        private TimeSpan endTime;
-        private double amount;
-        private string unit;
+        private MedicalTreatmentDto originalTreatment;
         private bool inputTransparent;
         private bool allowDelete;
+        private string name;
+        private MedicalTreatmentType type;
+        public IEnumerable<MedicalTreatmentType> MedicalTreatmentTypeValues => Enum.GetValues(typeof(MedicalTreatmentType)).Cast<MedicalTreatmentType>();
+        private string description;
+        private DateTime date;
+        private string place;
+        private string tender;
+        private string price;
+        private string currency;
 
         private ICommand editCommand;
         private ICommand saveCommand;
         private ICommand deleteCommand;
+
+        #region Public Properties
+        public bool InputTransparent
+        {
+            get => inputTransparent;
+            set { SetProperty(ref inputTransparent, value); /*RaisePropertyChanged(nameof(SaveOrEdit)); */}
+        }
 
         public bool AllowDelete
         {
             get => allowDelete;
             set => SetProperty(ref allowDelete, value);
         }
-        public string HabitTitle
+
+        public string Name
         {
-            get => habitTitle;
-            set => SetProperty(ref habitTitle, value);
+            get => name;
+            set => SetProperty(ref name, value);
+        }
+
+        public MedicalTreatmentType Type
+        {
+            get => type;
+            set => SetProperty(ref type, value);
         }
 
         public string Description
@@ -49,35 +69,36 @@ namespace KutyApp.Client.Xam.ViewModels
             set => SetProperty(ref description, value);
         }
 
-        public TimeSpan StartTime
+        public DateTime Date
         {
-            get => startTime;
-            set => SetProperty(ref startTime, value);
+            get => date;
+            set => SetProperty(ref date, value);
         }
 
-        public TimeSpan EndTime
+        public string Place
         {
-            get => endTime;
-            set => SetProperty(ref endTime, value);
+            get => place;
+            set => SetProperty(ref place, value);
         }
 
-        public double Amount
+        public string Tender
         {
-            get => amount;
-            set => SetProperty(ref amount, value);
+            get => tender;
+            set => SetProperty(ref tender, value);
         }
 
-        public string Unit
+        public string Price
         {
-            get => unit;
-            set => SetProperty(ref unit, value);
+            get => price;
+            set => SetProperty(ref price, value);
         }
 
-        public bool InputTransparent
+        public string Currency
         {
-            get => inputTransparent;
-            set { SetProperty(ref inputTransparent, value); /*RaisePropertyChanged(nameof(SaveOrEdit)); */}
+            get => currency;
+            set => SetProperty(ref currency, value);
         }
+        #endregion
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
@@ -92,18 +113,15 @@ namespace KutyApp.Client.Xam.ViewModels
                         AllowDelete = false;
                         break;
                     case Common.Enums.NavigationAction.Edit:
-                        originalHabit = param.Parameter as HabitDto;
+                        originalTreatment = param.Parameter as MedicalTreatmentDto;
+                        SetUIValues(originalTreatment);
                         AllowDelete = true;
-                        SetUIValues(originalHabit);
                         InputTransparent = true;
                         break;
                     default:
                         InputTransparent = true;
                         break;
                 }
-
-                //originalHabit = param.Parameter as HabitDto;
-                //SetUIValues(originalHabit);
             }
 
             base.OnNavigatedTo(parameters);
@@ -117,18 +135,18 @@ namespace KutyApp.Client.Xam.ViewModels
             saveCommand ?? (saveCommand = new Command(
                 async () =>
                 {
-                    if (originalHabit == null)
+                    if (originalTreatment == null)
                         await NavigationService.ClearPopupStackAsync(new NavigationParameters
                         {
                             {
                                 nameof(NavigationHelper), new NavigationHelper
                                 {
                                     Action = Common.Enums.NavigationAction.Add,
-                                    Parameter = new HabitDto
+                                    Parameter = new MedicalTreatmentDto
                                         {
-                                           Title = HabitTitle, Description = Description, StartTime = StartTime, EndTime = EndTime, Amount = Amount, Unit = Unit
+                                            Currency = Currency, Date = Date, Description = Description, Name = Name, Place = Place, Price = double.Parse(Price), Tender = Tender, Type = Type
                                         },
-                                    ParameterTypeName = nameof(HabitDto)
+                                    ParameterTypeName = nameof(MedicalTreatmentDto)
                                 }
                             }
                         });
@@ -140,16 +158,15 @@ namespace KutyApp.Client.Xam.ViewModels
                                 nameof(NavigationHelper), new NavigationHelper
                                 {
                                     Action = Common.Enums.NavigationAction.Edit,
-                                    ParameterTypeName = nameof(HabitDto),
-                                    Parameter = new HabitDto
+                                    ParameterTypeName = nameof(MedicalTreatmentDto),
+                                    Parameter = new MedicalTreatmentDto
                                     {
-                                        Id = originalHabit.Id, PetId = originalHabit.PetId, Title = HabitTitle, Description = Description, StartTime = StartTime, EndTime = EndTime, Amount = Amount, Unit = Unit
+                                        Id = originalTreatment.Id, PetId = originalTreatment.PetId, Currency = Currency, Date = Date, Description = Description, Name = Name, Place = Place, Price = double.Parse(Price), Tender = Tender, Type = Type
                                     }
                                 }
                             }
                         });
                 }
-                   
                 ));
 
         public ICommand DeleteCommand =>
@@ -160,23 +177,25 @@ namespace KutyApp.Client.Xam.ViewModels
                         nameof(NavigationHelper), new NavigationHelper
                         {
                             Action = Common.Enums.NavigationAction.Delete,
-                            ParameterTypeName = nameof(HabitDto),
-                            Parameter = new HabitDto { Id = originalHabit.Id },
+                            ParameterTypeName = nameof(MedicalTreatmentDto),
+                            Parameter = new MedicalTreatmentDto { Id = originalTreatment.Id },
                         }
                     }
                 })));
 
-        private void SetUIValues(HabitDto habit)
+        private void SetUIValues(MedicalTreatmentDto treatment)
         {
-            if (habit == null)
+            if (treatment == null)
                 return;
 
-            HabitTitle = habit.Title;
-            Description = habit.Description;
-            StartTime = habit.StartTime ?? new TimeSpan();
-            EndTime = habit.EndTime ?? new TimeSpan();
-            Amount = habit.Amount;
-            Unit = habit.Unit;
+            Name = treatment.Name;
+            Type = treatment.Type;
+            Description = treatment.Description;
+            Date = treatment.Date;
+            Place = treatment.Place;
+            Tender = treatment.Tender;
+            Price = treatment.Price.ToString();
+            Currency = treatment.Currency;
         }
     }
 }
