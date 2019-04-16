@@ -25,6 +25,9 @@ using KutyApp.Client.Services.ClientConsumer.Dtos;
 using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using Refit;
 using Newtonsoft.Json;
+using KutyApp.Client.Xam.Resources.Localization;
+using System.Resources;
+using System.Threading;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -36,7 +39,6 @@ namespace KutyApp.Client.Xam.ViewModels
         public LoginPopupPageViewModel(INavigationService navigationService, IEnvironmentApiService environmentApi, IKutyAppClientContext kutyAppClientContext)
             : base(navigationService)
         {
-            Title = "login vm title";
             EnvironmentApiService = environmentApi;
             KutyAppClientContext = kutyAppClientContext;
         }
@@ -94,7 +96,7 @@ namespace KutyApp.Client.Xam.ViewModels
                 try
                 {
                     IsBusy = true;
-                    var response = await EnvironmentApiService.LoginAsync(new LoginDto { Email = UserName, Password = Password, RememberMe = false });
+                    var response = await EnvironmentApiService.LoginAsync(new LoginDto { Email = UserName, Password = Password, RememberMe = RememberMe });
 
                     if (RememberMe)
                     {
@@ -117,14 +119,19 @@ namespace KutyApp.Client.Xam.ViewModels
                 {
                     var error = JsonConvert.DeserializeObject<ErrorDto>(exception.Content);
                     HasError = true;
-                    ErrorMessage = error.Message;
+                    try
+                    {
+                        var ottva = Texts.ResourceManager.GetString(error.Message, Localization.Current.CurrentCultureInfo);
+                        ErrorMessage = ottva;
+                    }
+                    catch (Exception)
+                    {
+                    }
+               
                     // other exception handling
                 }
                 catch (System.Exception e)
                 {
-                    //TODO: bejelentk. hiba
-
-                    //throw;
                 }
             }
 

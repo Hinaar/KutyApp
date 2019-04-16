@@ -44,7 +44,7 @@
                                         <StackLayout Grid.Column="1"  Padding="0" Margin="0" VerticalOptions="StartAndExpand"
                                                  HorizontalOptions="FillAndExpand">
                                             <Label Text="{Binding PetDto.Name}" TextColor="White"/>
-                                            <Label Text="{Binding PetDto.Gender}" TextColor="White"/>
+                                            <Label Text="{Binding PetDto.Gender, Converter={StaticResource EnumLocalizationConverter}}" TextColor="White"/>
                                             <Label Text="{Binding PetDto.Age}" TextColor="White"/>
                                         </StackLayout>
                                         <Image Source="{Binding PetImageSource, Mode=TwoWay}" HeightRequest="60" />

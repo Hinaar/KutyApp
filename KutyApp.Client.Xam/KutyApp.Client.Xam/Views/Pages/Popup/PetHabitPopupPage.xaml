@@ -36,7 +36,7 @@
                                            BorderThickness="2"
                                            Margin="5"
                                            HorizontalOptions="Fill"
-                                           x:Name="UsernameEntry"
+                                           x:Name="HabitEntry"
                                            HorizontalTextAlignment="Center"
                                            Placeholder="Title"
                                            PlaceholderColor="#D9D0D0D0" 
@@ -51,11 +51,14 @@
                             HorizontalOptions="Fill" BorderColor="White"
                             BorderThickness="0"
                             Text="{Binding Description}"
-                            TextColor="White" FontAttributes="Bold"/>
+                            TextColor="White" FontAttributes="Bold"
+                            x:Name="DescriptionLabel"/>
                         </ScrollView>
                     </Frame>
-                    <myControls:ExtraEditor Text="{Binding Description}" HeightRequest="120"
+                    <myControls:ExtraEditor Text="{Binding Description}"
+                                            HeightRequest="120"
                                             BackgroundColor="Transparent" 
+                                            x:Name="DescriptionEditor"
                                            MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" 
                                            TextColor="White"
                                            FontAttributes="Bold"
@@ -69,6 +72,7 @@
                                            InputTransparent="{Binding InputTransparent}"
                                            IsVisible="{Binding InputTransparent, Converter={StaticResource InvertBooleanConverter}}"/>
                     <myControls:ExtraTimePicker Time="{Binding StartTime}"
+                                                x:Name="StartPicker"
                                            BackgroundColor="Transparent" 
                                            MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" 
                                            TextColor="White"
@@ -81,6 +85,7 @@
                                            InputTransparent="{Binding InputTransparent}"
                                            Format="HH:mm"/>
                     <myControls:ExtraTimePicker Time="{Binding EndTime}"
+                                                x:Name="EndPicker"
                                            BackgroundColor="Transparent" 
                                            MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" 
                                            TextColor="White"

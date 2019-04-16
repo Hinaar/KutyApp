@@ -1,16 +1,15 @@
-﻿using AutoMapper;
-using KutyApp.Services.Environment.Api.Extensions;
+﻿using KutyApp.Services.Environment.Api.Extensions;
 using KutyApp.Services.Environment.Bll.Configuration;
 using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Entities.Model;
 using KutyApp.Services.Environment.Bll.Interfaces;
+using KutyApp.Services.Environment.Bll.Resources;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -65,13 +64,13 @@ namespace KutyApp.Services.Environment.Api.Managers
                 }
             }
             else
-                throw new Exception("nmjo bejelentkezes");
+                throw new Exception(ExceptionMessages.LoginError);
         }
 
         public async Task<string> RegisterAsync(RegisterDto dto)
         {
             if (dto.Password != dto.PasswordConfirm)
-                throw new Exception("pass doesnt match");
+                throw new Exception(ExceptionMessages.ConfirmPassword);
 
             var user = new User { UserName = dto.Email, Email = dto.Email };
             var result = await UserManager.CreateAsync(user, dto.Password);
@@ -80,14 +79,14 @@ namespace KutyApp.Services.Environment.Api.Managers
             {
                 return await GetTokenAsync(new LoginDto { Email = dto.Email, Password = dto.Password });
             }
-            else throw new Exception("sikertelen resgisztralas");
+            else throw new Exception(ExceptionMessages.RegisterError);
         }
 
         public async Task<string> GetUserIdAsync(string userName)
         {
             var user = await UserManager.FindByNameAsync(userName);
             if (user == null)
-                throw new Exception("notfound");
+                throw new Exception(ExceptionMessages.NotFound);
 
             else return user.Id;
         }

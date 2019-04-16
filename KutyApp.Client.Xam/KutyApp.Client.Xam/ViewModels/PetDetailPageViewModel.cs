@@ -5,6 +5,7 @@ using KutyApp.Client.Services.ClientConsumer.Interfaces;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using KutyApp.Client.Xam.Navigation;
+using KutyApp.Client.Xam.Resources.Localization;
 using KutyApp.Client.Xam.Views;
 using Prism.Navigation;
 using System;
@@ -35,14 +36,29 @@ namespace KutyApp.Client.Xam.ViewModels
 
             Title = "petdetail";
             SwipeEnabled = true;
-            CarouselViews = new ObservableCollection<View>(new List<View> { new PetDetailView(), new PetHabitsView(), new PetMedicalTreatMentsView()});
+            CarouselViews = new ObservableCollection<View>(new List<View> { new PetDetailView(), new PetHabitsView(), new PetMedicalTreatMentsView() });
         }
 
         #region Private Properties
         private string name;
         private string chipNumber;
         private Gender gender;
-        public IEnumerable<Gender> GenderValues => Enum.GetValues(typeof(Gender)).Cast<Gender>();
+        private int selectedGenderIndex;
+        //public IEnumerable<Gender> GenderValues => Enum.GetValues(typeof(Gender)).Cast<Gender>();
+        public IEnumerable<string> GenderDisplayValues
+        {
+            get
+            {
+                try
+                {
+                    return Enum.GetNames(typeof(Gender)).Select(enumName => Texts.ResourceManager.GetString(enumName, Localization.Current.CurrentCultureInfo)).ToArray();
+                }
+                catch (Exception)
+                {
+                    return Enum.GetValues(typeof(Gender)).Cast<string>();
+                }
+            }
+        } 
         private DateTime birthDate;
         private int? age;
         private int id;
@@ -148,6 +164,12 @@ namespace KutyApp.Client.Xam.ViewModels
         {
             get => medicalTreatments;
             set => SetProperty(ref medicalTreatments, value);
+        }
+
+        public int SelectedGenderIndex
+        {
+            get => selectedGenderIndex;
+            set { SetProperty(ref selectedGenderIndex, value); Gender = (Gender)value; }
         }
         #endregion
 

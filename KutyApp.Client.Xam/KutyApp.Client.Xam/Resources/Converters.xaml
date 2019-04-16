@@ -6,4 +6,5 @@
   <converters:IsTextEmptyConverter x:Key="IsTextEmptyConverter" />
   <converters:DefaultImageConverter x:Key="DefaultImageConverter" />
   <converters:TimeSpanToStringConverter x:Key="TimeSpantoStringConverter" />
+  <converters:EnumLocalizationConverter x:Key="EnumLocalizationConverter" />
 </ResourceDictionary>

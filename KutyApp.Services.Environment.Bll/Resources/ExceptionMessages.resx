@@ -117,79 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Adverts" xml:space="preserve">
-    <value>Adverts</value>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>CONFIRMPASSWORD</value>
   </data>
-  <data name="ChipNumberRequired" xml:space="preserve">
-    <value>The chip number is required</value>
+  <data name="LoginError" xml:space="preserve">
+    <value>LOGINERROR</value>
   </data>
-  <data name="CONFIRMPASSWORD" xml:space="preserve">
-    <value>Passwords does not match</value>
+  <data name="NoRights" xml:space="preserve">
+    <value>NORIGHTS</value>
   </data>
-  <data name="DeleteButtonText" xml:space="preserve">
-    <value>DELETE</value>
+  <data name="NotFound" xml:space="preserve">
+    <value>NOTFOUND</value>
   </data>
-  <data name="LOGINERROR" xml:space="preserve">
-    <value>Invalid login details</value>
+  <data name="RegisterError" xml:space="preserve">
+    <value>REGISTERERROR</value>
   </data>
-  <data name="NameRequired" xml:space="preserve">
-    <value>The name is required</value>
+  <data name="Required" xml:space="preserve">
+    <value>REQUIRED</value>
   </data>
-  <data name="NORIGHTS" xml:space="preserve">
-    <value>You have no right for this action</value>
+  <data name="ServerError" xml:space="preserve">
+    <value>SERVERERROR</value>
   </data>
-  <data name="NOTFOUND" xml:space="preserve">
-    <value>Entity not found</value>
-  </data>
-  <data name="Pets" xml:space="preserve">
-    <value>Pets</value>
-  </data>
-  <data name="PickPohotoButtonText" xml:space="preserve">
-    <value>Pick Photo</value>
-  </data>
-  <data name="Pois" xml:space="preserve">
-    <value>Pois</value>
-  </data>
-  <data name="Profile" xml:space="preserve">
-    <value>Profile</value>
-  </data>
-  <data name="REGISTERERROR" xml:space="preserve">
-    <value>Error while registering</value>
-  </data>
-  <data name="REQUIRED" xml:space="preserve">
-    <value>Required Field</value>
-  </data>
-  <data name="SaveButtonText" xml:space="preserve">
-    <value>SAVE</value>
-  </data>
-  <data name="SERVERERROR" xml:space="preserve">
-    <value>Server Error</value>
-  </data>
-  <data name="TakePhotoButtonText" xml:space="preserve">
-    <value>Take Photo</value>
-  </data>
-  <data name="UNAUTHORIZED" xml:space="preserve">
-    <value>You are not authorized</value>
-  </data>
-  <data name="Chipnumber" xml:space="preserve">
-    <value>Chip number</value>
-  </data>
-  <data name="Female" xml:space="preserve">
-    <value>Female</value>
-  </data>
-  <data name="Male" xml:space="preserve">
-    <value>Male</value>
-  </data>
-  <data name="Name" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="Password" xml:space="preserve">
-    <value>Password</value>
-  </data>
-  <data name="PasswordConfirm" xml:space="preserve">
-    <value>Confirm password</value>
-  </data>
-  <data name="Register" xml:space="preserve">
-    <value>Register</value>
+  <data name="Unauthorized" xml:space="preserve">
+    <value>UNAUTHORIZED</value>
   </data>
 </root>

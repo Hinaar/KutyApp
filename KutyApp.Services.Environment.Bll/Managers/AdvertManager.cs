@@ -9,6 +9,7 @@ using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Entities;
 using KutyApp.Services.Environment.Bll.Entities.Model;
 using KutyApp.Services.Environment.Bll.Interfaces;
+using KutyApp.Services.Environment.Bll.Resources;
 using Microsoft.EntityFrameworkCore;
 
 namespace KutyApp.Services.Environment.Bll.Managers
@@ -68,11 +69,6 @@ namespace KutyApp.Services.Environment.Bll.Managers
             return mappedAdverts;
         }
 
-        //public Task<List<AdvertDto>> ListNearestAdvertisementsAsync()
-        //{
-        //    throw new NotImplementedException();
-        //}
-
         public async Task<AdvertDto> AddOrEditAdvertAsync(AddOrEditAdvertDto dto)
         {
             Advert advert;
@@ -87,7 +83,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
             {
                 advert = await DbContext.Adverts.SingleOrDefaultAsync(a => a.Id == dto.Id);
                 if (advert == null)
-                    throw new Exception("notfound");
+                    throw new Exception(ExceptionMessages.NotFound);
 
                 if (advert.Title != dto.Title)
                     advert.Title = dto.Title;
@@ -105,7 +101,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
         {
             var advert = await DbContext.Adverts.SingleOrDefaultAsync(a => a.Id == id);
             if (advert == null)
-                throw new Exception("notdound");
+                throw new Exception(ExceptionMessages.NotFound);
 
             DbContext.Adverts.Remove(advert);
 
@@ -116,7 +112,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
         {
             var advert = await DbContext.Adverts.SingleOrDefaultAsync(a => a.Id == id);
             if (advert == null)
-                throw new Exception("notfound");
+                throw new Exception(ExceptionMessages.NotFound);
 
             return Mapper.Map<AdvertDto>(advert);
         }

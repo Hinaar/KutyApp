@@ -1,5 +1,6 @@
 ﻿using KutyApp.Services.Environment.Bll.Configuration;
 using KutyApp.Services.Environment.Bll.Interfaces;
+using KutyApp.Services.Environment.Bll.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using System;
@@ -41,7 +42,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
             if (File.Exists(fullPath))
                 return await File.ReadAllBytesAsync(fullPath);
             else
-                throw new Exception("notfound");
+                throw new Exception(ExceptionMessages.NotFound);
         }
 
         public async Task<string> SaveFileAsync(IFormFile file)

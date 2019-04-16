@@ -7,6 +7,7 @@ using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Entities;
 using KutyApp.Services.Environment.Bll.Entities.Model;
 using KutyApp.Services.Environment.Bll.Interfaces;
+using KutyApp.Services.Environment.Bll.Resources;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -58,7 +59,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
             {
                 pet = await DbContext.Pets.FirstOrDefaultAsync(d => d.Id == addOrEditPet.Id);
                 if (pet == null)
-                    throw new System.Exception("notfound");
+                    throw new Exception(ExceptionMessages.NotFound);
 
                 if (pet.Name != addOrEditPet.Name)
                     pet.Name = addOrEditPet.Name;
@@ -98,7 +99,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
                 {
                     var originalHabit = pet.Habits.SingleOrDefault(h => h.Id == habitDto.Id);
                     if (originalHabit == null)
-                        throw new System.Exception("notfound");
+                        throw new Exception(ExceptionMessages.NotFound);
 
                     if (originalHabit.Title != habitDto.Title)
                         originalHabit.Title = habitDto.Title;
@@ -134,7 +135,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
                 {
                     var originalTreatment = pet.MedicalTreatments.SingleOrDefault(m => m.Id == medicalTreatmentDto.Id);
                     if (originalTreatment == null)
-                        throw new System.Exception("notfound");
+                        throw new Exception(ExceptionMessages.NotFound);
 
                     if (originalTreatment.Name != medicalTreatmentDto.Name)
                         originalTreatment.Name = medicalTreatmentDto.Name;
@@ -180,7 +181,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
                 await DbContext.SaveChangesAsync();
             }
             else
-                throw new System.Exception("notdound");
+                throw new Exception(ExceptionMessages.NotFound);
         }
 
         public async Task DeleteDogAsync(int id)
@@ -191,10 +192,10 @@ namespace KutyApp.Services.Environment.Bll.Managers
                                           .FirstOrDefaultAsync(p => p.Id == id);
 
             if (pet == null)
-                throw new System.Exception("notdound");
+                throw new Exception(ExceptionMessages.NotFound);
 
             if (pet.OwnerId != KutyAppContext.CurrentUser.Id)
-                throw new System.Exception("no rights");
+                throw new Exception(ExceptionMessages.NoRights);
 
             DbContext.Pets.Remove(pet);
 
@@ -225,7 +226,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
                                           .FirstOrDefaultAsync(p => p.Id == id);
 
             if (pet == null)
-                throw new System.Exception("notfound");
+                throw new Exception(ExceptionMessages.NotFound);
 
             var dto = Mapper.Map<PetDto>(pet);
 
@@ -298,7 +299,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
             {
                 pet = await DbContext.Pets.FirstOrDefaultAsync(d => d.Id == dto.Id);
                 if (pet == null)
-                    throw new System.Exception("notfound");
+                    throw new Exception(ExceptionMessages.NotFound);
 
                 if (pet.Name != dto.Name)
                     pet.Name = dto.Name;
@@ -338,7 +339,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
                 {
                     var originalHabit = pet.Habits.SingleOrDefault(h => h.Id == habitDto.Id);
                     if (originalHabit == null)
-                        throw new System.Exception("notfound");
+                        throw new Exception(ExceptionMessages.NotFound);
 
                     if (originalHabit.Title != habitDto.Title)
                         originalHabit.Title = habitDto.Title;
@@ -374,7 +375,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
                 {
                     var originalTreatment = pet.MedicalTreatments.SingleOrDefault(m => m.Id == medicalTreatmentDto.Id);
                     if (originalTreatment == null)
-                        throw new System.Exception("notfound");
+                        throw new Exception(ExceptionMessages.NotFound);
 
                     if (originalTreatment.Name != medicalTreatmentDto.Name)
                         originalTreatment.Name = medicalTreatmentDto.Name;

@@ -34,9 +34,8 @@ namespace KutyApp.Client.Xam.Views
                 DeleteButton.Scale = 1;
                 DeleteButton.Opacity = 1;
 
-                //TODO
-                //UsernameEntry.TranslationX = PasswordEntry.TranslationX = RememberCheckBox.TranslationX = 0;
-                //UsernameEntry.Opacity = PasswordEntry.Opacity = RememberCheckBox.Opacity = 1;
+                HabitEntry.TranslationX = DescriptionLabel.TranslationX = DescriptionEditor.TranslationX = StartPicker.TranslationX = EndPicker.TranslationX = 0;
+                HabitEntry.Opacity = DescriptionLabel.Opacity = DescriptionEditor.Opacity = StartPicker.Opacity = EndPicker.Opacity = 1;
 
                 return;
             }
@@ -48,9 +47,8 @@ namespace KutyApp.Client.Xam.Views
             DeleteButton.Scale = 0.3;
             DeleteButton.Opacity = 0;
 
-            //TODO
-            //UsernameEntry.TranslationX = PasswordEntry.TranslationX = RememberCheckBox.TranslationX = -10;
-            //UsernameEntry.Opacity = PasswordEntry.Opacity = RememberCheckBox.Opacity = 0;
+            HabitEntry.TranslationX = DescriptionLabel.TranslationX = DescriptionEditor.TranslationX = StartPicker.TranslationX = EndPicker.TranslationX = -10;
+            HabitEntry.Opacity = DescriptionLabel.Opacity = DescriptionEditor.Opacity = StartPicker.Opacity = EndPicker.Opacity = 0;
         }
 
         protected override async Task OnAppearingAnimationEndAsync()
@@ -61,24 +59,25 @@ namespace KutyApp.Client.Xam.Views
             var translateLength = 400u;
 
             await Task.WhenAll(
-                UsernameEntry.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
-                UsernameEntry.FadeTo(1),
-                (new Func<Task>(async () =>
-                {
-                    await Task.Delay(150);
-                    await Task.WhenAll(
-                            //PasswordEntry.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
-                            //PasswordEntry.FadeTo(1)
-                        );
-                }))(),
-                (new Func<Task>(async () =>
-                {
-                    await Task.Delay(300);
-                    await Task.WhenAll(
-                            //RememberCheckBox.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
-                            //RememberCheckBox.FadeTo(1)
-                        );
-                }))()
+                HabitEntry.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
+                HabitEntry.FadeTo(1),
+                DescriptionLabel.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
+                DescriptionLabel.FadeTo(1),
+                DescriptionEditor.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
+                DescriptionEditor.FadeTo(1),
+                StartPicker.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
+                StartPicker.FadeTo(1),
+                EndPicker.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
+                EndPicker.FadeTo(1),
+                
+                //(new Func<Task>(async () =>
+                //{
+                //    await Task.Delay(300);
+                //    await Task.WhenAll(
+                //            //RememberCheckBox.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
+                //            //RememberCheckBox.FadeTo(1)
+                //        );
+                //}))()
                 );
 
             await Task.WhenAll(
@@ -102,12 +101,13 @@ namespace KutyApp.Client.Xam.Views
             var currentHeight = FrameContainer.Height;
 
             //await Task.WhenAll(
-            //    UsernameEntry.FadeTo(0),
-            //    PasswordEntry.FadeTo(0),
-            //    RememberCheckBox.FadeTo(0),
-            //    LoginButton.FadeTo(0),
-            //    OrEntry.FadeTo(0),
-            //    RegisterButton.FadeTo(0),
+            //    HabitEntry.FadeTo(0),
+            //    DescriptionLabel.FadeTo(0),
+            //    DescriptionEditor.FadeTo(0),
+            //    StartPicker.FadeTo(0),
+            //    EndPicker.FadeTo(0),
+            //    EndPicker.FadeTo(0)
+
             //    ErrorLabel.FadeTo(0),
             //    LoadingActivityIndicator.FadeTo(0)
             //    );

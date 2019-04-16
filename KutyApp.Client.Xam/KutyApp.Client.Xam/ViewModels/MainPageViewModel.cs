@@ -25,7 +25,6 @@ namespace KutyApp.Client.Xam.ViewModels
             KutyAppClientContext = kutyAppClientContext;
             IsEnglish = CurrentLanguage == Languages.En || CurrentLanguage == Languages.Default;
             IsLoggedIn = false;
-            Title = "main vm ciim";
         }
 
         public override async void OnNavigatingTo(INavigationParameters parameters)
@@ -38,6 +37,19 @@ namespace KutyApp.Client.Xam.ViewModels
         {
             //TODO: xamarin essentials
             base.OnNavigatedTo(parameters);
+
+            //try if token is still valid
+            if (KutyAppClientContext.IsLoggedIn)
+            {
+                try
+                {
+                    await EnvironmentApi.AuthPingAsync();
+                }
+                catch (System.Exception e)
+                {
+                    KutyAppClientContext.RemoveApiKey();
+                }
+            }
 
             this.IsLoggedIn = KutyAppClientContext.IsLoggedIn;
 

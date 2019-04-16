@@ -39,7 +39,8 @@
                             <Button IsEnabled="{Binding IsOnline}" Text="{x:Static local:Resources.Localization.Texts.PickPohotoButtonText}" Command="{Binding PickPhotoCommand}" CornerRadius="5" BackgroundColor="{StaticResource MainButtonBackgroundColor}" TextColor="White"/>
                         </StackLayout>
                         <!-- Name -->
-                        <myControls:ExtraEntry Text="{Binding Name, Mode=TwoWay}" BackgroundColor="Transparent" MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" TextColor="White" FontAttributes="Bold" CornerRadius="10" BorderColor="White" BorderThickness="2" Margin="5">
+                        <myControls:ExtraEntry Text="{Binding Name, Mode=TwoWay}" BackgroundColor="Transparent" MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" TextColor="White" FontAttributes="Bold" CornerRadius="10" BorderColor="White" BorderThickness="2" Margin="5"
+                                               Placeholder="{x:Static local:Resources.Localization.Texts.Name}">
                             <Entry.Behaviors>
                                 <validator:ValidatorBaseBehavior x:Name="NameValidator" IsRequired="True"/>
                             </Entry.Behaviors>
@@ -62,7 +63,8 @@
                         </myControls:ExtraEntry>
                         <Label Margin="5, -5" Text="{x:Static local:Resources.Localization.Texts.NameRequired}" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference NameValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
                         <!--Chipnumber-->
-                        <myControls:ExtraEntry Text="{Binding ChipNumber, Mode=TwoWay}" BackgroundColor="Transparent" MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" TextColor="White" FontAttributes="Bold" CornerRadius="10" BorderColor="White" BorderThickness="2" Margin="5">
+                        <myControls:ExtraEntry Text="{Binding ChipNumber, Mode=TwoWay}" BackgroundColor="Transparent" MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" TextColor="White" FontAttributes="Bold" CornerRadius="10" BorderColor="White" BorderThickness="2" Margin="5"
+                                               Placeholder="{x:Static local:Resources.Localization.Texts.Chipnumber}">
                             <Entry.Behaviors>
                                 <validator:ValidatorBaseBehavior x:Name="ChipnumberValidator" IsRequired="True"/>
                             </Entry.Behaviors>
@@ -86,8 +88,8 @@
                         <Label Margin="5, -5" Text="{x:Static local:Resources.Localization.Texts.ChipNumberRequired}" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference ChipnumberValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
 
                         <!--<Picker ItemsSource="{Binding GenderValues}" TextColor="White" SelectedItem="{Binding Gender, Mode=TwoWay}" Margin="5" BackgroundColor="{StaticResource ExtraEntryBackgroundColor}"/>-->
-                        <myControls:ExtraPicker ItemsSource="{Binding GenderValues}"
-                                            SelectedItem="{Binding Gender, Mode=TwoWay}"
+                        <myControls:ExtraPicker ItemsSource="{Binding GenderDisplayValues}"
+                                            SelectedIndex="{Binding SelectedGenderIndex}"
                                             BackgroundColor="Transparent"
                                             MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}"
                                             TextColor="White" 

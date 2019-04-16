@@ -9,6 +9,7 @@ using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Entities;
 using KutyApp.Services.Environment.Bll.Entities.Model;
 using KutyApp.Services.Environment.Bll.Interfaces;
+using KutyApp.Services.Environment.Bll.Resources;
 using Microsoft.EntityFrameworkCore;
 
 namespace KutyApp.Services.Environment.Bll.Managers
@@ -32,7 +33,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
                 throw new ArgumentNullException();
 
             if (string.IsNullOrEmpty(dto.Name))
-                throw new Exception("Name required");
+                throw new Exception(ExceptionMessages.Required);
 
             //TODO: visszaadni poit
             if (dto.Id == null)
@@ -45,7 +46,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
         {
             Poi poi = await DbContext.Pois.FirstOrDefaultAsync(p => p.Id == dto.Id);
             if (poi == null)
-                throw new Exception("not found");
+                throw new Exception(ExceptionMessages.NotFound);
 
             Poi editedPoi = Mapper.Map<Poi>(dto);
 
@@ -90,7 +91,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
             Poi poiToDelete = await DbContext.Pois.FirstOrDefaultAsync(p => p.Id == id);
 
             if (poiToDelete == null)
-                throw new Exception("Not found");
+                throw new Exception(ExceptionMessages.NotFound);
 
             DbContext.Pois.Remove(poiToDelete);
 

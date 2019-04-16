@@ -31,6 +31,12 @@ namespace KutyApp.Services.Environment.Api.Controllers
         public IActionResult Ping() =>
             Ok();
 
+        [HttpGet("authping")]
+        public IActionResult AuthPing() =>
+            Ok();
+
+        
+
         [HttpGet("error")]
         [AllowAnonymous]
         public IActionResult Error(string message) =>

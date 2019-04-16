@@ -6,7 +6,7 @@ namespace KutyApp.Client.Xam.Converters
 {
     public class TimeSpanToStringConverter : IValueConverter
     {
-        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             TimeSpan timeSpan = (TimeSpan)value;
             DateTime dateTime = DateTime.MinValue + timeSpan;

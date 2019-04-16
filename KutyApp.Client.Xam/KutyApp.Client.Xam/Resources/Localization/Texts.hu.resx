@@ -120,14 +120,44 @@
   <data name="Adverts" xml:space="preserve">
     <value>Hírdetések</value>
   </data>
+  <data name="Chipnumber" xml:space="preserve">
+    <value>Chip szám</value>
+  </data>
   <data name="ChipNumberRequired" xml:space="preserve">
     <value>A chip szám kitöltése kötelező</value>
+  </data>
+  <data name="CONFIRMPASSWORD" xml:space="preserve">
+    <value>A megadott jelszavak nem egyeznek</value>
   </data>
   <data name="DeleteButtonText" xml:space="preserve">
     <value>TÖRLÉS</value>
   </data>
+  <data name="Female" xml:space="preserve">
+    <value>Nőstény</value>
+  </data>
+  <data name="LOGINERROR" xml:space="preserve">
+    <value>Helytelen bejelentkezési adatok</value>
+  </data>
+  <data name="Male" xml:space="preserve">
+    <value>Hím</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Név</value>
+  </data>
   <data name="NameRequired" xml:space="preserve">
     <value>A név kitöltése kötelező</value>
+  </data>
+  <data name="NORIGHTS" xml:space="preserve">
+    <value>Nincs jogod a művelethez</value>
+  </data>
+  <data name="NOTFOUND" xml:space="preserve">
+    <value>Egyed nem található</value>
+  </data>
+  <data name="Password" xml:space="preserve">
+    <value>Jelszó</value>
+  </data>
+  <data name="PasswordConfirm" xml:space="preserve">
+    <value>Jelszó megerősítése</value>
   </data>
   <data name="Pets" xml:space="preserve">
     <value>Állatok</value>
@@ -141,10 +171,25 @@
   <data name="Profile" xml:space="preserve">
     <value>Profil</value>
   </data>
+  <data name="Register" xml:space="preserve">
+    <value>Regisztráció</value>
+  </data>
+  <data name="REGISTERERROR" xml:space="preserve">
+    <value>Hibás regisztráció</value>
+  </data>
+  <data name="REQUIRED" xml:space="preserve">
+    <value>Kötelező mező</value>
+  </data>
   <data name="SaveButtonText" xml:space="preserve">
     <value>MENTÉS</value>
   </data>
+  <data name="SERVERERROR" xml:space="preserve">
+    <value>Szerver hiba</value>
+  </data>
   <data name="TakePhotoButtonText" xml:space="preserve">
     <value>Fotó készítése</value>
+  </data>
+  <data name="UNAUTHORIZED" xml:space="preserve">
+    <value>Azonosítási hiba</value>
   </data>
 </root>

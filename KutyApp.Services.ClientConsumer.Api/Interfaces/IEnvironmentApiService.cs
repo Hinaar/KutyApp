@@ -17,6 +17,10 @@ namespace KutyApp.Client.Services.ClientConsumer.Interfaces
 
         [Get("/ping")]
         Task PingAsync();
+
+        [Get("/authping")]
+        [Headers("Authorization: Bearer")]
+        Task AuthPingAsync();
         #endregion
 
         #region advert

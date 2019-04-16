@@ -65,6 +65,7 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
         {
             SecureStorage.Remove($"{nameof(KutyApp)}.{nameof(ApiKey)}");
             Preferences.Remove($"{nameof(KutyApp)}.{nameof(ApiKey)}");
+            IsLoggedIn = false;
         }
 
         public async Task<string> ReturnApiKeyAsync() => await Task.FromResult(ApiKey);

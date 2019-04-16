@@ -10,7 +10,7 @@
              BackgroundColor="{StaticResource PageBackgroundColor}">
   <ContentView.Content>
       <StackLayout>
-            <ListView ItemsSource="{Binding Habits}" SelectionMode="None">
+            <ListView ItemsSource="{Binding Habits}" SelectionMode="None" HasUnevenRows="True">
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemTapped"
                                               Command="{Binding OpenHabitCommand}"
@@ -20,11 +20,15 @@
                     <DataTemplate>
                         <ViewCell>
                             <Frame BorderColor="White" Margin="2" Padding="1" CornerRadius="10">
-                                <Frame CornerRadius="10" Padding="0" Margin="0">
-                                    <StackLayout HeightRequest="30">
-                                        <Label Text="{Binding Title}" />
-                                        <Label Text="{Binding StartTime, Converter={StaticResource TimeSpantoStringConverter}}" />
-                                    </StackLayout>
+                                <Frame CornerRadius="10" Padding="0" Margin="0" BackgroundColor="{StaticResource ExtraEntryBackgroundColor}">
+                                    <Grid VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" Padding="5" Margin="0" RowSpacing="5" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="*" />
+                                        </Grid.RowDefinitions>
+                                        <Label Grid.Row="0" Text="{Binding Title}" />
+                                        <Label Grid.Row="1" Text="{Binding StartTime, Converter={StaticResource TimeSpantoStringConverter}}" />
+                                    </Grid>
                                 </Frame>
                             </Frame>
                         </ViewCell>

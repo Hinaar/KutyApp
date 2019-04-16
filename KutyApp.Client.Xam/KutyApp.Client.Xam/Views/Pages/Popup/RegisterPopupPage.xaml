@@ -38,7 +38,7 @@
                                            HorizontalOptions="Fill"
                                            x:Name="UsernameEntry"
                                            HorizontalTextAlignment="Center"
-                                           Placeholder="Username"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.Name}"
                                            PlaceholderColor="#D9D0D0D0">
                         <Entry.Behaviors>
                             <validator:ValidatorBaseBehavior x:Name="NameValidator" IsRequired="True"/>
@@ -74,7 +74,7 @@
                                            HorizontalOptions="Fill"
                                            x:Name="EmailEntry"
                                            HorizontalTextAlignment="Center"
-                                           Placeholder="email@example.com"
+                                           Placeholder="email@email.com"
                                            PlaceholderColor="#D9D0D0D0"
                                            Keyboard="Email">
                         <Entry.Behaviors>
@@ -111,7 +111,7 @@
                                            HorizontalOptions="Fill"
                                            x:Name="PasswordEntry"
                                            HorizontalTextAlignment="Center"
-                                           Placeholder="Password"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.Password}"
                                            PlaceholderColor="#D9D0D0D0"
                                            IsPassword="True">
                         <Entry.Behaviors>
@@ -148,7 +148,7 @@
                                            HorizontalOptions="Fill"
                                            x:Name="PasswordConfirmEntry"
                                            HorizontalTextAlignment="Center"
-                                           Placeholder="Confirm Password"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.PasswordConfirm}"
                                            PlaceholderColor="#D9D0D0D0"
                                            IsPassword="True">
                         <Entry.Behaviors>
@@ -156,8 +156,8 @@
                                 x:Name="PasswordConfirmValidator" 
                                 IsRequired="True" 
                                 CompareTo="{Binding Source={x:Reference PasswordEntry}, Path=Text}"
-                                ShownMessage="kotelezo ej"
-                                ShownCompareMessage="nem ugyanaz"/>
+                                ShownMessage="{x:Static local:Resources.Localization.Texts.REQUIRED}"
+                                ShownCompareMessage="{x:Static local:Resources.Localization.Texts.ConfirmPassword}"/>
                         </Entry.Behaviors>
                         <Entry.Triggers>
                             <DataTrigger Binding="{Binding Source={x:Reference PasswordConfirmValidator}, Path=IsValid}"
@@ -202,7 +202,7 @@
                         Margin="100, 5"
                         CornerRadius="5"
                         BackgroundColor="#7dbbe6"
-                        Text="Register"
+                        Text="{x:Static local:Resources.Localization.Texts.Register}"
                         x:Name="RegisterButton" 
                         Command="{Binding RegisterCommand}"
                         IsEnabled="False">

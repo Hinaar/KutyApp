@@ -22,7 +22,7 @@ namespace KutyApp.Client.Xam.Resources.Localization {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Texts {
+    public class Texts {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("KutyApp.Client.Xam.Resources.Localization.Texts", typeof(Texts).Assembly);
@@ -51,7 +51,7 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,43 +63,133 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Adverts.
         /// </summary>
-        internal static string Adverts {
+        public static string Adverts {
             get {
                 return ResourceManager.GetString("Adverts", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Chip number.
+        /// </summary>
+        public static string Chipnumber {
+            get {
+                return ResourceManager.GetString("Chipnumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The chip number is required.
         /// </summary>
-        internal static string ChipNumberRequired {
+        public static string ChipNumberRequired {
             get {
                 return ResourceManager.GetString("ChipNumberRequired", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Passwords does not match.
+        /// </summary>
+        public static string CONFIRMPASSWORD {
+            get {
+                return ResourceManager.GetString("CONFIRMPASSWORD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DELETE.
         /// </summary>
-        internal static string DeleteButtonText {
+        public static string DeleteButtonText {
             get {
                 return ResourceManager.GetString("DeleteButtonText", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Female.
+        /// </summary>
+        public static string Female {
+            get {
+                return ResourceManager.GetString("Female", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid login details.
+        /// </summary>
+        public static string LOGINERROR {
+            get {
+                return ResourceManager.GetString("LOGINERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Male.
+        /// </summary>
+        public static string Male {
+            get {
+                return ResourceManager.GetString("Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The name is required.
         /// </summary>
-        internal static string NameRequired {
+        public static string NameRequired {
             get {
                 return ResourceManager.GetString("NameRequired", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You have no right for this action.
+        /// </summary>
+        public static string NORIGHTS {
+            get {
+                return ResourceManager.GetString("NORIGHTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Entity not found.
+        /// </summary>
+        public static string NOTFOUND {
+            get {
+                return ResourceManager.GetString("NOTFOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password.
+        /// </summary>
+        public static string Password {
+            get {
+                return ResourceManager.GetString("Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm password.
+        /// </summary>
+        public static string PasswordConfirm {
+            get {
+                return ResourceManager.GetString("PasswordConfirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pets.
         /// </summary>
-        internal static string Pets {
+        public static string Pets {
             get {
                 return ResourceManager.GetString("Pets", resourceCulture);
             }
@@ -108,7 +198,7 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Pick Photo.
         /// </summary>
-        internal static string PickPohotoButtonText {
+        public static string PickPohotoButtonText {
             get {
                 return ResourceManager.GetString("PickPohotoButtonText", resourceCulture);
             }
@@ -117,7 +207,7 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Pois.
         /// </summary>
-        internal static string Pois {
+        public static string Pois {
             get {
                 return ResourceManager.GetString("Pois", resourceCulture);
             }
@@ -126,27 +216,72 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
-        internal static string Profile {
+        public static string Profile {
             get {
                 return ResourceManager.GetString("Profile", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Register.
+        /// </summary>
+        public static string Register {
+            get {
+                return ResourceManager.GetString("Register", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error while registering.
+        /// </summary>
+        public static string REGISTERERROR {
+            get {
+                return ResourceManager.GetString("REGISTERERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Required Field.
+        /// </summary>
+        public static string REQUIRED {
+            get {
+                return ResourceManager.GetString("REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SAVE.
         /// </summary>
-        internal static string SaveButtonText {
+        public static string SaveButtonText {
             get {
                 return ResourceManager.GetString("SaveButtonText", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Server Error.
+        /// </summary>
+        public static string SERVERERROR {
+            get {
+                return ResourceManager.GetString("SERVERERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Take Photo.
         /// </summary>
-        internal static string TakePhotoButtonText {
+        public static string TakePhotoButtonText {
             get {
                 return ResourceManager.GetString("TakePhotoButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You are not authorized.
+        /// </summary>
+        public static string UNAUTHORIZED {
+            get {
+                return ResourceManager.GetString("UNAUTHORIZED", resourceCulture);
             }
         }
     }
