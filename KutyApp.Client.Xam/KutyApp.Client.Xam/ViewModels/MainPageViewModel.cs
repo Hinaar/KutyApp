@@ -23,14 +23,15 @@ namespace KutyApp.Client.Xam.ViewModels
             this.EnvironmentApi = environmentApi;
             this.PageDialogService = dialogService;
             KutyAppClientContext = kutyAppClientContext;
-            IsEnglish = CurrentLanguage == Languages.En || CurrentLanguage == Languages.Default;
+            //IsEnglish = CurrentLanguage == Languages.En || CurrentLanguage == Languages.Default;
             IsLoggedIn = false;
         }
 
         public override async void OnNavigatingTo(INavigationParameters parameters)
         {
-            base.OnNavigatingTo(parameters);
             await KutyAppClientContext.LoadSettingsAsync();
+            CurrentLanguage = KutyAppClientContext.SavedLanguage;
+            base.OnNavigatingTo(parameters);
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)
@@ -60,15 +61,15 @@ namespace KutyApp.Client.Xam.ViewModels
             }
         }
 
-        private bool isEnglish;
+        //private bool isEnglish;
         private bool isLoggedIn;
-        public bool IsEnglish { get => isEnglish; set => SetProperty(ref isEnglish, value); }
+        //public bool IsEnglish { get => isEnglish; set => SetProperty(ref isEnglish, value); }
         public bool IsLoggedIn { get => isLoggedIn; set => SetProperty(ref isLoggedIn, value); }
 
         private ICommand navigateToPetsPage;
         private ICommand navigateToPoisPage;
         private ICommand navigateToProfilePage;
-        private ICommand changeLanguage;
+        //private ICommand changeLanguage;
         private ICommand navigateToAdvertPage;
         private ICommand openPopupCommand;
 
@@ -86,14 +87,14 @@ namespace KutyApp.Client.Xam.ViewModels
             navigateToProfilePage ?? (navigateToProfilePage = new Command(
                 async () => await NavigationService.NavigateAsync(nameof(Views.ProfilePage))));
 
-        public ICommand ChangeLanguage =>
-            changeLanguage ?? (changeLanguage = new Command(
-                async () =>
-                    {
-                        //already shows the required language
-                        CurrentLanguage = IsEnglish ? Languages.En : Languages.Hu;
-                        await NavigationService.NavigateAsync("app:///MainPage", animated: false);
-                    }));
+        //public ICommand ChangeLanguage =>
+        //    changeLanguage ?? (changeLanguage = new Command(
+        //        async () =>
+        //            {
+        //                //already shows the required language
+        //                CurrentLanguage = IsEnglish ? Languages.En : Languages.Hu;
+        //                await NavigationService.NavigateAsync("app:///MainPage", animated: false);
+        //            }));
 
         public ICommand NavigateToAdvertPage =>
             navigateToAdvertPage ?? (navigateToAdvertPage = new Command(

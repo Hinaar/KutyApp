@@ -34,8 +34,8 @@ namespace KutyApp.Client.Xam.Views
                 DeleteButton.Scale = 1;
                 DeleteButton.Opacity = 1;
 
-                HabitEntry.TranslationX = DescriptionLabel.TranslationX = DescriptionEditor.TranslationX = StartPicker.TranslationX = EndPicker.TranslationX = 0;
-                HabitEntry.Opacity = DescriptionLabel.Opacity = DescriptionEditor.Opacity = StartPicker.Opacity = EndPicker.Opacity = 1;
+                HabitEntry.TranslationX = DescriptionLabel.TranslationX = DescriptionEditor.TranslationX = StartPicker.TranslationX = EndPicker.TranslationX = AmountEntry.TranslationX = UnitEntry.TranslationX = 0;
+                HabitEntry.Opacity = DescriptionLabel.Opacity = DescriptionEditor.Opacity = StartPicker.Opacity = EndPicker.Opacity = AmountEntry.Opacity = UnitEntry.Opacity = 1;
 
                 return;
             }
@@ -47,8 +47,8 @@ namespace KutyApp.Client.Xam.Views
             DeleteButton.Scale = 0.3;
             DeleteButton.Opacity = 0;
 
-            HabitEntry.TranslationX = DescriptionLabel.TranslationX = DescriptionEditor.TranslationX = StartPicker.TranslationX = EndPicker.TranslationX = -10;
-            HabitEntry.Opacity = DescriptionLabel.Opacity = DescriptionEditor.Opacity = StartPicker.Opacity = EndPicker.Opacity = 0;
+            HabitEntry.TranslationX = DescriptionLabel.TranslationX = DescriptionEditor.TranslationX = StartPicker.TranslationX = EndPicker.TranslationX = AmountEntry.TranslationX = UnitEntry.TranslationX = -10;
+            HabitEntry.Opacity = DescriptionLabel.Opacity = DescriptionEditor.Opacity = StartPicker.Opacity = EndPicker.Opacity = AmountEntry.Opacity = UnitEntry.Opacity = 0;
         }
 
         protected override async Task OnAppearingAnimationEndAsync()
@@ -69,7 +69,11 @@ namespace KutyApp.Client.Xam.Views
                 StartPicker.FadeTo(1),
                 EndPicker.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
                 EndPicker.FadeTo(1),
-                
+                AmountEntry.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
+                AmountEntry.FadeTo(1),
+                UnitEntry.TranslateTo(0, 0, easing: Easing.SpringOut, length: translateLength),
+                UnitEntry.FadeTo(1)
+
                 //(new Func<Task>(async () =>
                 //{
                 //    await Task.Delay(300);

@@ -55,10 +55,11 @@ namespace KutyApp.Client.Xam.ViewModels
                 }
                 catch (Exception)
                 {
-                    return Enum.GetValues(typeof(Gender)).Cast<string>();
+                    return Enum.GetNames(typeof(Gender)).ToArray();
                 }
             }
-        } 
+        }
+        
         private DateTime birthDate;
         private int? age;
         private int id;

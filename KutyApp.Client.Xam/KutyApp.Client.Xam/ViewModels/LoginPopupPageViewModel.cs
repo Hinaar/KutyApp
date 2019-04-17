@@ -121,13 +121,13 @@ namespace KutyApp.Client.Xam.ViewModels
                     HasError = true;
                     try
                     {
-                        var ottva = Texts.ResourceManager.GetString(error.Message, Localization.Current.CurrentCultureInfo);
-                        ErrorMessage = ottva;
+                        ErrorMessage = Texts.ResourceManager.GetString(error.Message, Localization.Current.CurrentCultureInfo) ?? Texts.SERVERERROR;
                     }
                     catch (Exception)
                     {
+                        ErrorMessage = Texts.SERVERERROR;
                     }
-               
+
                     // other exception handling
                 }
                 catch (System.Exception e)

@@ -10,6 +10,13 @@
              BackgroundColor="{StaticResource PageBackgroundColor}">
   <ContentView.Content>
       <StackLayout>
+            <Label Text="{x:Static local:Resources.Localization.Texts.MedicalTreatments}" 
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   TextColor="#eb3a77"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"
+                   Margin="0, 5"/>
             <ListView ItemsSource="{Binding MedicalTreatments}" SelectionMode="None" HasUnevenRows="True">
                 <ListView.Behaviors>
                     <b:EventToCommandBehavior EventName="ItemTapped"

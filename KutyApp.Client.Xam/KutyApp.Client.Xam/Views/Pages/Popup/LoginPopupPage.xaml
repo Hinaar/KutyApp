@@ -38,7 +38,7 @@
                                            HorizontalOptions="Fill"
                                            x:Name="UsernameEntry"
                                            HorizontalTextAlignment="Center"
-                                           Placeholder="Username"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.Name}"
                                            PlaceholderColor="#D9D0D0D0"
                                            Keyboard="Email">
                         <Entry.Behaviors>
@@ -75,7 +75,7 @@
                                            HorizontalOptions="Fill"
                                            x:Name="PasswordEntry"
                                            HorizontalTextAlignment="Center"
-                                           Placeholder="Password"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.Password}"
                                            PlaceholderColor="#D9D0D0D0"
                                            IsPassword="True">
                         <Entry.Behaviors>
@@ -99,8 +99,8 @@
                         </Entry.Triggers>
                     </myControls:ExtraEntry>
                     <Label Margin="10, -5, 10, 0" Text="{x:Static local:Resources.Localization.Texts.NameRequired}" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference PasswordValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
-                   
-                    <XLabControls:CheckBox Checked="{Binding RememberMe}" DefaultText="Remember me" x:Name="RememberCheckBox" />
+
+                    <XLabControls:CheckBox Checked="{Binding RememberMe}" DefaultText="{x:Static local:Resources.Localization.Texts.RememberMe}" x:Name="RememberCheckBox" />
                     
                     <StackLayout Orientation="Horizontal">
                         <Button 
@@ -112,7 +112,7 @@
                             BackgroundColor="#7dbbe6"
                             HorizontalOptions="Fill"
                             x:Name="LoginButton"
-                            Text="Login" 
+                            Text="{x:Static local:Resources.Localization.Texts.Login}" 
                             Command="{Binding LoginCommand}"
                             IsEnabled="False">
                             <Button.Triggers>
@@ -127,7 +127,7 @@
                                 </MultiTrigger>
                             </Button.Triggers>
                         </Button>
-                        <Label HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="Or" x:Name="OrEntry"/>
+                        <Label HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" Text="{x:Static local:Resources.Localization.Texts.Or}" x:Name="OrEntry"/>
                         <Button
                             BorderColor="Black" 
                             BorderRadius="5"
@@ -135,7 +135,7 @@
                             Margin="10, 5"
                             CornerRadius="5"
                             BackgroundColor="#7dbbe6"
-                            Text="Register"
+                            Text="{x:Static local:Resources.Localization.Texts.Register}"
                             x:Name="RegisterButton" 
                             Command="{Binding RegisterCommand}"/>
                     </StackLayout>

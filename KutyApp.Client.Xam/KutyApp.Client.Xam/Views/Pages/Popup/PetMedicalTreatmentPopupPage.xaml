@@ -24,8 +24,7 @@
         <ScrollView HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" Margin="20">
             <Frame x:Name="FrameContainer" Margin="0" HorizontalOptions="FillAndExpand" BackgroundColor="#32B6A4"
                    CornerRadius="5" BorderColor="Black" Padding="0" VerticalOptions="CenterAndExpand">
-                <StackLayout IsClippedToBounds="True" Padding="0" Spacing="3" HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" x:Name="PageStack">
-                    <Label Text="halp" />
+                <StackLayout IsClippedToBounds="True" Padding="0, 10, 0, 0" Spacing="3" HorizontalOptions="Fill" VerticalOptions="CenterAndExpand" x:Name="PageStack">
                     <myControls:ExtraEntry Text="{Binding Name, Mode=TwoWay}" 
                                            BackgroundColor="Transparent" 
                                            MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" 
@@ -38,7 +37,7 @@
                                            HorizontalOptions="Fill"
                                            x:Name="NameEntry"
                                            HorizontalTextAlignment="Center"
-                                           Placeholder="Title"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.Name}"
                                            PlaceholderColor="#D9D0D0D0" 
                                            InputTransparent="{Binding InputTransparent}" />
                     <Frame IsVisible="{Binding InputTransparent}" BorderColor="White" CornerRadius="10" Padding="2" 
@@ -66,7 +65,7 @@
                                            BorderThickness="2"
                                            Margin="5"
                                            HorizontalOptions="Fill"
-                                           Placeholder="Description"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.Description}"
                                            PlaceholderColor="#D9D0D0D0" 
                                            InputTransparent="{Binding InputTransparent}"
                                            IsVisible="{Binding InputTransparent, Converter={StaticResource InvertBooleanConverter}}"/>
@@ -81,7 +80,9 @@
                                            Margin="5"
                                            HorizontalOptions="Fill" 
                                            InputTransparent="{Binding InputTransparent}"
-                                           Format="HH:mm"/>
+                                           >
+                        <myControls:ExtraDatePicker.Format>yyyy.MM.dd dddd</myControls:ExtraDatePicker.Format>
+                    </myControls:ExtraDatePicker>
                     <myControls:ExtraEntry Text="{Binding Place, Mode=TwoWay}" 
                                            BackgroundColor="Transparent" 
                                            MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" 
@@ -94,7 +95,7 @@
                                            HorizontalOptions="Fill"
                                            x:Name="UsernameEntry2"
                                            HorizontalTextAlignment="Center"
-                                           Placeholder="Title"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.Location}"
                                            PlaceholderColor="#D9D0D0D0" 
                                            InputTransparent="{Binding InputTransparent}" />
                     <myControls:ExtraEntry Text="{Binding Tender, Mode=TwoWay}" 
@@ -109,7 +110,7 @@
                                            HorizontalOptions="Fill"
                                            x:Name="UsernameEntry3"
                                            HorizontalTextAlignment="Center"
-                                           Placeholder="Title"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.Tender}"
                                            PlaceholderColor="#D9D0D0D0" 
                                            InputTransparent="{Binding InputTransparent}" />
                     <StackLayout Orientation="Horizontal" Spacing="0" >
@@ -124,7 +125,7 @@
                                            Margin="5"
                                            x:Name="UsernameEnt4ry"
                                            HorizontalTextAlignment="Center"
-                                           Placeholder="Title"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.Price}"
                                            PlaceholderColor="#D9D0D0D0"
                                            Keyboard="Numeric"
                                            HorizontalOptions="FillAndExpand"
@@ -132,7 +133,7 @@
                         <myControls:ExtraEntry Text="{Binding Currency, Mode=TwoWay}" 
                                            BackgroundColor="Transparent" 
                                            MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" 
-                                           WidthRequest="80"
+                                           WidthRequest="100"
                                            TextColor="White"
                                            FontAttributes="Bold"
                                            CornerRadius="10" 
@@ -141,13 +142,13 @@
                                            Margin="5"
                                            x:Name="UsernameEn2try"
                                            HorizontalTextAlignment="Center"
-                                           Placeholder="Ti"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.Currency}"
                                            PlaceholderColor="#D9D0D0D0" 
                                            InputTransparent="{Binding InputTransparent}"
                                            HorizontalOptions="End"/>
                     </StackLayout>
-                    <myControls:ExtraPicker ItemsSource="{Binding MedicalTreatmentTypeValues}"
-                                            SelectedItem="{Binding Type, Mode=TwoWay}"
+                    <myControls:ExtraPicker ItemsSource="{Binding MedicalTreatmentDisplayValues}"
+                                            SelectedIndex="{Binding SelectedTypeIndex}"
                                             BackgroundColor="Transparent"
                                             MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}"
                                             TextColor="White" 
@@ -167,7 +168,7 @@
                             BackgroundColor="#7dbbe6"
                             HorizontalOptions="Fill"
                             x:Name="EditButton"
-                            Text="Edit" 
+                            Text="{x:Static local:Resources.Localization.Texts.Edit}" 
                             Command="{Binding EditCommand}"
                             IsVisible="{Binding InputTransparent}">
                         </Button>
@@ -178,7 +179,7 @@
                             Margin="10, 5"
                             CornerRadius="5"
                             BackgroundColor="#7dbbe6"
-                            Text="Save"
+                            Text="{x:Static local:Resources.Localization.Texts.SaveButtonText}"
                             x:Name="SaveButton" 
                             Command="{Binding SaveCommand}"
                             IsVisible="{Binding InputTransparent, Converter={StaticResource InvertBooleanConverter}}"/>
@@ -189,7 +190,7 @@
                             Margin="10, 5"
                             CornerRadius="5"
                             BackgroundColor="#7dbbe6"
-                            Text="Delete"
+                            Text="{x:Static local:Resources.Localization.Texts.DeleteButtonText}"
                             x:Name="DeleteButton"
                             Command="{Binding DeleteCommand}"
                             IsEnabled="{Binding AllowDelete}"/>

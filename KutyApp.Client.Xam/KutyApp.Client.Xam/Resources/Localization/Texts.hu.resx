@@ -130,7 +130,7 @@
     <value>A megadott jelszavak nem egyeznek</value>
   </data>
   <data name="DeleteButtonText" xml:space="preserve">
-    <value>TÖRLÉS</value>
+    <value>Törlés</value>
   </data>
   <data name="Female" xml:space="preserve">
     <value>Nőstény</value>
@@ -191,5 +191,53 @@
   </data>
   <data name="UNAUTHORIZED" xml:space="preserve">
     <value>Azonosítási hiba</value>
+  </data>
+  <data name="Amount" xml:space="preserve">
+    <value>Mennyiség</value>
+  </data>
+  <data name="Currency" xml:space="preserve">
+    <value>Pénznem</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Leírás</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Szerkeszt</value>
+  </data>
+  <data name="Habits" xml:space="preserve">
+    <value>Szokások</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Helyszín</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Bejelentkezés</value>
+  </data>
+  <data name="MedicalTreatments" xml:space="preserve">
+    <value>Orvosi kezelések</value>
+  </data>
+  <data name="Or" xml:space="preserve">
+    <value>Vagy</value>
+  </data>
+  <data name="Other" xml:space="preserve">
+    <value>Egyéb</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Ár</value>
+  </data>
+  <data name="RememberMe" xml:space="preserve">
+    <value>Emlékezz rám</value>
+  </data>
+  <data name="Surgery" xml:space="preserve">
+    <value>Műtét</value>
+  </data>
+  <data name="Tender" xml:space="preserve">
+    <value>Gondozó</value>
+  </data>
+  <data name="Unit" xml:space="preserve">
+    <value>Kg</value>
+  </data>
+  <data name="Vaccination" xml:space="preserve">
+    <value>Oltás</value>
   </data>
 </root>

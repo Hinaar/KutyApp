@@ -27,8 +27,8 @@ namespace KutyApp.Client.Xam.ViewModels
             this.PetRepository = petRepository;
             this.EnvironmentApi = environmentApi;
             this.KutyAppClientContext = kutyAppClientContext;
-            IsOnline = KutyAppClientContext.IsLoggedIn;
-            Title = "profil title";
+            IsEnglish = CurrentLanguage == Languages.En || CurrentLanguage == Languages.Default;
+            IsLoggedIn = KutyAppClientContext.IsLoggedIn;
         }
 
         public override void OnNavigatedTo(INavigationParameters parameters)
@@ -36,25 +36,28 @@ namespace KutyApp.Client.Xam.ViewModels
             base.OnNavigatedTo(parameters);
         }
 
-        private ObservableCollection<View> pages;
-        public ObservableCollection<View> Pages
-        {
-            get => pages;
-            set => SetProperty(ref pages, value);
-        }
-        private bool isOnline;
+        private bool isEnglish;
+        private bool isLoggedIn;
+        public bool IsEnglish { get => isEnglish; set => SetProperty(ref isEnglish, value); }
+        public bool IsLoggedIn { get => isLoggedIn; set => SetProperty(ref isLoggedIn, value); }
 
-        public bool IsOnline
-        {
-            get => isOnline;
-            set => SetProperty(ref isOnline, value);
-        }
 
         private ICommand saveOfflineCommand;
+        private ICommand changeLanguage;
 
         public ICommand SaveOfflineCommand =>
             saveOfflineCommand ?? (saveOfflineCommand = new Command(
                 async () => await SaveOffline()));
+
+        public ICommand ChangeLanguage =>
+          changeLanguage ?? (changeLanguage = new Command(
+              async () =>
+              {
+                    //already shows the required language
+                  CurrentLanguage = IsEnglish ? Languages.En : Languages.Hu;
+                  await KutyAppClientContext.SaveSettingsAsync(null, CurrentLanguage);
+                  await NavigationService.NavigateAsync("app:///MainPage", animated: false);
+              }));
 
         private async Task SaveOffline()
         {

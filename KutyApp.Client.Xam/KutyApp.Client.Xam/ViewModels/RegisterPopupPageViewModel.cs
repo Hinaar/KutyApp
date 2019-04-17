@@ -1,6 +1,7 @@
 ﻿using KutyApp.Client.Services.ClientConsumer.Dtos;
 using KutyApp.Client.Services.ClientConsumer.Interfaces;
 using KutyApp.Client.Services.ServiceCollector.Interfaces;
+using KutyApp.Client.Xam.Resources.Localization;
 using Newtonsoft.Json;
 using Prism.Navigation;
 using Refit;
@@ -100,7 +101,14 @@ namespace KutyApp.Client.Xam.ViewModels
                 {
                     var error = JsonConvert.DeserializeObject<ErrorDto>(exception.Content);
                     HasError = true;
-                    ErrorMessage = error.Message;
+                    try
+                    {
+                        ErrorMessage = Texts.ResourceManager.GetString(error.Message, Localization.Current.CurrentCultureInfo) ?? Texts.SERVERERROR;
+                    }
+                    catch (System.Exception)
+                    {
+                        ErrorMessage = Texts.SERVERERROR;
+                    }
                 }
                 catch (System.Exception e)
                 {

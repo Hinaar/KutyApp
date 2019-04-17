@@ -2,6 +2,7 @@
 using KutyApp.Client.Services.ClientConsumer.Enums;
 using KutyApp.Client.Services.ServiceCollector.Interfaces;
 using KutyApp.Client.Xam.Navigation;
+using KutyApp.Client.Xam.Resources.Localization;
 using Prism.Navigation;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,22 @@ namespace KutyApp.Client.Xam.ViewModels
         private bool allowDelete;
         private string name;
         private MedicalTreatmentType type;
-        public IEnumerable<MedicalTreatmentType> MedicalTreatmentTypeValues => Enum.GetValues(typeof(MedicalTreatmentType)).Cast<MedicalTreatmentType>();
+        //public IEnumerable<MedicalTreatmentType> MedicalTreatmentTypeValues => Enum.GetValues(typeof(MedicalTreatmentType)).Cast<MedicalTreatmentType>();
+        private int selectedTypeIndex;
+        public IEnumerable<string> MedicalTreatmentDisplayValues
+        {
+            get
+            {
+                try
+                {
+                    return Enum.GetNames(typeof(MedicalTreatmentType)).Select(enumName => Texts.ResourceManager.GetString(enumName, Localization.Current.CurrentCultureInfo)).ToArray();
+                }
+                catch (Exception)
+                {
+                    return Enum.GetNames(typeof(MedicalTreatmentType)).ToArray();
+                }
+            }
+        }
         private string description;
         private DateTime date;
         private string place;
@@ -98,6 +114,12 @@ namespace KutyApp.Client.Xam.ViewModels
             get => currency;
             set => SetProperty(ref currency, value);
         }
+
+        public int SelectedTypeIndex
+        {
+            get => selectedTypeIndex;
+            set { SetProperty(ref selectedTypeIndex, value); Type = (MedicalTreatmentType)value; }
+        }
         #endregion
 
         public override void OnNavigatedTo(INavigationParameters parameters)
@@ -123,6 +145,8 @@ namespace KutyApp.Client.Xam.ViewModels
                         break;
                 }
             }
+            else
+                Date = DateTime.Now;
 
             base.OnNavigatedTo(parameters);
         }

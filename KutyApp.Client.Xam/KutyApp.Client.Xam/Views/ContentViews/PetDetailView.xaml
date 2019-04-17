@@ -108,7 +108,9 @@
                                             BorderColor="White" 
                                             BorderThickness="2"
                                             Margin="5"
-                                                    />
+                                                    >
+                            <myControls:ExtraDatePicker.Format>yyyy.MM.dd dddd</myControls:ExtraDatePicker.Format>
+                        </myControls:ExtraDatePicker>
                         <StackLayout Orientation="Horizontal" Padding="10, 0">
                             <Button Text="{x:Static local:Resources.Localization.Texts.SaveButtonText}" Command="{Binding AddOrEditPetCommand}" 
                                 BackgroundColor="{StaticResource MainButtonBackgroundColor}" TextColor="White" CornerRadius="5"

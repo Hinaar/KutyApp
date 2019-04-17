@@ -70,6 +70,15 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Amount.
+        /// </summary>
+        public static string Amount {
+            get {
+                return ResourceManager.GetString("Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Chip number.
         /// </summary>
         public static string Chipnumber {
@@ -97,11 +106,38 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to DELETE.
+        ///   Looks up a localized string similar to Currency.
+        /// </summary>
+        public static string Currency {
+            get {
+                return ResourceManager.GetString("Currency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string DeleteButtonText {
             get {
                 return ResourceManager.GetString("DeleteButtonText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
             }
         }
         
@@ -111,6 +147,33 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         public static string Female {
             get {
                 return ResourceManager.GetString("Female", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Habits.
+        /// </summary>
+        public static string Habits {
+            get {
+                return ResourceManager.GetString("Habits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Login.
+        /// </summary>
+        public static string Login {
+            get {
+                return ResourceManager.GetString("Login", resourceCulture);
             }
         }
         
@@ -129,6 +192,15 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         public static string Male {
             get {
                 return ResourceManager.GetString("Male", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Medical Treatments.
+        /// </summary>
+        public static string MedicalTreatments {
+            get {
+                return ResourceManager.GetString("MedicalTreatments", resourceCulture);
             }
         }
         
@@ -165,6 +237,24 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         public static string NOTFOUND {
             get {
                 return ResourceManager.GetString("NOTFOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Or.
+        /// </summary>
+        public static string Or {
+            get {
+                return ResourceManager.GetString("Or", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Other.
+        /// </summary>
+        public static string Other {
+            get {
+                return ResourceManager.GetString("Other", resourceCulture);
             }
         }
         
@@ -214,6 +304,15 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Profile.
         /// </summary>
         public static string Profile {
@@ -237,6 +336,15 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         public static string REGISTERERROR {
             get {
                 return ResourceManager.GetString("REGISTERERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remember Me.
+        /// </summary>
+        public static string RememberMe {
+            get {
+                return ResourceManager.GetString("RememberMe", resourceCulture);
             }
         }
         
@@ -268,6 +376,15 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Surgery.
+        /// </summary>
+        public static string Surgery {
+            get {
+                return ResourceManager.GetString("Surgery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Take Photo.
         /// </summary>
         public static string TakePhotoButtonText {
@@ -277,11 +394,38 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tender.
+        /// </summary>
+        public static string Tender {
+            get {
+                return ResourceManager.GetString("Tender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You are not authorized.
         /// </summary>
         public static string UNAUTHORIZED {
             get {
                 return ResourceManager.GetString("UNAUTHORIZED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Kg.
+        /// </summary>
+        public static string Unit {
+            get {
+                return ResourceManager.GetString("Unit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Vaccination.
+        /// </summary>
+        public static string Vaccination {
+            get {
+                return ResourceManager.GetString("Vaccination", resourceCulture);
             }
         }
     }

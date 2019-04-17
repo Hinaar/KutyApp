@@ -97,7 +97,7 @@
                             </DataTrigger>
                         </Entry.Triggers>
                     </myControls:ExtraEntry>
-                    <Label Margin="10, -5, 10, 0" Text="{x:Static local:Resources.Localization.Texts.NameRequired}" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference EmailValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
+                    <Label Margin="10, -5, 10, 0" Text="{x:Static local:Resources.Localization.Texts.REQUIRED}" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference EmailValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
 
                     <myControls:ExtraEntry Text="{Binding Password, Mode=TwoWay}" 
                                            BackgroundColor="Transparent" 
@@ -134,7 +134,7 @@
                             </DataTrigger>
                         </Entry.Triggers>
                     </myControls:ExtraEntry>
-                    <Label Margin="10, -5, 10, 0" Text="{x:Static local:Resources.Localization.Texts.NameRequired}" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference PasswordValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
+                    <Label Margin="10, -5, 10, 0" Text="{x:Static local:Resources.Localization.Texts.REQUIRED}" TextColor="Red" FontSize="Micro" IsVisible="{Binding Source={x:Reference PasswordValidator}, Path=IsValid, Converter={StaticResource InvertBooleanConverter}}" />
 
                     <myControls:ExtraEntry Text="{Binding PasswordConfirm, Mode=TwoWay}" 
                                            BackgroundColor="Transparent" 
@@ -157,7 +157,7 @@
                                 IsRequired="True" 
                                 CompareTo="{Binding Source={x:Reference PasswordEntry}, Path=Text}"
                                 ShownMessage="{x:Static local:Resources.Localization.Texts.REQUIRED}"
-                                ShownCompareMessage="{x:Static local:Resources.Localization.Texts.ConfirmPassword}"/>
+                                ShownCompareMessage="{x:Static local:Resources.Localization.Texts.CONFIRMPASSWORD}"/>
                         </Entry.Behaviors>
                         <Entry.Triggers>
                             <DataTrigger Binding="{Binding Source={x:Reference PasswordConfirmValidator}, Path=IsValid}"

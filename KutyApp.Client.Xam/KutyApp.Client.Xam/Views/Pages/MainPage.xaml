@@ -179,7 +179,7 @@
                 </ImageButton>
             </Frame>
                 
-            <StackLayout Orientation="Horizontal" VerticalOptions="End">
+            <!--<StackLayout Orientation="Horizontal" VerticalOptions="End">
                     <Label x:Name="HungarianLabel" Text="Hungarian" HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
                    Margin="10, 0, 0, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish, Converter={StaticResource InvertBooleanConverter}}">
                         <Label.Triggers>
@@ -217,7 +217,7 @@
                             </DataTrigger>
                         </Label.Triggers>
                     </Label>
-                </StackLayout>
+            </StackLayout>-->
             </Grid>
         </Frame>
 </ContentPage>
