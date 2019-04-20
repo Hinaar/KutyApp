@@ -29,7 +29,15 @@ namespace KutyApp.Client.Xam.ViewModels
             set { SetProperty(ref isBusy, value); }
         }
 
-        public CultureInfo CurrentLanguage { get { return currentLanguage; } set { Localization.Current.CurrentCultureInfo = value; SetProperty(ref currentLanguage, value); } }
+        public CultureInfo CurrentLanguage {
+            get => currentLanguage; 
+            set
+            {
+                CultureInfo.DefaultThreadCurrentCulture = value;
+                Localization.Current.CurrentCultureInfo = value;
+                SetProperty(ref currentLanguage, value);
+            }
+        }
 
         public ViewModelBase(INavigationService navigationService)
         {

@@ -86,7 +86,7 @@ namespace KutyApp.Client.Xam.ViewModels
                 try
                 {
                     IsBusy = true;
-                    var response = await EnvironmentApiService.RegisterAsync(new RegisterDto { Email = UserName, Password = Password, PasswordConfirm = PasswordConfirm });
+                    var response = await EnvironmentApiService.RegisterAsync(new RegisterDto { Email = UserName, Password = Password, PasswordConfirm = PasswordConfirm, PhoneNumber = PhoneNumber });
 
                     KutyAppClientContext.SetTemporaryApiKey(response);
 

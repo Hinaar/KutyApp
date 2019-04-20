@@ -21,6 +21,10 @@ namespace KutyApp.Client.Services.ClientConsumer.Interfaces
         [Get("/authping")]
         [Headers("Authorization: Bearer")]
         Task AuthPingAsync();
+
+        [Get("/getUser/{name}")]
+        [Headers("Authorization: Bearer")]
+        Task GetUserAsync(string name);
         #endregion
 
         #region advert
@@ -84,7 +88,7 @@ namespace KutyApp.Client.Services.ClientConsumer.Interfaces
 
         [Get("/api/pet/availableSitters")]
         [Headers("Authorization: Bearer")]
-        Task ListAvailableSittersAsync(string username);
+        Task<List<UserDto>> ListAvailableSittersAsync(string username);
 
         [Get("/api/pet/{id}")]
         [Headers("Authorization: Bearer")]
@@ -97,6 +101,10 @@ namespace KutyApp.Client.Services.ClientConsumer.Interfaces
         [Get("/api/pet/mySittedPets")]
         [Headers("Authorization: Bearer")]
         Task<List<PetDto>> GetMySittedPetsAsync();
+
+        [Get("/api/pet/myPetSitters")]
+        [Headers("Authorization: Bearer")]
+        Task<List<UserDto>> GetMySittersAsync();
         #endregion
 
         #region poi

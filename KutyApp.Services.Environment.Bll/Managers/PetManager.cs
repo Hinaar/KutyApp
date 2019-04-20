@@ -169,6 +169,7 @@ namespace KutyApp.Services.Environment.Bll.Managers
             return await GetPetAsync(pet.Id);
         }
 
+        //TODO: ha nincs petid akkor a user osszes allatahoz
         public async Task AddPetSitter(AddOrRemovePetSitterDto dto)
         {
             bool petExists = await DbContext.Pets.AnyAsync(p => p.Id == dto.PetId);
@@ -431,9 +432,24 @@ namespace KutyApp.Services.Environment.Bll.Managers
 
         public async Task<List<UserDto>> ListAvailableSittersAsync(string username)
         {
-            var users = await DbContext.Users.AsNoTracking().Where(u => u.UserName.Contains(username ?? string.Empty, StringComparison.CurrentCultureIgnoreCase)).ToListAsync();
+            var users = await DbContext.Users.AsNoTracking()
+                                       .Where(u => u.UserName.Contains(username ?? string.Empty, StringComparison.CurrentCultureIgnoreCase) &&
+                                                   u.Id != KutyAppContext.CurrentUser.Id)
+                                       .ToListAsync();
 
             return Mapper.Map<List<UserDto>>(users);
+        }
+
+        public async Task<List<UserDto>> ListMyPetSittersAsync()
+        {
+            var mypets = DbContext.Pets.Where(p => p.OwnerId == KutyAppContext.CurrentUser.Id).Select(p => p.Id);
+
+            var users = await DbContext.Users.Where(u => u.PetSittings.Any(ps => mypets.Contains(ps.PetId)))
+                                             .Distinct()
+                                             .AsNoTracking()
+                                             .ToListAsync();
+
+            return Mapper.Map <List<UserDto>>(users ?? Enumerable.Empty<User>().ToList());
         }
     }
 }

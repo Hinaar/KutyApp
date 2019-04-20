@@ -53,5 +53,9 @@ namespace KutyApp.Services.Environment.Api.Controllers
         [HttpGet("mySittedPets")]
         public async Task<ActionResult<List<PetDto>>> ListMySittedPets() =>
             Result(await PetManager.ListMySittedPetsAsync());
+
+        [HttpGet("myPetSitters")]
+        public async Task<ActionResult<List<UserDto>>> ListMyPetSitters() =>
+            Result(await PetManager.ListMyPetSittersAsync());
     }
 }

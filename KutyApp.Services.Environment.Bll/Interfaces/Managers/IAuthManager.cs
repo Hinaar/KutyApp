@@ -9,5 +9,6 @@ namespace KutyApp.Services.Environment.Bll.Interfaces
         Task<string> GetTokenAsync(LoginDto dto);
         Task<string> RegisterAsync(RegisterDto dto);
         Task<string> GetUserIdAsync(string userName);
+        Task<UserDto> GetUserAsync(string name);
     }
 }

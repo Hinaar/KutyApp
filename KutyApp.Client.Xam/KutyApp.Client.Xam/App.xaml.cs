@@ -39,7 +39,7 @@ namespace KutyApp.Client.Xam
             InitializeComponent();
 
             //await NavigationService.NavigateAsync("NavigationPage/MainPage");
-            await NavigationService.NavigateAsync(nameof(Views.MainPage));
+            await NavigationService.NavigateAsync(nameof(Views.LoadingPage));
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -53,6 +53,7 @@ namespace KutyApp.Client.Xam
             }));
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
+            containerRegistry.RegisterForNavigation<LoadingPage, LoadingPageViewModel>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<PetsPage, PetsPageViewModel>();
             containerRegistry.RegisterForNavigation<PetDetailPage, PetDetailPageViewModel>();
@@ -62,6 +63,7 @@ namespace KutyApp.Client.Xam
             containerRegistry.RegisterForNavigation<RegisterPopupPage>();
             containerRegistry.RegisterForNavigation<PetHabitPopupPage>();
             containerRegistry.RegisterForNavigation<PetMedicalTreatmentPopupPage>();
+            containerRegistry.RegisterForNavigation<PetSitterPopupPage>();
             containerRegistry.Register<IPermissionManager, PermissionManager>();
             containerRegistry.Register<IMediaManager, MediaManager>();
             //containerRegistry.RegisterInstance<IPetRepository>(new PetRepositoryManager(localDbPath));

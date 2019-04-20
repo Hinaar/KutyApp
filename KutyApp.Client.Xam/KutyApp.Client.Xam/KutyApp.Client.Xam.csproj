@@ -77,6 +77,9 @@
     <EmbeddedResource Update="Views\ContentViews\PetHabitsView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Pages\LoadingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Pages\PetDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -115,6 +118,9 @@
     </Compile>
     <Compile Update="Views\ContentViews\PetMedicalTreatMentsView.xaml.cs">
       <DependentUpon>PetMedicalTreatMentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Pages\Popup\PetSitterPopupPage.xaml.cs">
+      <DependentUpon>PetSitterPopupPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Pages\Popup\PetMedicalTreatmentPopupPage.xaml.cs">
       <DependentUpon>PetMedicalTreatmentPopupPage.xaml</DependentUpon>

@@ -1,4 +1,5 @@
-﻿using KutyApp.Services.Environment.Api.Extensions;
+﻿using AutoMapper;
+using KutyApp.Services.Environment.Api.Extensions;
 using KutyApp.Services.Environment.Bll.Configuration;
 using KutyApp.Services.Environment.Bll.Dtos;
 using KutyApp.Services.Environment.Bll.Entities.Model;
@@ -21,12 +22,14 @@ namespace KutyApp.Services.Environment.Api.Managers
         private SignInManager<User> SignInManager { get; }
         private UserManager<User> UserManager { get; }
         private JwtSettings JwtSettings { get; }
+        private IMapper Mapper { get; }
 
-        public AuthManager(SignInManager<User> signInManager, UserManager<User> userManager, IOptions<JwtSettings> jwtSettings)
+        public AuthManager(SignInManager<User> signInManager, UserManager<User> userManager, IOptions<JwtSettings> jwtSettings, IMapper mapper)
         {
             SignInManager = signInManager;
             UserManager = userManager;
             JwtSettings = jwtSettings.Value;
+            Mapper = mapper;
         }
         public async Task<string> GetTokenAsync(LoginDto dto)
         {
@@ -72,7 +75,7 @@ namespace KutyApp.Services.Environment.Api.Managers
             if (dto.Password != dto.PasswordConfirm)
                 throw new Exception(ExceptionMessages.ConfirmPassword);
 
-            var user = new User { UserName = dto.Email, Email = dto.Email };
+            var user = new User { UserName = dto.Email, Email = dto.Email, PhoneNumber = dto.PhoneNumber };
             var result = await UserManager.CreateAsync(user, dto.Password);
 
             if (result.Succeeded)
@@ -89,6 +92,19 @@ namespace KutyApp.Services.Environment.Api.Managers
                 throw new Exception(ExceptionMessages.NotFound);
 
             else return user.Id;
+        }
+
+        public async Task<UserDto> GetUserAsync(string name)
+        {
+            var user = await UserManager.FindByNameAsync(name);
+
+            if (user == null)
+                user = await UserManager.FindByEmailAsync(name);
+
+            if (user == null)
+                throw new Exception(ExceptionMessages.NotFound);
+
+            return Mapper.Map<UserDto>(user);
         }
     }
 }

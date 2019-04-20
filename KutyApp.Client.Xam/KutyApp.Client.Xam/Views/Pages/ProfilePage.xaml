@@ -16,90 +16,116 @@
                 </DataTrigger>
             </Frame.Triggers>
             <Grid>
-                <ScrollView>
-                    <StackLayout BackgroundColor="{StaticResource PageBackgroundColor}" VerticalOptions="Fill">
+                <StackLayout BackgroundColor="{StaticResource PageBackgroundColor}" VerticalOptions="Fill">
 
-                        <Button Text="SaveOfflineDogs" Command="{Binding SaveOfflineCommand}" IsEnabled="{Binding IsLoggedIn}"/>
-                        <Button Text="MySittedPets" Command="{Binding }"/>
-                        <Button Text="Save Settings" Command="{Binding SaveSettingsCommand}"/>
-                        <Label Text="my sitters:" TextColor="White" Margin="5, 0"/>
-                        <Frame BackgroundColor="Pink" VerticalOptions="FillAndExpand" Margin="5, 0, 50, 0" Padding="5" CornerRadius="10">
-                            <StackLayout Padding="0" BackgroundColor="Azure">
-                                <Label Text="Sitterrr" />
-                                <Label Text="Sitterrr" />
-                                <Label Text="Sitterrr" />
-                                <Label Text="Sitterrr" />
-                                <Frame x:Name="FloatingButtonWrapper" CornerRadius="100" WidthRequest="20" HeightRequest="20" BackgroundColor="#eb3a77" HorizontalOptions="End" VerticalOptions="EndAndExpand" Margin="0">
-                                    <ImageButton Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.plus.png}"
+                    <Button Text="SaveOfflineDogs" Command="{Binding SaveOfflineCommand}" IsEnabled="{Binding IsLoggedIn}"/>
+                    <Button Text="MySittedPets" />
+                    <Button Text="Save Settings" Command="{Binding SaveSettingsCommand}"/>
+                    <Label Text="my sitters:" TextColor="White" Margin="5, 0"/>
+
+                    <Frame BackgroundColor="Pink" VerticalOptions="FillAndExpand" Margin="5, 0, 50, 0" Padding="5" CornerRadius="10">
+                        <Grid Padding="0" BackgroundColor="Azure">
+                            <ListView ItemsSource="{Binding MyPetSitters}"
+                                          HasUnevenRows="True"
+                                          SelectionMode="None"
+                                          SeparatorVisibility="None"
+                                          IsRefreshing="{Binding IsListRefreshing}">
+                                <ListView.Behaviors>
+                                    <b:EventToCommandBehavior EventName="ItemTapped"
+                                                                  Command="{Binding OpenSitterPopupCommand}"
+                                                                  EventArgsParameterPath="Item" />
+                                </ListView.Behaviors>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Frame BorderColor="White" 
+                                                       CornerRadius="10"
+                                                       Margin="3"
+                                                       Padding="1">
+                                                <Frame CornerRadius="10"
+                                                           Padding="0"
+                                                           Margin="0">
+                                                    <StackLayout>
+                                                        <Label Text="{Binding Email}" TextColor="Red" Margin="5" FontAttributes="Bold"/>
+                                                    </StackLayout>
+                                                </Frame>
+                                            </Frame>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                            <Frame x:Name="FloatingButtonWrapper" CornerRadius="100" WidthRequest="20" HeightRequest="20" BackgroundColor="#eb3a77" HorizontalOptions="End" VerticalOptions="EndAndExpand" Margin="0">
+                                <ImageButton Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.plus.png}"
                              Aspect="AspectFit"
                              Margin="-18"
                              Padding="8"
                              BackgroundColor="Transparent">
-                                        <ImageButton.Behaviors>
-                                            <behaviors:EventHandlerBehavior EventName="Clicked">
-                                                <behaviors:ScaleAction TargetObject="{x:Reference FloatingButtonWrapper}" 
+                                    <ImageButton.Behaviors>
+                                        <behaviors:EventHandlerBehavior EventName="Clicked">
+                                            <behaviors:ScaleAction TargetObject="{x:Reference FloatingButtonWrapper}" 
                                    FinalScale="0.8" 
                                    Duration="100" 
                                    EasingFunction="Linear"
                                    Await="true"/>
-                                                <behaviors:ScaleAction TargetObject="{x:Reference FloatingButtonWrapper}" 
+                                            <behaviors:ScaleAction TargetObject="{x:Reference FloatingButtonWrapper}" 
                                    FinalScale="1.0" 
                                    Duration="100" 
                                    EasingFunction="CubicOut" 
                                    Await="true"/>
-                                                <behaviors:InvokeCommandAction Command="{Binding OpenPopupCommand}" />
-                                            </behaviors:EventHandlerBehavior>
-                                        </ImageButton.Behaviors>
-                                    </ImageButton>
-                                </Frame>
-                            </StackLayout>
-                        </Frame>
-                        <StackLayout Orientation="Horizontal" VerticalOptions="End">
-                            <Label x:Name="HungarianLabel" Text="Magyar" HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
+                                            <behaviors:InvokeCommandAction Command="{Binding OpenSitterPopupCommand}" CommandParameter="{Null}"/>
+                                        </behaviors:EventHandlerBehavior>
+                                    </ImageButton.Behaviors>
+                                </ImageButton>
+                            </Frame>
+                        </Grid>
+                    </Frame>
+
+                    <StackLayout Orientation="Horizontal" VerticalOptions="End">
+                        <Label x:Name="HungarianLabel" Text="Magyar" HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
                    Margin="10, 0, 0, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish, Converter={StaticResource InvertBooleanConverter}}">
-                                <Label.Triggers>
-                                    <DataTrigger Binding="{Binding Source={x:Reference HungarianLabel}, Path=IsEnabled}"
+                            <Label.Triggers>
+                                <DataTrigger Binding="{Binding Source={x:Reference HungarianLabel}, Path=IsEnabled}"
                                  TargetType="Label"
                                  Value="True">
-                                        <Setter Property="Opacity" Value="1"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Source={x:Reference HungarianLabel}, Path=IsEnabled}"
+                                    <Setter Property="Opacity" Value="1"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Source={x:Reference HungarianLabel}, Path=IsEnabled}"
                                  TargetType="Label"
                                  Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
-                            <Switch HorizontalOptions="Fill" IsToggled="{Binding IsEnglish}" Margin="-10, 0, 0, 0">
-                                <Switch.Behaviors>
-                                    <b:EventToCommandBehavior EventName="Toggled" 
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                        <Switch HorizontalOptions="Fill" IsToggled="{Binding IsEnglish}" Margin="-10, 0, 0, 0">
+                            <Switch.Behaviors>
+                                <b:EventToCommandBehavior EventName="Toggled" 
                                               Command="{Binding ChangeLanguage}">
-                                    </b:EventToCommandBehavior>
-                                </Switch.Behaviors>
-                            </Switch>
-                            <Label x:Name="EnglishLabel"  Text="English" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
+                                </b:EventToCommandBehavior>
+                            </Switch.Behaviors>
+                        </Switch>
+                        <Label x:Name="EnglishLabel"  Text="English" HorizontalOptions="EndAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
                            Margin="0, 0, 10, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish}">
-                                <Label.Triggers>
-                                    <DataTrigger Binding="{Binding Source={x:Reference EnglishLabel}, Path=IsEnabled}"
+                            <Label.Triggers>
+                                <DataTrigger Binding="{Binding Source={x:Reference EnglishLabel}, Path=IsEnabled}"
                                  TargetType="Label"
                                  Value="True">
-                                        <Setter Property="Opacity" Value="1"/>
-                                    </DataTrigger>
-                                    <DataTrigger Binding="{Binding Source={x:Reference EnglishLabel}, Path=IsEnabled}"
+                                    <Setter Property="Opacity" Value="1"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Source={x:Reference EnglishLabel}, Path=IsEnabled}"
                                  TargetType="Label"
                                  Value="False">
-                                        <Setter Property="Opacity" Value="0.5" />
-                                    </DataTrigger>
-                                </Label.Triggers>
-                            </Label>
-                        </StackLayout>
+                                    <Setter Property="Opacity" Value="0.5" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
                     </StackLayout>
-                </ScrollView>
-                
+                </StackLayout>
+
                 <ActivityIndicator IsEnabled="True" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
             </Grid>
-            
+
         </Frame>
-        
+
     </ContentPage.Content>
 </ContentPage>

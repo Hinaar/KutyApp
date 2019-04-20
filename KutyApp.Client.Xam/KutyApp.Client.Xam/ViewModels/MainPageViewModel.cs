@@ -29,8 +29,6 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public override async void OnNavigatingTo(INavigationParameters parameters)
         {
-            await KutyAppClientContext.LoadSettingsAsync();
-            CurrentLanguage = KutyAppClientContext.SavedLanguage;
             base.OnNavigatingTo(parameters);
         }
 
@@ -85,7 +83,8 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public ICommand NavigateToProfilePage =>
             navigateToProfilePage ?? (navigateToProfilePage = new Command(
-                async () => await NavigationService.NavigateAsync(nameof(Views.ProfilePage))));
+                async () => 
+                    await NavigationService.NavigateAsync(nameof(Views.ProfilePage))));
 
         //public ICommand ChangeLanguage =>
         //    changeLanguage ?? (changeLanguage = new Command(

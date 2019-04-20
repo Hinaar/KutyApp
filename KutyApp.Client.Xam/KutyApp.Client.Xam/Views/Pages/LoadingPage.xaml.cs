@@ -9,12 +9,12 @@ using Xamarin.Forms.Xaml;
 
 namespace KutyApp.Client.Xam.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class ProfilePage : ContentPage
-	{
-		public ProfilePage ()
-		{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class LoadingPage : ContentPage
+    {
+        public LoadingPage()
+        {
             InitializeComponent();
-		}
-	}
+        }
+    }
 }

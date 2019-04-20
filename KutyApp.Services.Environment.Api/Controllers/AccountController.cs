@@ -41,5 +41,10 @@ namespace KutyApp.Services.Environment.Api.Controllers
         [AllowAnonymous]
         public IActionResult Error(string message) =>
             throw new System.Exception(message);
+
+        [HttpGet("getUser/{name}")]
+        public async Task<ActionResult<UserDto>> GetUser(string name) =>
+            Result(await AuthManager.GetUserAsync(name));
+
     }
 }

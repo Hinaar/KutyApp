@@ -1,8 +1,10 @@
 ﻿using KutyApp.Client.Common.Constants;
+using KutyApp.Client.Common.Enums;
 using KutyApp.Client.Services.ClientConsumer.Dtos;
 using KutyApp.Client.Services.ClientConsumer.Interfaces;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using KutyApp.Client.Services.ServiceCollector.Interfaces;
+using KutyApp.Client.Xam.Navigation;
 using KutyApp.Client.Xam.Views;
 using Prism.Navigation;
 using Prism.Services;
@@ -27,23 +29,30 @@ namespace KutyApp.Client.Xam.ViewModels
             this.PetRepository = petRepository;
             this.EnvironmentApi = environmentApi;
             this.KutyAppClientContext = kutyAppClientContext;
-            IsEnglish = CurrentLanguage == Languages.En || CurrentLanguage == Languages.Default;
+
+            IsEnglish = CurrentLanguage.DisplayName == Languages.En.DisplayName || CurrentLanguage.DisplayName == Languages.Default.DisplayName;
             IsLoggedIn = KutyAppClientContext.IsLoggedIn;
         }
 
-        public override void OnNavigatedTo(INavigationParameters parameters)
+        public async override void OnNavigatedTo(INavigationParameters parameters)
         {
-            base.OnNavigatedTo(parameters);
+            if (IsLoggedIn)
+                await LoadSittersAsync();
         }
 
         private bool isEnglish;
         private bool isLoggedIn;
+        private bool isListRefreshing;
+        private ObservableCollection<UserDto> myPetSitters;
+
         public bool IsEnglish { get => isEnglish; set => SetProperty(ref isEnglish, value); }
         public bool IsLoggedIn { get => isLoggedIn; set => SetProperty(ref isLoggedIn, value); }
-
+        public bool IsListRefreshing { get => isListRefreshing; set => SetProperty(ref isListRefreshing, value); }
+        public ObservableCollection<UserDto> MyPetSitters { get => myPetSitters; set => SetProperty(ref myPetSitters, value); }
 
         private ICommand saveOfflineCommand;
         private ICommand changeLanguage;
+        private ICommand openSitterPopupCommand;
 
         public ICommand SaveOfflineCommand =>
             saveOfflineCommand ?? (saveOfflineCommand = new Command(
@@ -59,6 +68,20 @@ namespace KutyApp.Client.Xam.ViewModels
                   await NavigationService.NavigateAsync("app:///MainPage", animated: false);
               }));
 
+        public ICommand OpenSitterPopupCommand =>
+            openSitterPopupCommand ?? (openSitterPopupCommand = new Command(
+                async (tappedSitter) => await NavigationService.NavigateAsync(nameof(PetSitterPopupPage),
+                    new NavigationParameters {
+                        {
+                            nameof(NavigationHelper), new NavigationHelper
+                            {
+                                Action = tappedSitter is UserDto ? NavigationAction.Edit : NavigationAction.Add,
+                                ParameterTypeName = nameof(UserDto),
+                                Parameter = tappedSitter
+                            }
+                        } }
+                )));
+
         private async Task SaveOffline()
         {
             IsBusy = true;
@@ -72,5 +95,23 @@ namespace KutyApp.Client.Xam.ViewModels
 
             IsBusy = false;
         }
+
+        private async Task LoadSittersAsync()
+        {
+            IsListRefreshing = true;
+            try
+            {
+                var sitters = await EnvironmentApi.GetMySittersAsync();
+                if (sitters.Any())
+                    MyPetSitters = new ObservableCollection<UserDto>(sitters);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            IsListRefreshing = false;
+        }
+
     }
 }
