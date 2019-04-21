@@ -23,8 +23,8 @@
                     <Button Text="Save Settings" Command="{Binding SaveSettingsCommand}"/>
                     <Label Text="my sitters:" TextColor="White" Margin="5, 0"/>
 
-                    <Frame BackgroundColor="Pink" VerticalOptions="FillAndExpand" Margin="5, 0, 50, 0" Padding="5" CornerRadius="10">
-                        <Grid Padding="0" BackgroundColor="Azure">
+                    <Frame BackgroundColor="{StaticResource MainButtonBackgroundColor}" VerticalOptions="FillAndExpand" Margin="5, 0, 50, 0" Padding="5" CornerRadius="10">
+                        <Grid Padding="0" BackgroundColor="{StaticResource MainButtonBackgroundColor}">
                             <ListView ItemsSource="{Binding MyPetSitters}"
                                           HasUnevenRows="True"
                                           SelectionMode="None"
@@ -45,8 +45,8 @@
                                                 <Frame CornerRadius="10"
                                                            Padding="0"
                                                            Margin="0">
-                                                    <StackLayout>
-                                                        <Label Text="{Binding Email}" TextColor="Red" Margin="5" FontAttributes="Bold"/>
+                                                    <StackLayout BackgroundColor="{StaticResource ExtraEntryBackgroundColor}">
+                                                        <Label Text="{Binding Email}" TextColor="White" Margin="5" FontAttributes="Bold" FontSize="20"/>
                                                     </StackLayout>
                                                 </Frame>
                                             </Frame>

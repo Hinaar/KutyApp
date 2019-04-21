@@ -7,4 +7,5 @@
   <converters:DefaultImageConverter x:Key="DefaultImageConverter" />
   <converters:TimeSpanToStringConverter x:Key="TimeSpantoStringConverter" />
   <converters:EnumLocalizationConverter x:Key="EnumLocalizationConverter" />
+  <converters:IsBindingNotNullConverter x:Key="IsBindingNotNullConverter" />
 </ResourceDictionary>

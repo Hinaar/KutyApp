@@ -58,7 +58,7 @@ namespace KutyApp.Services.Environment.Api.Managers
                         issuer: JwtSettings.Issuer,
                         audience: JwtSettings.Audience,
                         notBefore: DateTime.Now,
-                        expires: dto.RememberMe ? (DateTime?)null : DateTime.Now.AddMinutes(JwtSettings.ExpiricyInMinutes),
+                        expires: dto.RememberMe ? DateTime.Now.AddYears(10) : DateTime.Now.AddMinutes(JwtSettings.ExpiricyInMinutes),
                         signingCredentials: signingCredentials,
                         claims: claims
                     );

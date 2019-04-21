@@ -46,6 +46,8 @@
                                 Command="{Binding SearchCommand}"
                                 IsEnabled="{Binding IsAdd}" 
                                 FontSize="25"
+                                BorderColor="White"
+                                BorderWidth="1"
                                 CornerRadius="10"
                                 Padding="0"
                                 WidthRequest="50"
@@ -58,26 +60,44 @@
                         </Button>
                     </StackLayout>
 
-                    <ListView ItemsSource="{Binding AvailableSitters}"
+                    <Frame BackgroundColor="{StaticResource ExtraEntryBackgroundColor}"
+                           Margin="5" Padding="5" CornerRadius="10" BorderColor="White">
+                        <ListView ItemsSource="{Binding AvailableSitters}"
                               SelectedItem="{Binding SelectedSitter}"
                               HasUnevenRows="True"
                               IsRefreshing="{Binding IsListLoading}" 
                               HeightRequest="100">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <StackLayout>
-                                        <Label Text="{Binding Email}" Margin="5" />
-                                    </StackLayout>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Frame BorderColor="White" 
+                                                       CornerRadius="10"
+                                                       Margin="3"
+                                                       Padding="1">
+                                            <Frame CornerRadius="10"
+                                                           Padding="0"
+                                                           Margin="0">
+                                                <StackLayout BackgroundColor="#32B6A4">
+                                                    <Label Text="{Binding Email}" TextColor="White" Margin="5" FontAttributes="Bold" FontSize="20"/>
+                                                </StackLayout>
+                                            </Frame>
+                                        </Frame>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Frame>
+                    <BoxView 
+                        HeightRequest="1"
+                        Margin="5, 0"
+                        BackgroundColor="White" 
+                        HorizontalOptions="FillAndExpand" />
                     
-                    <Label Text="{Binding SelectedSitter.Email}" BackgroundColor="Yellow"/>
-                    <Label Text="{Binding SelectedSitter.UserName}" />
-                    <Label Text="{Binding SelectedSitter.PhoneNumber}" />
-                    <!--<StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                    
+                    <Label Text="{Binding SelectedSitter.Email}" FontAttributes="Bold" TextColor="White" Margin="5, 0"/>
+                    <Label Text="{Binding SelectedSitter.UserName}" FontAttributes="Bold" TextColor="White" Margin="5, 0"/>
+                    <Label Text="{Binding SelectedSitter.PhoneNumber}" FontAttributes="Bold" TextColor="White" Margin="5, 0"/>
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
                         <Button 
                             BorderColor="Black" 
                             BorderRadius="5"
@@ -87,21 +107,11 @@
                             BackgroundColor="#7dbbe6"
                             HorizontalOptions="Fill"
                             x:Name="EditButton"
-                            Text="{x:Static local:Resources.Localization.Texts.Edit}" 
-                            Command="{Binding EditCommand}"
-                            IsVisible="{Binding InputTransparent}">
+                            Text="add" 
+                            Command="{Binding AddPetSitterCommand}"
+                            IsVisible="{Binding IsAdd}"
+                            IsEnabled="{Binding SelectedSitter, Converter={StaticResource IsBindingNotNullConverter}}">
                         </Button>
-                        <Button
-                            BorderColor="Black" 
-                            BorderRadius="5"
-                            BorderWidth="1"
-                            Margin="10, 5"
-                            CornerRadius="5"
-                            BackgroundColor="#7dbbe6"
-                            Text="{x:Static local:Resources.Localization.Texts.SaveButtonText}"
-                            x:Name="SaveButton" 
-                            Command="{Binding SaveCommand}"
-                            IsVisible="{Binding InputTransparent, Converter={StaticResource InvertBooleanConverter}}"/>
                         <Button
                             BorderColor="Black" 
                             BorderRadius="5"
@@ -111,10 +121,11 @@
                             BackgroundColor="#7dbbe6"
                             Text="{x:Static local:Resources.Localization.Texts.DeleteButtonText}"
                             x:Name="DeleteButton"
-                            Command="{Binding DeleteCommand}"
-                            IsEnabled="{Binding AllowDelete}"
+                            Command="{Binding RemovePetSitterCommand}"
+                            IsVisible="{Binding IsAdd, Converter={StaticResource InvertBooleanConverter}}"
+                            IsEnabled="{Binding SelectedSitter, Converter={StaticResource IsBindingNotNullConverter}}"
                             />
-                    </StackLayout>-->
+                    </StackLayout>
                     
                     <Label x:Name="ErrorLabel" Margin="10, 5" HorizontalTextAlignment="Center" Text="{Binding ErrorMessage}" TextColor="Red" FontSize="Micro" IsVisible="{Binding HasError}" />
                     <ActivityIndicator x:Name="LoadingActivityIndicator" IsEnabled="True" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" />

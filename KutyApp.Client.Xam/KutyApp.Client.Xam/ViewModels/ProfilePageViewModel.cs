@@ -105,7 +105,7 @@ namespace KutyApp.Client.Xam.ViewModels
                 if (sitters.Any())
                     MyPetSitters = new ObservableCollection<UserDto>(sitters);
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
             }

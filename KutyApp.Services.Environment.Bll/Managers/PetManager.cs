@@ -172,17 +172,36 @@ namespace KutyApp.Services.Environment.Bll.Managers
         //TODO: ha nincs petid akkor a user osszes allatahoz
         public async Task AddPetSitter(AddOrRemovePetSitterDto dto)
         {
-            bool petExists = await DbContext.Pets.AnyAsync(p => p.Id == dto.PetId);
-
-            var userId = await AuthManager.GetUserIdAsync(dto.UserName);
-
-            if (petExists && !string.IsNullOrWhiteSpace(userId))
+            if (!dto.PetId.HasValue)
             {
-                DbContext.PetSittings.Add(new PetSitting { PetId = dto.PetId, SitterId = userId });
-                await DbContext.SaveChangesAsync();
+                var userId = await AuthManager.GetUserIdAsync(dto.UserName);
+                if (string.IsNullOrEmpty(userId))
+                    throw new Exception(ExceptionMessages.NotFound);
+
+                var existingSitterIds = await DbContext.PetSittings.Where(ps => ps.Pet.OwnerId == KutyAppContext.CurrentUser.Id).Select(ps => ps.SitterId).Distinct().ToListAsync();
+
+                if (!existingSitterIds.Contains(userId))
+                {
+                    var myPetIds = await DbContext.Pets.Where(p => p.OwnerId == KutyAppContext.CurrentUser.Id).Select(p => p.Id).ToListAsync();
+                    myPetIds.ForEach(id => DbContext.PetSittings.Add(new PetSitting { PetId = id, SitterId = userId }));
+                }
+
             }
             else
-                throw new Exception(ExceptionMessages.NotFound);
+            {
+                bool petExists = await DbContext.Pets.AnyAsync(p => p.Id == dto.PetId);
+
+                var userId = await AuthManager.GetUserIdAsync(dto.UserName);
+
+                if (petExists && !string.IsNullOrWhiteSpace(userId))
+                {
+                    DbContext.PetSittings.Add(new PetSitting { PetId = dto.PetId.Value, SitterId = userId });
+                }
+                else
+                    throw new Exception(ExceptionMessages.NotFound);
+            }
+
+            await DbContext.SaveChangesAsync();
         }
 
         public async Task DeleteDogAsync(int id)
@@ -205,13 +224,27 @@ namespace KutyApp.Services.Environment.Bll.Managers
 
         public async Task RemovePetSitter(AddOrRemovePetSitterDto dto)
         {
-            var userId = await AuthManager.GetUserIdAsync(dto.UserName);
-
-            var petSitting = await DbContext.PetSittings.Include(ps => ps.Pet).FirstOrDefaultAsync(ps => ps.PetId == dto.PetId && ps.SitterId == userId);
-            if (petSitting != null && petSitting.Pet.OwnerId == KutyAppContext.CurrentUser.Id)
+            if (!dto.PetId.HasValue)
             {
-                petSitting.Pet = null;
-                DbContext.PetSittings.Remove(petSitting);
+                var userId = await AuthManager.GetUserIdAsync(dto.UserName);
+                if (string.IsNullOrEmpty(userId))
+                    throw new Exception(ExceptionMessages.NotFound);
+
+                var existingSittings = await DbContext.PetSittings.Where(ps => ps.Pet.OwnerId == KutyAppContext.CurrentUser.Id && ps.SitterId.Equals(userId)).ToListAsync();
+
+                if(existingSittings.Any())
+                    DbContext.PetSittings.RemoveRange(existingSittings);
+            }
+            else
+            {
+                var userId = await AuthManager.GetUserIdAsync(dto.UserName);
+
+                var petSitting = await DbContext.PetSittings.Include(ps => ps.Pet).FirstOrDefaultAsync(ps => ps.PetId == dto.PetId && ps.SitterId == userId);
+                if (petSitting != null && petSitting.Pet.OwnerId == KutyAppContext.CurrentUser.Id)
+                {
+                    petSitting.Pet = null;
+                    DbContext.PetSittings.Remove(petSitting);
+                }
             }
 
             await DbContext.SaveChangesAsync();

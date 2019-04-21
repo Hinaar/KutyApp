@@ -38,9 +38,15 @@ namespace KutyApp.Client.Xam.ViewModels
             set
             {
                 SetProperty(ref selectedSitter, value);
-                RaisePropertyChanged(nameof(SelectedSitter.Email));
-                //RaisePropertyChanged($"{nameof(selectedSitter)}.{nameof(SelectedSitter.Email)}");
+                RefreshSelectedUserUI();
             }
+        }
+
+        private void RefreshSelectedUserUI()
+        {
+            RaisePropertyChanged(nameof(SelectedSitter.Email));
+            RaisePropertyChanged(nameof(SelectedSitter.PhoneNumber));
+            RaisePropertyChanged(nameof(SelectedSitter.UserName));
         }
 
         private ICommand searchCommand;
@@ -65,7 +71,7 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public ICommand RemovePetSitterCommand =>
             removePetSitterCommand ?? (removePetSitterCommand = new Command(
-                async () => await EnvironmentApi.RemovePetSitterAsync(new AddOrRemovePetSitterDto { UserName = SelectedSitter.UserName})))
+                async () => await EnvironmentApi.RemovePetSitterAsync(new AddOrRemovePetSitterDto { UserName = SelectedSitter.UserName })));
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
