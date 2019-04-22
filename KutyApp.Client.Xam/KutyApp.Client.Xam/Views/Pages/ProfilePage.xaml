@@ -18,9 +18,7 @@
             <Grid>
                 <StackLayout BackgroundColor="{StaticResource PageBackgroundColor}" VerticalOptions="Fill">
 
-                    <Button Text="SaveOfflineDogs" Command="{Binding SaveOfflineCommand}" IsEnabled="{Binding IsLoggedIn}"/>
-                    <Button Text="MySittedPets" />
-                    <Button Text="Save Settings" Command="{Binding SaveSettingsCommand}"/>
+          
                     <Label Text="my sitters:" TextColor="White" Margin="5, 0"/>
 
                     <Frame BackgroundColor="{StaticResource MainButtonBackgroundColor}" VerticalOptions="FillAndExpand" Margin="5, 0, 50, 0" Padding="5" CornerRadius="10">
@@ -81,6 +79,35 @@
                         </Grid>
                     </Frame>
 
+                    <Button Text="SaveOfflineDogs" 
+                            Command="{Binding SaveOfflineCommand}"
+                            IsEnabled="{Binding IsLoggedIn}"
+                            CornerRadius="5"
+                            BackgroundColor="{StaticResource MainButtonBackgroundColor}"
+                            TextColor="White"
+                            Margin="5"
+                            />
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="MySittedPets"
+                                Command="{Binding OpenMySittedPets}"
+                                IsEnabled="{Binding IsLoggedIn}"
+                                CornerRadius="5"
+                                BackgroundColor="{StaticResource MainButtonBackgroundColor}"
+                                TextColor="White"
+                                Margin="5"
+                                HorizontalOptions="FillAndExpand"/>
+                        <Button Text="logout"
+                                Command="{Binding LogoutCommand}" 
+                                IsEnabled="{Binding IsLoggedIn}"
+                                CornerRadius="5"
+                                BackgroundColor="#eb3a77"
+                                TextColor="White"
+                                Margin="5"
+                                HorizontalOptions="End"
+                            />
+                    </StackLayout>
+                    
+                    
                     <StackLayout Orientation="Horizontal" VerticalOptions="End">
                         <Label x:Name="HungarianLabel" Text="Magyar" HorizontalOptions="StartAndExpand" VerticalOptions="Center" FontSize="Large" TextColor="White"
                    Margin="10, 0, 0, 0" FontAttributes="Bold" IsEnabled="{Binding IsEnglish, Converter={StaticResource InvertBooleanConverter}}">

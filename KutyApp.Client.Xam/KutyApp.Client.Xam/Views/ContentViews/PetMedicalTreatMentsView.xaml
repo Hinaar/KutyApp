@@ -42,7 +42,8 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Frame x:Name="FloatingButtonWrapper" CornerRadius="100" WidthRequest="20" HeightRequest="20" BackgroundColor="#eb3a77" HorizontalOptions="End" VerticalOptions="End" Margin="20">
+            <Frame x:Name="FloatingButtonWrapper" CornerRadius="100" WidthRequest="20" HeightRequest="20" BackgroundColor="#eb3a77" HorizontalOptions="End" VerticalOptions="End" Margin="20"
+                   IsVisible="{Binding IsEditEnabled}">
                 <ImageButton Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.plus.png}"
                              Aspect="AspectFit"
                              Margin="-18"

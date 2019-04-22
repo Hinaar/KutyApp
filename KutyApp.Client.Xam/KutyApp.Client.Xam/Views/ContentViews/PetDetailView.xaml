@@ -35,8 +35,8 @@
                 <ScrollView Grid.Row="1">
                     <StackLayout>
                         <StackLayout Orientation="Horizontal" x:Name="PictureButtonsLayout" IsVisible="False" HorizontalOptions="CenterAndExpand">
-                            <Button IsEnabled="{Binding IsOnline}" Text="{x:Static local:Resources.Localization.Texts.TakePhotoButtonText}" Command="{Binding TakePhotoCommand}" CornerRadius="5" BackgroundColor="{StaticResource MainButtonBackgroundColor}" TextColor="White"/>
-                            <Button IsEnabled="{Binding IsOnline}" Text="{x:Static local:Resources.Localization.Texts.PickPohotoButtonText}" Command="{Binding PickPhotoCommand}" CornerRadius="5" BackgroundColor="{StaticResource MainButtonBackgroundColor}" TextColor="White"/>
+                            <Button IsEnabled="{Binding IsOnline}" IsVisible="{Binding IsEditEnabled}" Text="{x:Static local:Resources.Localization.Texts.TakePhotoButtonText}" Command="{Binding TakePhotoCommand}" CornerRadius="5" BackgroundColor="{StaticResource MainButtonBackgroundColor}" TextColor="White"/>
+                            <Button IsEnabled="{Binding IsOnline}" IsVisible="{Binding IsEditEnabled}" Text="{x:Static local:Resources.Localization.Texts.PickPohotoButtonText}" Command="{Binding PickPhotoCommand}" CornerRadius="5" BackgroundColor="{StaticResource MainButtonBackgroundColor}" TextColor="White"/>
                         </StackLayout>
                         <!-- Name -->
                         <myControls:ExtraEntry Text="{Binding Name, Mode=TwoWay}" BackgroundColor="Transparent" MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" TextColor="White" FontAttributes="Bold" CornerRadius="10" BorderColor="White" BorderThickness="2" Margin="5"
@@ -115,11 +115,13 @@
                             <Button Text="{x:Static local:Resources.Localization.Texts.SaveButtonText}" Command="{Binding AddOrEditPetCommand}" 
                                 BackgroundColor="{StaticResource MainButtonBackgroundColor}" TextColor="White" CornerRadius="5"
                                 HorizontalOptions="StartAndExpand"
-                                IsEnabled="{Binding IsOnline}"/>
+                                IsEnabled="{Binding IsOnline}"
+                                IsVisible="{Binding IsEditEnabled}"/>
                             <Button Text="{x:Static local:Resources.Localization.Texts.DeleteButtonText}" Command="{Binding DeletePetCommand}" VerticalOptions="End"
                                 BackgroundColor="{StaticResource ErrorBackgroundColor}" TextColor="White" CornerRadius="5" 
                                 HorizontalOptions="EndAndExpand"
-                                IsEnabled="{Binding IsOnline}"/>
+                                IsEnabled="{Binding IsOnline}"
+                                IsVisible="{Binding IsEditEnabled}"/>
                         </StackLayout>
                     </StackLayout>
                 </ScrollView>

@@ -52,6 +52,8 @@ namespace KutyApp.Client.Xam.ViewModels
 
         private ICommand saveOfflineCommand;
         private ICommand changeLanguage;
+        private ICommand logoutCommand;
+        private ICommand openMySittedPets;
         private ICommand openSitterPopupCommand;
 
         public ICommand SaveOfflineCommand =>
@@ -82,6 +84,29 @@ namespace KutyApp.Client.Xam.ViewModels
                         } }
                 )));
 
+        public ICommand OpenMySittedPets =>
+            openMySittedPets ?? (openMySittedPets = new Command(
+                async () =>
+                    await NavigationService.NavigateAsync(nameof(PetsPage),
+                        new NavigationParameters
+                        {
+                            {
+                                nameof(NavigationHelper),
+                                new NavigationHelper
+                                {
+                                    Action = NavigationAction.SittedPets
+                                }
+                            }
+                        })));
+
+        public ICommand LogoutCommand =>
+            logoutCommand ?? (logoutCommand = new Command(
+                async () =>
+                {
+                    KutyAppClientContext.RemoveApiKey();
+                    await NavigationService.NavigateAsync("app:///MainPage");
+                }));
+
         private async Task SaveOffline()
         {
             IsBusy = true;
@@ -102,8 +127,7 @@ namespace KutyApp.Client.Xam.ViewModels
             try
             {
                 var sitters = await EnvironmentApi.GetMySittersAsync();
-                if (sitters.Any())
-                    MyPetSitters = new ObservableCollection<UserDto>(sitters);
+                MyPetSitters = new ObservableCollection<UserDto>(sitters);
             }
             catch (Exception e)
             {

@@ -4,6 +4,7 @@
     {
         Delete = 0,
         Add = 1,
-        Edit = 2
+        Edit = 2,
+        SittedPets = 3
     }
 }

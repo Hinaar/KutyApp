@@ -71,6 +71,7 @@ namespace KutyApp.Client.Xam.ViewModels
         private ObservableCollection<HabitDto> habits = new ObservableCollection<HabitDto>();
         private ObservableCollection<MedicalTreatmentDto> medicalTreatments = new ObservableCollection<MedicalTreatmentDto>();
         private bool swipeEnabled;
+        private bool isEditEnabled;
 
         private ICommand addOrEditPetCommand;
         private ICommand deletePetCommand;
@@ -172,6 +173,8 @@ namespace KutyApp.Client.Xam.ViewModels
             get => selectedGenderIndex;
             set { SetProperty(ref selectedGenderIndex, value); Gender = (Gender)value; }
         }
+
+        public bool IsEditEnabled { get => isEditEnabled; set => SetProperty(ref isEditEnabled, value); }
         #endregion
 
         public async override void OnNavigatedTo(INavigationParameters parameters)
@@ -180,7 +183,7 @@ namespace KutyApp.Client.Xam.ViewModels
             if (parameters.ContainsKey(ParameterKeys.PetId))
                 await LoadPet((int)parameters[ParameterKeys.PetId]);
 
-            if (parameters.ContainsKey(nameof(NavigationHelper)))
+            if (parameters.ContainsKey(nameof(NavigationHelper)) && IsEditEnabled)
             {
                 var helper = (NavigationHelper)parameters[nameof(NavigationHelper)];
 
@@ -244,6 +247,7 @@ namespace KutyApp.Client.Xam.ViewModels
             Age = Pet.Age;
             Id = Pet.Id;
             ImagePath = Pet.ImagePath;
+            IsEditEnabled = Pet.IsMyPet;
 
             if (!string.IsNullOrEmpty(ImagePath))
                 await LoadImage();

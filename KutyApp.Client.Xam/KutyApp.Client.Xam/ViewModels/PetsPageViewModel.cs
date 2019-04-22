@@ -3,8 +3,10 @@ using KutyApp.Client.Services.ClientConsumer.Dtos;
 using KutyApp.Client.Services.ClientConsumer.Interfaces;
 using KutyApp.Client.Services.LocalRepository.Interfaces;
 using KutyApp.Client.Services.ServiceCollector.Interfaces;
+using KutyApp.Client.Xam.Navigation;
 using Prism.Navigation;
 using Prism.Services;
+using System;
 using System.Collections.Async;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -68,6 +70,7 @@ namespace KutyApp.Client.Xam.ViewModels
             get { return isRefreshing; }
             set { SetProperty(ref isRefreshing, value); }
         }
+
         public override void OnNavigatingTo(INavigationParameters parameters)
         {
             base.OnNavigatingTo(parameters);
@@ -76,7 +79,16 @@ namespace KutyApp.Client.Xam.ViewModels
         public override async void OnNavigatedTo(INavigationParameters parameters)
         {
             base.OnNavigatedTo(parameters);
-            await LoadMyPetsAsync();
+
+            if (parameters.ContainsKey(nameof(NavigationHelper)))
+            {
+                var param = parameters[nameof(NavigationHelper)] as NavigationHelper;
+
+                if (param.Action == Common.Enums.NavigationAction.SittedPets)
+                    await LoadMySittedPets();
+            }
+            else
+                await LoadMyPetsAsync();
         }
 
         private async Task DeletePet(PetDto pet)
@@ -91,6 +103,20 @@ namespace KutyApp.Client.Xam.ViewModels
                 await PageDialogService.DisplayAlertAsync("warning", "csak online lehet torolni", "OK");
                 //await PetRepository.DeleteDogAsync(pet.Id);
             }
+        }
+
+        private async Task LoadMySittedPets()
+        {
+            IsBusy = true;
+
+            var sittedPets = await EnvironmentApi.GetMySittedPetsAsync();
+            if (sittedPets.Any())
+            {
+                Pets = new ObservableCollection<PetsListItemViewModel>(sittedPets.Select(p => new PetsListItemViewModel(EnvironmentApi, KutyAppClientContext, p)));
+                await Pets.ParallelForEachAsync(async p => await p.LoadImageAsync(), maxDegreeOfParalellism: 4);
+            }
+
+            IsBusy = false;
         }
 
         private async Task LoadMyPetsAsync(bool isRefresh = false)

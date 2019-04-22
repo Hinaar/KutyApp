@@ -67,11 +67,19 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public ICommand AddPetSitterCommand =>
             addPetSitterCommand ?? (addPetSitterCommand = new Command(
-                async () => await EnvironmentApi.AddPetSitterAsync(new AddOrRemovePetSitterDto { UserName = SelectedSitter.UserName})));
+                async () =>
+                {
+                    await EnvironmentApi.AddPetSitterAsync(new AddOrRemovePetSitterDto { UserName = SelectedSitter.UserName });
+                    await NavigationService.ClearPopupStackAsync();
+                }));
 
         public ICommand RemovePetSitterCommand =>
             removePetSitterCommand ?? (removePetSitterCommand = new Command(
-                async () => await EnvironmentApi.RemovePetSitterAsync(new AddOrRemovePetSitterDto { UserName = SelectedSitter.UserName })));
+                async () => 
+                {
+                    await EnvironmentApi.RemovePetSitterAsync(new AddOrRemovePetSitterDto { UserName = SelectedSitter.UserName });
+                    await NavigationService.ClearPopupStackAsync();
+                }));
 
         public override void OnNavigatedTo(INavigationParameters parameters)
         {
