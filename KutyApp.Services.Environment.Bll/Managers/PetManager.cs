@@ -57,7 +57,9 @@ namespace KutyApp.Services.Environment.Bll.Managers
             }
             else
             {
-                pet = await DbContext.Pets.FirstOrDefaultAsync(d => d.Id == addOrEditPet.Id);
+                pet = await DbContext.Pets.Include(p => p.Habits)
+                                          .Include(p => p.MedicalTreatments)
+                                          .FirstOrDefaultAsync(d => d.Id == addOrEditPet.Id);
                 if (pet == null)
                     throw new Exception(ExceptionMessages.NotFound);
 
@@ -331,7 +333,10 @@ namespace KutyApp.Services.Environment.Bll.Managers
             }
             else
             {
-                pet = await DbContext.Pets.FirstOrDefaultAsync(d => d.Id == dto.Id);
+                pet = await DbContext.Pets
+                                     .Include(p => p.Habits)
+                                     .Include(p => p.MedicalTreatments)
+                                     .FirstOrDefaultAsync(d => d.Id == dto.Id);
                 if (pet == null)
                     throw new Exception(ExceptionMessages.NotFound);
 

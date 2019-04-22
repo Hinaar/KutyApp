@@ -243,6 +243,7 @@ namespace KutyApp.Client.Xam.ViewModels
             Name = Pet.Name;
             ChipNumber = Pet.ChipNumber;
             Gender = Pet.Gender;
+            SelectedGenderIndex = (int)Pet.Gender;
             BirthDate = Pet.BirthDate ?? DateTime.MinValue;
             Age = Pet.Age;
             Id = Pet.Id;
@@ -308,6 +309,7 @@ namespace KutyApp.Client.Xam.ViewModels
             {
                 using (FileStream file = new FileStream(ImagePath, FileMode.Open))
                 {
+                    dto.ImagePath = ImagePath;
                     var res = await EnvironmentApiService.AddOrEditComplexPetAsync(dto,  new Refit.StreamPart(file, Path.GetFileName(ImagePath)));
                     if (res.Id != 0)
                         await NavigationService.NavigateAsync(nameof(Views.PetsPage));

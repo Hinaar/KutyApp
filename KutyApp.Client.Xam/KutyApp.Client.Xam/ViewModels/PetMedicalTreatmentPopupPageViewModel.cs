@@ -220,6 +220,8 @@ namespace KutyApp.Client.Xam.ViewModels
             Tender = treatment.Tender;
             Price = treatment.Price.ToString();
             Currency = treatment.Currency;
+
+            SelectedTypeIndex = (int)treatment.Type;
         }
     }
 }
