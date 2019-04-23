@@ -103,11 +103,10 @@ namespace KutyApp.Client.Xam.ViewModels
                 {
                     try
                     {
-                        dynamic valt = null;
                         if (originalAdvert == null)
-                            valt = await EnvironmentApiService.AddOrEditAdvertisementAsync(new AddOrEditAdvertDto { Title = AdvertTitle, Description = Description });
+                            await EnvironmentApiService.AddOrEditAdvertisementAsync(new AddOrEditAdvertDto { Title = AdvertTitle, Description = Description });
                         else
-                            valt = await EnvironmentApiService.AddOrEditAdvertisementAsync(new AddOrEditAdvertDto { Id = originalAdvert.Id, Title = AdvertTitle, Description = description });
+                            await EnvironmentApiService.AddOrEditAdvertisementAsync(new AddOrEditAdvertDto { Id = originalAdvert.Id, Title = AdvertTitle, Description = description });
 
                         await NavigationService.ClearPopupStackAsync();
                     }
