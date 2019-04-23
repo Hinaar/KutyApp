@@ -240,4 +240,37 @@
   <data name="Vaccination" xml:space="preserve">
     <value>Vaccination</value>
   </data>
+  <data name="Cosmetics" xml:space="preserve">
+    <value>Cosmetics</value>
+  </data>
+  <data name="HealthCare" xml:space="preserve">
+    <value>Healthcare</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
+  <data name="MySittedPets" xml:space="preserve">
+    <value>Sitted pets</value>
+  </data>
+  <data name="MySitters" xml:space="preserve">
+    <value>My sitters</value>
+  </data>
+  <data name="Park" xml:space="preserve">
+    <value>Park</value>
+  </data>
+  <data name="Restaurant" xml:space="preserve">
+    <value>Restaurant</value>
+  </data>
+  <data name="SaveOffline" xml:space="preserve">
+    <value>Save pets offline</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search....</value>
+  </data>
+  <data name="Shelter" xml:space="preserve">
+    <value>Shelter</value>
+  </data>
+  <data name="Shop" xml:space="preserve">
+    <value>Shop</value>
+  </data>
 </root>

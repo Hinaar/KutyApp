@@ -97,7 +97,7 @@ namespace KutyApp.Client.Xam.ViewModels
 
         public ICommand NavigateToAdvertPage =>
             navigateToAdvertPage ?? (navigateToAdvertPage = new Command(
-                async () => await NavigationService.NavigateAsync(nameof(TempPage))));
+                async () => await NavigationService.NavigateAsync(nameof(AdvertsPage))));
 
         public ICommand OpenPopupCommand =>
             openPopupCommand ?? (openPopupCommand = new Command(

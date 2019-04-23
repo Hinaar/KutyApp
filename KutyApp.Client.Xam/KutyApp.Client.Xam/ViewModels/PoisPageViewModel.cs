@@ -22,6 +22,7 @@ using KutyApp.Client.Services.LocalRepository.Entities.Models;
 using System.Collections.ObjectModel;
 using KutyApp.Client.Services.ClientConsumer.Dtos;
 using Plugin.ExternalMaps;
+using Xamarin.Essentials;
 
 namespace KutyApp.Client.Xam.ViewModels
 {
@@ -68,8 +69,14 @@ namespace KutyApp.Client.Xam.ViewModels
 
         private async Task OpenExternalMapAsync(object poi)
         {
-           var location = poi as PoiDto;
-           await CrossExternalMaps.Current.NavigateTo(location.Name, location.Latitude, location.Longitude);
+            var location = poi as PoiDto;
+
+            var supportsUri = await Launcher.CanOpenAsync("comgooglemaps://");
+            if(supportsUri)
+                await Launcher.OpenAsync($"comgooglemaps://?q={location.Latitude},{location.Longitude}({location.Name})");
+            else
+                await Map.OpenAsync(location.Latitude, location.Longitude, new MapLaunchOptions { Name = location.Name, NavigationMode = Xamarin.Essentials.NavigationMode.None });
+            //await CrossExternalMaps.Current.NavigateTo(location.Name, location.Latitude, location.Longitude);
         }
 
         public override async void OnNavigatedTo(INavigationParameters parameters)

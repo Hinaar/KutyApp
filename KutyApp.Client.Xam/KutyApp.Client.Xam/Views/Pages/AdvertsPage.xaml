@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:b="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+             xmlns:behaviors="clr-namespace:Behaviors;assembly=Behaviors"
+             xmlns:serverModels="clr-namespace:KutyApp.Client.Services.ClientConsumer.Dtos;assembly=KutyApp.Client.Services.ClientConsumer"
+             xmlns:local="clr-namespace:KutyApp.Client.Xam"
+             xmlns:myControls="clr-namespace:KutyApp.Client.Xam.Controls"
+             x:Class="KutyApp.Client.Xam.Views.AdvertsPage"
+             BackgroundColor="{StaticResource PageBackgroundColor}">
+    <ContentPage.Content>
+        <Grid>
+            <StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Fill">
+                    <myControls:ExtraEntry Text="{Binding KeyWord}" 
+                                           BackgroundColor="Transparent" 
+                                           MyBackgroundColor="{StaticResource ExtraEntryBackgroundColor}" 
+                                           TextColor="White"
+                                           FontAttributes="Bold"
+                                           CornerRadius="10" 
+                                           BorderColor="White"
+                                           BorderThickness="2"
+                                           Margin="5"
+                                           HorizontalOptions="FillAndExpand"
+                                           x:Name="KeyWordEntry"
+                                           HorizontalTextAlignment="Start"
+                                           Placeholder="{x:Static local:Resources.Localization.Texts.Search}"
+                                           PlaceholderColor="#D9D0D0D0"
+                                           IsEnabled="{Binding IsAdd}"/>
+                    <Button Text="&#xf002;" 
+                                HorizontalOptions="End"
+                                Command="{Binding SearchCommand}"
+                                IsEnabled="{Binding IsAdd}" 
+                                FontSize="25"
+                                BorderColor="White"
+                                BorderWidth="1"
+                                CornerRadius="10"
+                                Padding="0"
+                                WidthRequest="50"
+                                Margin="5"
+                                TextColor="White" 
+                                BackgroundColor="{StaticResource ExtraEntryBackgroundColor}">
+                        <Button.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String" Android="fa-solid-900.ttf#Font Awesome 5 Free Solid" iOS="Font Awesome 5 Free" WinPhone="Assets/fa-regular-400.ttf#Font Awesome 5 Free" />
+                        </Button.FontFamily>
+                    </Button>
+                </StackLayout>
+                <ListView ItemsSource="{Binding Adverts, Mode=TwoWay}" IsPullToRefreshEnabled="True" RefreshCommand="{Binding SearchCommand}" IsRefreshing="{Binding IsRefreshing}"
+                      SeparatorVisibility="Default" HasUnevenRows="True" SelectionMode="None">
+                    <ListView.Behaviors>
+                        <b:EventToCommandBehavior EventName="ItemTapped"
+                                              Command="{Binding OpenAdvertCommand}"
+                                              EventArgsParameterPath="Item" />
+                    </ListView.Behaviors>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="serverModels:AdvertDto">
+                            <ViewCell>
+                                <Frame BorderColor="White" Margin="3" Padding="1" CornerRadius="15">
+                                    <Frame CornerRadius="15" Padding="0" Margin="0" >
+                                        <Grid VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" Padding="0" Margin="0">
+                                            <StackLayout Margin="0" BackgroundColor="{StaticResource ExtraEntryBackgroundColor}" Opacity="1" Padding="5">
+                                                <Label Text="{Binding Title}" TextColor="Magenta" FontAttributes="Bold" HorizontalOptions="StartAndExpand" />
+                                                <ScrollView HeightRequest="100">
+                                                    <myControls:ExtraEditor Text="{Binding Description}" 
+                                                                        InputTransparent="True" 
+                                                                        TextColor="White"
+                                                                        BackgroundColor="Transparent" 
+                                                                        MyBackgroundColor="#386161" 
+                                                                        CornerRadius="10" 
+                                                                        BorderColor="White"
+                                                                        BorderThickness="2"
+                                                                        Margin="0"
+                                                                        HorizontalOptions="Fill"
+                                                                        PlaceholderColor="#D9D0D0D0" 
+                                                                        VerticalOptions="FillAndExpand"/>
+                                                </ScrollView>
+                                                
+                                                <Label Text="{Binding CreateDate,  StringFormat='{0:yyyy.MM.dd HH:mm}'}" TextColor="White" FontAttributes="Bold" Margin="5, 0"/>
+                                            </StackLayout>
+                                        </Grid>
+                                    </Frame>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
+
+            <Frame x:Name="FloatingButtonWrapper" CornerRadius="120" WidthRequest="20" HeightRequest="20" BackgroundColor="#eb3a77" HorizontalOptions="End" VerticalOptions="End" Margin="20" IsVisible="{Binding IsLoggedIn}">
+                <ImageButton Source="{local:ImageResource KutyApp.Client.Xam.Resources.Images.plus.png}"
+                             Aspect="AspectFit"
+                             Margin="-18"
+                             Padding="8"
+                             BackgroundColor="Transparent">
+                    <ImageButton.Behaviors>
+                        <behaviors:EventHandlerBehavior EventName="Clicked">
+                            <behaviors:ScaleAction TargetObject="{x:Reference FloatingButtonWrapper}" 
+                                   FinalScale="0.8" 
+                                   Duration="100" 
+                                   EasingFunction="Linear"
+                                   Await="true"/>
+                            <behaviors:ScaleAction TargetObject="{x:Reference FloatingButtonWrapper}" 
+                                   FinalScale="1.0" 
+                                   Duration="100" 
+                                   EasingFunction="CubicOut" 
+                                   Await="true"/>
+                            <behaviors:InvokeCommandAction Command="{Binding OpenAdvertCommand}" />
+                        </behaviors:EventHandlerBehavior>
+                    </ImageButton.Behaviors>
+                </ImageButton>
+            </Frame>
+            <ActivityIndicator IsEnabled="True" IsVisible="{Binding IsBusy}" IsRunning="{Binding IsBusy}" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+        </Grid>
+        
+    </ContentPage.Content>
+</ContentPage>

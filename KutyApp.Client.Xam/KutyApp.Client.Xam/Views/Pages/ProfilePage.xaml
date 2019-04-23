@@ -18,8 +18,8 @@
             <Grid>
                 <StackLayout BackgroundColor="{StaticResource PageBackgroundColor}" VerticalOptions="Fill">
 
-          
-                    <Label Text="my sitters:" TextColor="White" Margin="5, 0"/>
+
+                    <Label Text="{x:Static local:Resources.Localization.Texts.MySitters}" TextColor="White" Margin="5, 0" FontAttributes="Bold"/>
 
                     <Frame BackgroundColor="{StaticResource MainButtonBackgroundColor}" VerticalOptions="FillAndExpand" Margin="5, 0, 50, 0" Padding="5" CornerRadius="10">
                         <Grid Padding="0" BackgroundColor="{StaticResource MainButtonBackgroundColor}">
@@ -79,7 +79,7 @@
                         </Grid>
                     </Frame>
 
-                    <Button Text="SaveOfflineDogs" 
+                    <Button Text="{x:Static local:Resources.Localization.Texts.SaveOffline}" 
                             Command="{Binding SaveOfflineCommand}"
                             IsEnabled="{Binding IsLoggedIn}"
                             CornerRadius="5"
@@ -88,7 +88,7 @@
                             Margin="5"
                             />
                     <StackLayout Orientation="Horizontal">
-                        <Button Text="MySittedPets"
+                        <Button Text="{x:Static local:Resources.Localization.Texts.MySittedPets}"
                                 Command="{Binding OpenMySittedPets}"
                                 IsEnabled="{Binding IsLoggedIn}"
                                 CornerRadius="5"
@@ -96,7 +96,7 @@
                                 TextColor="White"
                                 Margin="5"
                                 HorizontalOptions="FillAndExpand"/>
-                        <Button Text="logout"
+                        <Button Text="{x:Static local:Resources.Localization.Texts.Logout}"
                                 Command="{Binding LogoutCommand}" 
                                 IsEnabled="{Binding IsLoggedIn}"
                                 CornerRadius="5"

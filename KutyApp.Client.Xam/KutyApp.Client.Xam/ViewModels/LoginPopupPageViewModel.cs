@@ -98,6 +98,8 @@ namespace KutyApp.Client.Xam.ViewModels
                     IsBusy = true;
                     var response = await EnvironmentApiService.LoginAsync(new LoginDto { Email = UserName, Password = Password, RememberMe = RememberMe });
 
+                    KutyAppClientContext.CurrentUserEmail = UserName;
+
                     if (RememberMe)
                     {
                         await KutyAppClientContext.SaveSettingsAsync(response, null);

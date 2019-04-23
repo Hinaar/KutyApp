@@ -240,4 +240,37 @@
   <data name="Vaccination" xml:space="preserve">
     <value>Oltás</value>
   </data>
+  <data name="Cosmetics" xml:space="preserve">
+    <value>Kozmetikum</value>
+  </data>
+  <data name="HealthCare" xml:space="preserve">
+    <value>Egészségügy</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Kijelentkezés</value>
+  </data>
+  <data name="MySittedPets" xml:space="preserve">
+    <value>Gondozott állataim</value>
+  </data>
+  <data name="MySitters" xml:space="preserve">
+    <value>Gondozóim</value>
+  </data>
+  <data name="Park" xml:space="preserve">
+    <value>Park</value>
+  </data>
+  <data name="Restaurant" xml:space="preserve">
+    <value>Étterem</value>
+  </data>
+  <data name="SaveOffline" xml:space="preserve">
+    <value>Állatok offline mentése</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Keresés...</value>
+  </data>
+  <data name="Shelter" xml:space="preserve">
+    <value>Menhely</value>
+  </data>
+  <data name="Shop" xml:space="preserve">
+    <value>Bolt</value>
+  </data>
 </root>

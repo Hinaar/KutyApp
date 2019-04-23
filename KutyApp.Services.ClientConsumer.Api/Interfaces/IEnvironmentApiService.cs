@@ -38,7 +38,7 @@ namespace KutyApp.Client.Services.ClientConsumer.Interfaces
 
         [Post("/api/advertisement")]
         [Headers("Authorization: Bearer")]
-        Task<List<AdvertDto>> AddOrEditAdvertisementAsync(AddOrEditAdvertDto dto);
+        Task<AdvertDto> AddOrEditAdvertisementAsync(AddOrEditAdvertDto dto);
 
         [Delete("/api/advertisement/{id}")]
         [Headers("Authorization: Bearer")]

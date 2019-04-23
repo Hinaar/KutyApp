@@ -9,11 +9,12 @@ namespace KutyApp.Services.Environment.Bll.DI
     {
         public static IServiceCollection AddBllManagers(this IServiceCollection services)
         {
+            services.AddTransient<IAdvertManager, AdvertManager>();
             services.AddTransient<IDatabaseManager, DatabaseManager>();
-            services.AddTransient<IPoiManager, PoiManager>();
+            services.AddTransient<IDataManager, DataManager>();
             services.AddTransient<ILocationManager, LocationManager>();
             services.AddTransient<IPetManager, PetManager>();
-            services.AddTransient<IDataManager, DataManager>();
+            services.AddTransient<IPoiManager, PoiManager>();
             return services;
         }
 

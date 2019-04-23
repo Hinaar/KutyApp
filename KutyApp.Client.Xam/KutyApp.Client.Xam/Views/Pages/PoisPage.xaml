@@ -22,7 +22,7 @@
                                 <Frame CornerRadius="15" Padding="0" Margin="0" >
                                     <Grid VerticalOptions="EndAndExpand" HorizontalOptions="FillAndExpand" Padding="0" Margin="0">
                                         <StackLayout Margin="0" BackgroundColor="{StaticResource ExtraEntryBackgroundColor}" Opacity="1" Padding="5">
-                                            <Label Text="{Binding EnvironmentTypes}" TextColor="Magenta" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"/>
+                                            <Label Text="{Binding EnvironmentTypes, Converter={StaticResource EnumLocalizationConverter}}" TextColor="Magenta" FontAttributes="Bold" HorizontalOptions="CenterAndExpand"/>
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="*" />

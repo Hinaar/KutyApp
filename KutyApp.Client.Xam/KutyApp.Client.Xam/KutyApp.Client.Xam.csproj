@@ -20,6 +20,7 @@
     <None Remove="Resources\Images\dog.png" />
     <None Remove="Resources\Images\maps.png" />
     <None Remove="Resources\Images\plus.png" />
+    <None Remove="Resources\Images\turnoff.png" />
     <None Remove="Resources\Images\user.png" />
   </ItemGroup>
 
@@ -28,6 +29,7 @@
     <EmbeddedResource Include="Resources\Images\dog.png" />
     <EmbeddedResource Include="Resources\Images\maps.png" />
     <EmbeddedResource Include="Resources\Images\plus.png" />
+    <EmbeddedResource Include="Resources\Images\turnoff.png" />
     <EmbeddedResource Include="Resources\Images\user.png" />
   </ItemGroup>
 
@@ -118,6 +120,12 @@
     </Compile>
     <Compile Update="Views\ContentViews\PetMedicalTreatMentsView.xaml.cs">
       <DependentUpon>PetMedicalTreatMentsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Pages\AdvertsPage.xaml.cs">
+      <DependentUpon>AdvertsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Pages\Popup\AdvertisementPopupPage.xaml.cs">
+      <DependentUpon>AdvertisementPopupPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Pages\Popup\PetSitterPopupPage.xaml.cs">
       <DependentUpon>PetSitterPopupPage.xaml</DependentUpon>

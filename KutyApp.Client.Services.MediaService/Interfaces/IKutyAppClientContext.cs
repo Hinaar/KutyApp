@@ -16,5 +16,6 @@ namespace KutyApp.Client.Services.ServiceCollector.Interfaces
         Task SaveSettingsAsync(string ApiKey, CultureInfo language);
         void RemoveApiKey();
         void SetTemporaryApiKey(string key);
+        string CurrentUserEmail { get; set; }
     }
 }

@@ -106,6 +106,15 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cosmetics.
+        /// </summary>
+        public static string Cosmetics {
+            get {
+                return ResourceManager.GetString("Cosmetics", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Currency.
         /// </summary>
         public static string Currency {
@@ -160,6 +169,15 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Healthcare.
+        /// </summary>
+        public static string HealthCare {
+            get {
+                return ResourceManager.GetString("HealthCare", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Location.
         /// </summary>
         public static string Location {
@@ -187,6 +205,15 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Logout.
+        /// </summary>
+        public static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Male.
         /// </summary>
         public static string Male {
@@ -201,6 +228,24 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         public static string MedicalTreatments {
             get {
                 return ResourceManager.GetString("MedicalTreatments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sitted pets.
+        /// </summary>
+        public static string MySittedPets {
+            get {
+                return ResourceManager.GetString("MySittedPets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to My sitters.
+        /// </summary>
+        public static string MySitters {
+            get {
+                return ResourceManager.GetString("MySitters", resourceCulture);
             }
         }
         
@@ -255,6 +300,15 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         public static string Other {
             get {
                 return ResourceManager.GetString("Other", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Park.
+        /// </summary>
+        public static string Park {
+            get {
+                return ResourceManager.GetString("Park", resourceCulture);
             }
         }
         
@@ -358,6 +412,15 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Restaurant.
+        /// </summary>
+        public static string Restaurant {
+            get {
+                return ResourceManager.GetString("Restaurant", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SAVE.
         /// </summary>
         public static string SaveButtonText {
@@ -367,11 +430,47 @@ namespace KutyApp.Client.Xam.Resources.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save pets offline.
+        /// </summary>
+        public static string SaveOffline {
+            get {
+                return ResourceManager.GetString("SaveOffline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.....
+        /// </summary>
+        public static string Search {
+            get {
+                return ResourceManager.GetString("Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server Error.
         /// </summary>
         public static string SERVERERROR {
             get {
                 return ResourceManager.GetString("SERVERERROR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shelter.
+        /// </summary>
+        public static string Shelter {
+            get {
+                return ResourceManager.GetString("Shelter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shop.
+        /// </summary>
+        public static string Shop {
+            get {
+                return ResourceManager.GetString("Shop", resourceCulture);
             }
         }
         

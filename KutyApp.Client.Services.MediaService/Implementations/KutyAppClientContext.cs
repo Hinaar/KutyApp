@@ -12,6 +12,7 @@ namespace KutyApp.Client.Services.ServiceCollector.Implementations
         public string ApiKey { get; protected set; } = string.Empty;
         public CultureInfo SavedLanguage { get; set; } = Languages.Default;
         private bool IsSettingsLoaded { get; set; } = false;
+        public string CurrentUserEmail { get; set; } = string.Empty;
 
         public void SetTemporaryApiKey(string key)
         {
